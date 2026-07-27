@@ -1,4 +1,6 @@
 ---
+import Brand from "../components/Brand.astro";
+
 const products = [
   {
     index: "01",
@@ -43,6 +45,8 @@ const products = [
       content="Tokn AI builds open-source tools for training models, routing inference, and understanding coding-agent usage."
     />
     <meta name="theme-color" content="#fbfbfa" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="canonical" href="https://tokn-ai.dev/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Tokn AI" />
@@ -71,9 +75,7 @@ const products = [
   <body>
     <header>
       <div class="container header-inner">
-        <a class="brand" href="/" aria-label="Tokn AI home">
-          <span aria-hidden="true">~/</span>tokn-ai
-        </a>
+        <Brand />
         <nav aria-label="Primary navigation">
           <a href="#projects">Projects</a>
           <a href="#about">About</a>
@@ -226,9 +228,7 @@ total        47.2M      $56.67</code></pre>
 
     <footer>
       <div class="container footer-inner">
-        <a class="brand" href="/" aria-label="Tokn AI home">
-          <span aria-hidden="true">~/</span>tokn-ai
-        </a>
+        <Brand />
         <p>Open tools for people building with language models.</p>
         <div class="footer-links">
           <a href="#projects">Projects</a>
@@ -266,11 +266,13 @@ total        47.2M      $56.67</code></pre>
     --text-secondary: #5f645e;
     --border: #dedfda;
     --border-strong: #b9bcb5;
-    --blue: #1f65d6;
-    --blue-dark: #174fa7;
+    --blue: #5853d8;
+    --blue-dark: #413cad;
+    --cyan: #36ccec;
+    --coral: #ff5a4e;
     --green: #2b9b62;
-    --terminal: #111612;
-    --terminal-text: #dce7dd;
+    --terminal: #0b1024;
+    --terminal-text: #e7e8f4;
     --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
       sans-serif;
     --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -323,19 +325,6 @@ total        47.2M      $56.67</code></pre>
     min-height: 64px;
     align-items: center;
     justify-content: space-between;
-  }
-
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 14px;
-    font-weight: 700;
-  }
-
-  .brand span {
-    color: var(--blue);
   }
 
   nav {
@@ -445,11 +434,11 @@ total        47.2M      $56.67</code></pre>
 
   .terminal {
     overflow: hidden;
-    border: 1px solid #253027;
+    border: 1px solid #31365f;
     border-radius: 8px;
     background: var(--terminal);
     color: var(--terminal-text);
-    box-shadow: 0 18px 45px rgba(18, 25, 20, 0.14);
+    box-shadow: 0 18px 45px rgba(11, 16, 36, 0.18);
     font-family: var(--mono);
   }
 
@@ -458,13 +447,13 @@ total        47.2M      $56.67</code></pre>
     align-items: center;
     justify-content: space-between;
     padding: 11px 14px;
-    border-bottom: 1px solid #29332b;
-    color: #8c9b8e;
+    border-bottom: 1px solid #292e50;
+    color: #9ca1bd;
     font-size: 10px;
   }
 
   .terminal-dots {
-    color: #48574b;
+    color: var(--coral);
     font-size: 7px;
     letter-spacing: 4px;
   }
@@ -479,15 +468,15 @@ total        47.2M      $56.67</code></pre>
   }
 
   .prompt {
-    color: #8be3aa;
+    color: var(--cyan);
   }
 
   .dim {
-    color: #738276;
+    color: #9298b5;
   }
 
   .rule {
-    color: #465248;
+    color: #373d64;
   }
 
   .projects-section {

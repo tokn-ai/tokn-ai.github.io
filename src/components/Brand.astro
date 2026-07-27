@@ -1,0 +1,56 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<a class:list={["brand", className]} href="/" aria-label="Tokn AI home">
+  <img
+    class="brand-icon"
+    src="/logo-icon.svg"
+    width="34"
+    height="34"
+    alt=""
+    aria-hidden="true"
+  />
+  <span class="brand-wordmark" aria-hidden="true">
+    tokn<span>ai</span>
+  </span>
+</a>
+
+<style>
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .brand-icon {
+    display: block;
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand-wordmark {
+    position: relative;
+    padding-right: 17px;
+  }
+
+  .brand-wordmark span {
+    position: absolute;
+    top: -0.55em;
+    right: 0;
+    color: var(--coral);
+    font-size: 0.62em;
+    letter-spacing: -0.06em;
+  }
+</style>

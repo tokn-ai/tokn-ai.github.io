@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1200" y2="630">
+      <stop offset="0" stop-color="#fffdfa" />
+      <stop offset="1" stop-color="#f1f0ff" />
+    </linearGradient>
+    <linearGradient id="tile" x1="90" y1="105" x2="350" y2="365">
+      <stop offset="0" stop-color="#1d2144" />
+      <stop offset="1" stop-color="#0b1024" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#background)" />
+  <path d="M0 0H1200V14H0Z" fill="#15172a" />
+  <path d="M0 14H720V20H0Z" fill="#36ccec" />
+  <path d="M720 14H970V20H720Z" fill="#8b5cf6" />
+  <path d="M970 14H1200V20H970Z" fill="#ff5a4e" />
+
+  <g transform="translate(70 88) scale(1.16)">
+    <rect
+      x="10"
+      y="10"
+      width="236"
+      height="236"
+      rx="52"
+      fill="url(#tile)"
+      stroke="#31365f"
+      stroke-width="4"
+    />
+    <g
+      fill="none"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M76 42H48V214H76" stroke="#f7f1e7" stroke-width="12" />
+      <path d="M180 42H208V214H180" stroke="#f7f1e7" stroke-width="12" />
+      <path d="M100 78H158" stroke="#36ccec" stroke-width="6" />
+      <path d="m144 64 14 14" stroke="#36ccec" stroke-width="6" />
+      <path
+        d="M128 108V174c0 11 6 17 18 17h10"
+        stroke="#ff5a4e"
+        stroke-width="15"
+      />
+      <path d="M104 128H154" stroke="#ff5a4e" stroke-width="15" />
+    </g>
+  </g>
+
+  <g
+    font-family="Menlo, Consolas, 'Liberation Mono', monospace"
+    font-weight="700"
+  >
+    <text x="415" y="272" fill="#15172a" font-size="124">tokn</text>
+    <text x="716" y="194" fill="#ff5a4e" font-size="52">ai</text>
+  </g>
+
+  <text
+    x="82"
+    y="494"
+    fill="#15172a"
+    font-family="Inter, Arial, sans-serif"
+    font-size="48"
+    font-weight="650"
+    letter-spacing="-1.5"
+  >
+    Build, route, and measure AI systems.
+  </text>
+  <text
+    x="84"
+    y="548"
+    fill="#5f6474"
+    font-family="Menlo, Consolas, 'Liberation Mono', monospace"
+    font-size="22"
+  >
+    open source · local first · tokn-ai.dev
+  </text>
+</svg>
