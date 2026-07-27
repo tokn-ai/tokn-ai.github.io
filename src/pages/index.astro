@@ -1,0 +1,863 @@
+---
+const products = [
+  {
+    index: "01",
+    name: "flm.py",
+    status: "research preview",
+    summary:
+      "A composable Python workspace for language-model research, training, reinforcement learning, and inference.",
+    points: ["PyTorch foundations", "Reusable model modules", "Portable training experiments"],
+    language: "Python",
+    href: "https://github.com/tokn-ai/flm.py",
+  },
+  {
+    index: "02",
+    name: "tokn-router",
+    status: "in development",
+    summary:
+      "One local, OpenAI-compatible endpoint for supported coding plans and model providers.",
+    points: ["Single Rust binary", "Streaming + account pools", "Local SQLite usage records"],
+    language: "Rust",
+    href: "https://github.com/agentic-rs/tokn",
+  },
+  {
+    index: "03",
+    name: "llm-tokei",
+    status: "available",
+    summary:
+      "Fast, local reports that show where your coding-agent tokens and estimated costs went.",
+    points: ["Six agent sources", "Human tables + stable JSON", "No log uploads"],
+    language: "Rust",
+    href: "https://github.com/agentic-rs/llm-tokei",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Tokn AI builds open-source tools for training models, routing inference, and understanding coding-agent usage."
+    />
+    <meta name="theme-color" content="#fbfbfa" />
+    <link rel="canonical" href="https://tokn-ai.dev/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tokn AI" />
+    <meta property="og:title" content="Tokn AI — Open tools for AI systems" />
+    <meta
+      property="og:description"
+      content="Build models, route inference, and measure agent usage."
+    />
+    <meta property="og:url" content="https://tokn-ai.dev/" />
+    <meta property="og:image" content="https://tokn-ai.dev/og.png" />
+    <meta
+      property="og:image:alt"
+      content="Tokn AI — Build models, route inference, and measure agent usage."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tokn AI — Open tools for AI systems" />
+    <meta
+      name="twitter:description"
+      content="Build models, route inference, and measure agent usage."
+    />
+    <meta name="twitter:image" content="https://tokn-ai.dev/og.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Tokn AI — Open tools for AI systems</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Tokn AI home">
+          <span aria-hidden="true">~/</span>tokn-ai
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <div class="hero-copy">
+          <p class="overline"><span class="status-dot"></span> Open source / local first</p>
+          <h1>Build, route, and measure AI systems.</h1>
+          <p class="lede">
+            Tokn AI makes focused tools for people working close to language
+            models—from training experiments to local inference and usage analysis.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#projects">Explore projects</a>
+            <a
+              class="button secondary"
+              href="https://github.com/tokn-ai"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View source <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="terminal" aria-label="LLM Tokei command line example">
+          <div class="terminal-header">
+            <span>tokn-ai / terminal</span>
+            <span class="terminal-dots" aria-hidden="true">● ● ●</span>
+          </div>
+          <pre><code><span class="dim"># install the usage analyzer</span>
+<span class="prompt">$</span> npm i -g @tokn-ai/llm-tokei
+
+<span class="prompt">$</span> llm-tokei --month -h
+
+<span class="dim">SOURCE       TOKENS      COST</span>
+codex        28.4M      $31.20
+claude       12.7M      $18.44
+copilot       6.1M       $7.03
+<span class="rule">────────────────────────────</span>
+total        47.2M      $56.67</code></pre>
+        </div>
+      </section>
+
+      <section class="projects-section" id="projects">
+        <div class="container">
+          <div class="section-intro">
+            <p class="overline">Projects</p>
+            <div>
+              <h2>Three parts of the workflow.</h2>
+              <p>
+                Independent, composable tools. Use one, or connect them into
+                your own model-building loop.
+              </p>
+            </div>
+          </div>
+
+          <div class="project-list">
+            {
+              products.map((product) => (
+                <article class="project">
+                  <div class="project-meta">
+                    <span>{product.index}</span>
+                    <span class="project-status">{product.status}</span>
+                  </div>
+                  <div class="project-content">
+                    <div>
+                      <h3>{product.name}</h3>
+                      <p>{product.summary}</p>
+                    </div>
+                    <ul>
+                      {product.points.map((point) => <li>{point}</li>)}
+                    </ul>
+                  </div>
+                  <div class="project-link">
+                    <span>{product.language}</span>
+                    <a href={product.href} target="_blank" rel="noreferrer">
+                      Repository <span aria-hidden="true">↗</span>
+                    </a>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="about container" id="about">
+        <div class="section-intro">
+          <p class="overline">Why Tokn AI</p>
+          <div>
+            <h2>Small tools, understood end to end.</h2>
+            <p>
+              We prefer software you can inspect, run locally, and compose
+              yourself over platforms that need to own the entire workflow.
+            </p>
+          </div>
+        </div>
+
+        <div class="values">
+          <article>
+            <code>01_local_first</code>
+            <h3>Keep sensitive state close.</h3>
+            <p>
+              Logs, credentials, usage records, and experiments stay on your
+              machine by default.
+            </p>
+          </article>
+          <article>
+            <code>02_open_source</code>
+            <h3>Inspect the implementation.</h3>
+            <p>
+              Understand behavior and tradeoffs directly from the code—not
+              through a platform promise.
+            </p>
+          </article>
+          <article>
+            <code>03_purpose_built</code>
+            <h3>Do one job clearly.</h3>
+            <p>
+              Focused commands and libraries that fit into existing systems
+              without requiring a migration.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container cta-inner">
+          <div>
+            <p class="overline">Available now</p>
+            <h2>Start by measuring your agents.</h2>
+          </div>
+          <div class="install-command">
+            <code><span>$</span> npm i -g @tokn-ai/llm-tokei</code>
+            <button type="button" data-copy-command aria-label="Copy install command">
+              Copy
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <a class="brand" href="/" aria-label="Tokn AI home">
+          <span aria-hidden="true">~/</span>tokn-ai
+        </a>
+        <p>Open tools for people building with language models.</p>
+        <div class="footer-links">
+          <a href="#projects">Projects</a>
+          <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <span>© 2026</span>
+      </div>
+    </footer>
+
+    <script>
+      const copyButton = document.querySelector<HTMLButtonElement>("[data-copy-command]");
+      const command = "npm i -g @tokn-ai/llm-tokei";
+
+      copyButton?.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(command);
+          copyButton.textContent = "Copied";
+          window.setTimeout(() => {
+            copyButton.textContent = "Copy";
+          }, 1600);
+        } catch {
+          copyButton.textContent = command;
+        }
+      });
+    </script>
+  </body>
+</html>
+
+<style>
+  :root {
+    --background: #fbfbfa;
+    --surface: #ffffff;
+    --surface-subtle: #f4f4f1;
+    --text: #151714;
+    --text-secondary: #5f645e;
+    --border: #dedfda;
+    --border-strong: #b9bcb5;
+    --blue: #1f65d6;
+    --blue-dark: #174fa7;
+    --green: #2b9b62;
+    --terminal: #111612;
+    --terminal-text: #dce7dd;
+    --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .container {
+    width: min(100% - 40px, 1120px);
+    margin-inline: auto;
+  }
+
+  header {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+    border-bottom: 1px solid var(--border);
+    background: rgba(251, 251, 250, 0.92);
+    backdrop-filter: blur(12px);
+  }
+
+  .header-inner {
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  .brand span {
+    color: var(--blue);
+  }
+
+  nav {
+    display: flex;
+    gap: 28px;
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+
+  nav a,
+  .footer-links a {
+    color: var(--text-secondary);
+  }
+
+  nav a:hover,
+  nav a:focus-visible,
+  .footer-links a:hover,
+  .footer-links a:focus-visible {
+    color: var(--text);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(400px, 0.96fr);
+    gap: clamp(48px, 8vw, 100px);
+    align-items: center;
+    min-height: 670px;
+    padding-block: 92px;
+  }
+
+  .overline {
+    margin: 0 0 18px;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    vertical-align: 1px;
+  }
+
+  h1 {
+    max-width: 680px;
+    margin: 0;
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 650;
+    letter-spacing: -0.052em;
+    line-height: 1.02;
+  }
+
+  .lede {
+    max-width: 610px;
+    margin: 28px 0 0;
+    color: var(--text-secondary);
+    font-size: 20px;
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .button {
+    display: inline-flex;
+    min-height: 43px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 17px;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .button.primary {
+    border-color: var(--blue);
+    background: var(--blue);
+    color: white;
+  }
+
+  .button.primary:hover,
+  .button.primary:focus-visible {
+    border-color: var(--blue-dark);
+    background: var(--blue-dark);
+  }
+
+  .button.secondary {
+    gap: 9px;
+    background: var(--surface);
+  }
+
+  .button.secondary:hover,
+  .button.secondary:focus-visible {
+    border-color: var(--text-secondary);
+  }
+
+  .terminal {
+    overflow: hidden;
+    border: 1px solid #253027;
+    border-radius: 8px;
+    background: var(--terminal);
+    color: var(--terminal-text);
+    box-shadow: 0 18px 45px rgba(18, 25, 20, 0.14);
+    font-family: var(--mono);
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 14px;
+    border-bottom: 1px solid #29332b;
+    color: #8c9b8e;
+    font-size: 10px;
+  }
+
+  .terminal-dots {
+    color: #48574b;
+    font-size: 7px;
+    letter-spacing: 4px;
+  }
+
+  pre {
+    margin: 0;
+    padding: 25px 22px 28px;
+    overflow-x: auto;
+    font-family: inherit;
+    font-size: 12px;
+    line-height: 1.75;
+  }
+
+  .prompt {
+    color: #8be3aa;
+  }
+
+  .dim {
+    color: #738276;
+  }
+
+  .rule {
+    color: #465248;
+  }
+
+  .projects-section {
+    padding-block: 100px 112px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .section-intro {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 660px);
+    gap: 44px;
+    align-items: start;
+  }
+
+  .section-intro h2,
+  .cta h2 {
+    margin: 0;
+    font-size: clamp(34px, 4.5vw, 48px);
+    font-weight: 650;
+    letter-spacing: -0.042em;
+    line-height: 1.12;
+  }
+
+  .section-intro > div > p {
+    max-width: 590px;
+    margin: 18px 0 0;
+    color: var(--text-secondary);
+    font-size: 18px;
+  }
+
+  .project-list {
+    margin-top: 68px;
+    border-top: 1px solid var(--border-strong);
+  }
+
+  .project {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) 170px;
+    gap: 30px;
+    padding-block: 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-meta,
+  .project-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+
+  .project-meta > span:first-child {
+    color: var(--text-secondary);
+  }
+
+  .project-status {
+    padding: 3px 7px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-secondary);
+  }
+
+  .project-content {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) minmax(200px, 0.72fr);
+    gap: 48px;
+  }
+
+  .project h3 {
+    margin: -6px 0 10px;
+    font-family: var(--mono);
+    font-size: clamp(26px, 3vw, 36px);
+    letter-spacing: -0.045em;
+  }
+
+  .project-content p {
+    max-width: 510px;
+    margin: 0;
+    color: var(--text-secondary);
+  }
+
+  .project ul {
+    margin: 0;
+    padding: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+    list-style: none;
+  }
+
+  .project li {
+    position: relative;
+    padding: 3px 0 3px 17px;
+  }
+
+  .project li::before {
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    content: "→";
+    font-family: var(--mono);
+  }
+
+  .project-link {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .project-link > span {
+    color: var(--text-secondary);
+  }
+
+  .project-link a {
+    color: var(--blue);
+  }
+
+  .project-link a:hover,
+  .project-link a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .about {
+    padding-block: 112px 124px;
+  }
+
+  .values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 68px;
+  }
+
+  .values article {
+    min-height: 250px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+  }
+
+  .values code {
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .values h3 {
+    margin: 58px 0 12px;
+    font-size: 20px;
+    letter-spacing: -0.025em;
+  }
+
+  .values p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  .cta {
+    padding-block: 84px;
+    border-top: 1px solid var(--border);
+    background: var(--surface-subtle);
+  }
+
+  .cta-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+  }
+
+  .install-command {
+    display: flex;
+    min-height: 62px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 0 10px 0 18px;
+    overflow: hidden;
+    border: 1px solid var(--border-strong);
+    border-radius: 7px;
+    background: var(--surface);
+    font-family: var(--mono);
+  }
+
+  .install-command code {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .install-command code span {
+    color: var(--green);
+  }
+
+  .install-command button {
+    min-width: 66px;
+    min-height: 38px;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface-subtle);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .install-command button:hover,
+  .install-command button:focus-visible {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  footer {
+    padding-block: 36px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .footer-inner {
+    display: grid;
+    grid-template-columns: 160px 1fr auto auto;
+    gap: 40px;
+    align-items: center;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    font-size: 10px;
+  }
+
+  .footer-inner p {
+    margin: 0;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 22px;
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .terminal {
+      max-width: 620px;
+    }
+
+    .project {
+      grid-template-columns: 90px minmax(0, 1fr);
+    }
+
+    .project-link {
+      grid-column: 2;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+    }
+
+    .values {
+      grid-template-columns: 1fr;
+    }
+
+    .values article {
+      min-height: auto;
+    }
+
+    .values h3 {
+      margin-top: 38px;
+    }
+
+    .cta-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+      grid-template-columns: 1fr auto;
+    }
+
+    .footer-inner p {
+      order: 3;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .container {
+      width: min(100% - 30px, 1120px);
+    }
+
+    nav {
+      gap: 18px;
+    }
+
+    nav a:not(:last-child) {
+      display: none;
+    }
+
+    .hero {
+      gap: 54px;
+      padding-block: 70px;
+    }
+
+    h1 {
+      font-size: 47px;
+    }
+
+    .lede {
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
+    .section-intro {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .projects-section,
+    .about {
+      padding-block: 80px;
+    }
+
+    .project {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .project-meta {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .project-content {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .project-link {
+      grid-column: 1;
+    }
+
+    .install-command {
+      align-items: stretch;
+      flex-direction: column;
+      padding: 16px;
+    }
+
+    .install-command button {
+      align-self: flex-start;
+    }
+
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .footer-inner p {
+      order: initial;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+</style>
