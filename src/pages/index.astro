@@ -4,6 +4,20 @@ import Brand from "../components/Brand.astro";
 const products = [
   {
     index: "01",
+    name: "ffbpe",
+    status: "available",
+    summary:
+      "Fast and faithful byte-pair encoding for training exact tokenizers over large, multilingual corpora.",
+    points: [
+      "Python + Rust APIs",
+      "Exact bounded-memory training",
+      "Tiktoken-compatible encoding",
+    ],
+    language: "Rust / Python",
+    href: "https://github.com/tokn-ai/ffbpe",
+  },
+  {
+    index: "02",
     name: "flm.py",
     status: "research preview",
     summary:
@@ -13,7 +27,7 @@ const products = [
     href: "https://github.com/tokn-ai/flm.py",
   },
   {
-    index: "02",
+    index: "03",
     name: "tokn-router",
     status: "in development",
     summary:
@@ -23,7 +37,7 @@ const products = [
     href: "https://github.com/agentic-rs/tokn",
   },
   {
-    index: "03",
+    index: "04",
     name: "llm-tokei",
     status: "available",
     summary:
@@ -42,7 +56,7 @@ const products = [
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="Tokn AI builds open-source tools for training models, routing inference, and understanding coding-agent usage."
+      content="Tokn AI builds open-source tools for training tokenizers and models, routing inference, and understanding coding-agent usage."
     />
     <meta name="theme-color" content="#fbfbfa" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -53,7 +67,7 @@ const products = [
     <meta property="og:title" content="Tokn AI — Open tools for AI systems" />
     <meta
       property="og:description"
-      content="Build models, route inference, and measure agent usage."
+      content="Train tokenizers and models, route inference, and measure agent usage."
     />
     <meta property="og:url" content="https://tokn-ai.dev/" />
     <meta property="og:image" content="https://tokn-ai.dev/og.png" />
@@ -65,7 +79,7 @@ const products = [
     <meta name="twitter:title" content="Tokn AI — Open tools for AI systems" />
     <meta
       name="twitter:description"
-      content="Build models, route inference, and measure agent usage."
+      content="Train tokenizers and models, route inference, and measure agent usage."
     />
     <meta name="twitter:image" content="https://tokn-ai.dev/og.png" />
     <meta name="generator" content={Astro.generator} />
@@ -90,10 +104,11 @@ const products = [
       <section class="hero container">
         <div class="hero-copy">
           <p class="overline"><span class="status-dot"></span> Open source / local first</p>
-          <h1>Build, route, and measure AI systems.</h1>
+          <h1>Tokenize, build, route, and measure AI systems.</h1>
           <p class="lede">
             Tokn AI makes focused tools for people working close to language
-            models—from training experiments to local inference and usage analysis.
+            models—from tokenizer and model training to local inference and
+            usage analysis.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#projects">Explore projects</a>
@@ -132,7 +147,7 @@ total        47.2M      $56.67</code></pre>
           <div class="section-intro">
             <p class="overline">Projects</p>
             <div>
-              <h2>Three parts of the workflow.</h2>
+              <h2>Four parts of the workflow.</h2>
               <p>
                 Independent, composable tools. Use one, or connect them into
                 your own model-building loop.
