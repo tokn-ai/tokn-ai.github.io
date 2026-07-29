@@ -5,6 +5,7 @@ const products = [
   {
     index: "01",
     name: "ffbpe",
+    scope: "tokenization",
     status: "available",
     summary:
       "Fast and faithful byte-pair encoding for training exact tokenizers over large, multilingual corpora.",
@@ -19,6 +20,7 @@ const products = [
   {
     index: "02",
     name: "flm.py",
+    scope: "training",
     status: "research preview",
     summary:
       "A composable Python workspace for language-model research, training, reinforcement learning, and inference.",
@@ -29,6 +31,7 @@ const products = [
   {
     index: "03",
     name: "tokn-router",
+    scope: "inference",
     status: "in development",
     summary:
       "One local, OpenAI-compatible endpoint for supported coding plans and model providers.",
@@ -39,6 +42,7 @@ const products = [
   {
     index: "04",
     name: "llm-tokei",
+    scope: "observability",
     status: "available",
     summary:
       "Fast, local reports that show where your coding-agent tokens and estimated costs went.",
@@ -56,7 +60,7 @@ const products = [
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="Tokn AI builds open-source tools for training tokenizers and models, routing inference, and understanding coding-agent usage."
+      content="Tokn AI is an open-source lab building reusable foundations for models and agents."
     />
     <meta name="theme-color" content="#fbfbfa" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -64,26 +68,32 @@ const products = [
     <link rel="canonical" href="https://tokn-ai.dev/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Tokn AI" />
-    <meta property="og:title" content="Tokn AI — Open tools for AI systems" />
+    <meta
+      property="og:title"
+      content="Tokn AI — Open foundations for models and agents"
+    />
     <meta
       property="og:description"
-      content="Train tokenizers and models, route inference, and measure agent usage."
+      content="Reusable primitives, developer tools, and hosted services for the hard problems shared across AI products."
     />
     <meta property="og:url" content="https://tokn-ai.dev/" />
     <meta property="og:image" content="https://tokn-ai.dev/og.png" />
     <meta
       property="og:image:alt"
-      content="Tokn AI — Build models, route inference, and measure agent usage."
+      content="Tokn AI — Open foundations for models and agents."
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Tokn AI — Open tools for AI systems" />
+    <meta
+      name="twitter:title"
+      content="Tokn AI — Open foundations for models and agents"
+    />
     <meta
       name="twitter:description"
-      content="Train tokenizers and models, route inference, and measure agent usage."
+      content="Reusable primitives, developer tools, and hosted services for the hard problems shared across AI products."
     />
     <meta name="twitter:image" content="https://tokn-ai.dev/og.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>Tokn AI — Open tools for AI systems</title>
+    <title>Tokn AI — Open foundations for models and agents</title>
   </head>
 
   <body>
@@ -92,7 +102,7 @@ const products = [
         <Brand />
         <nav aria-label="Primary navigation">
           <a href="#projects">Projects</a>
-          <a href="#about">About</a>
+          <a href="#about">Principles</a>
           <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">
             GitHub <span aria-hidden="true">↗</span>
           </a>
@@ -103,12 +113,13 @@ const products = [
     <main>
       <section class="hero container">
         <div class="hero-copy">
-          <p class="overline"><span class="status-dot"></span> Open source / local first</p>
-          <h1>Tokenize, build, route, and measure AI systems.</h1>
+          <p class="overline">
+            <span class="status-dot"></span> Open source lab / models + agents
+          </p>
+          <h1>Open foundations for models and agents.</h1>
           <p class="lede">
-            Tokn AI makes focused tools for people working close to language
-            models—from tokenizer and model training to local inference and
-            usage analysis.
+            We build reusable primitives, developer tools, and hosted services
+            for the hard problems shared across AI products.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#projects">Explore projects</a>
@@ -123,34 +134,58 @@ const products = [
           </div>
         </div>
 
-        <div class="terminal" aria-label="LLM Tokei command line example">
-          <div class="terminal-header">
-            <span>tokn-ai / terminal</span>
-            <span class="terminal-dots" aria-hidden="true">● ● ●</span>
+        <div class="stack-map" aria-label="Tokn AI open project stack">
+          <div class="stack-map-header">
+            <span>tokn-ai / open_stack</span>
+            <span class="stack-map-dots" aria-hidden="true">● ● ●</span>
           </div>
-          <pre><code><span class="dim"># install the usage analyzer</span>
-<span class="prompt">$</span> npm i -g @tokn-ai/llm-tokei
-
-<span class="prompt">$</span> llm-tokei --month -h
-
-<span class="dim">SOURCE       TOKENS      COST</span>
-codex        28.4M      $31.20
-claude       12.7M      $18.44
-copilot       6.1M       $7.03
-<span class="rule">────────────────────────────</span>
-total        47.2M      $56.67</code></pre>
+          <div class="stack-map-body">
+            <div class="stack-line">
+              <span class="stack-node">corpus</span>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <strong>ffbpe</strong>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <span class="stack-result">tokens</span>
+            </div>
+            <div class="stack-line">
+              <span class="stack-node">tokens</span>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <strong>flm.py</strong>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <span class="stack-result">model</span>
+            </div>
+            <div class="stack-line">
+              <span class="stack-node">request</span>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <strong>tokn-router</strong>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <span class="stack-result">inference</span>
+            </div>
+            <div class="stack-line">
+              <span class="stack-node">traces</span>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <strong>llm-tokei</strong>
+              <span class="stack-arrow" aria-hidden="true">→</span>
+              <span class="stack-result">insight</span>
+            </div>
+          </div>
+          <div class="stack-map-footer">
+            <span>open core</span>
+            <span>composable</span>
+            <span>hosted when useful</span>
+          </div>
         </div>
       </section>
 
       <section class="projects-section" id="projects">
         <div class="container">
           <div class="section-intro">
-            <p class="overline">Projects</p>
+            <p class="overline">Open projects</p>
             <div>
-              <h2>Four parts of the workflow.</h2>
+              <h2>Four projects, one direction.</h2>
               <p>
-                Independent, composable tools. Use one, or connect them into
-                your own model-building loop.
+                Each project tackles a difficult shared layer. Use one on its
+                own, or combine them without adopting an entire stack.
               </p>
             </div>
           </div>
@@ -161,7 +196,7 @@ total        47.2M      $56.67</code></pre>
                 <article class="project">
                   <div class="project-meta">
                     <span>{product.index}</span>
-                    <span class="project-status">{product.status}</span>
+                    <span>{product.scope}</span>
                   </div>
                   <div class="project-content">
                     <div>
@@ -173,9 +208,9 @@ total        47.2M      $56.67</code></pre>
                     </ul>
                   </div>
                   <div class="project-link">
-                    <span>{product.language}</span>
+                    <span class="project-status">{product.status}</span>
                     <a href={product.href} target="_blank" rel="noreferrer">
-                      Repository <span aria-hidden="true">↗</span>
+                      {product.language} <span aria-hidden="true">↗</span>
                     </a>
                   </div>
                 </article>
@@ -187,55 +222,76 @@ total        47.2M      $56.67</code></pre>
 
       <section class="about container" id="about">
         <div class="section-intro">
-          <p class="overline">Why Tokn AI</p>
+          <p class="overline">About the lab</p>
           <div>
-            <h2>Small tools, understood end to end.</h2>
+            <h2>The hard parts should be built once.</h2>
             <p>
-              We prefer software you can inspect, run locally, and compose
-              yourself over platforms that need to own the entire workflow.
+              Most teams focus on the product they need to ship today. We focus
+              on the foundations many products need, but few teams have the
+              time to build well.
             </p>
           </div>
         </div>
 
+        <div class="thesis">
+          <p>We build the tools behind AI products.</p>
+          <span>Open at the core. Local when preferred. Hosted when useful.</span>
+        </div>
+
         <div class="values">
           <article>
-            <code>01_local_first</code>
-            <h3>Keep sensitive state close.</h3>
+            <code>01_reusable</code>
+            <h3>Useful beyond one product.</h3>
             <p>
-              Logs, credentials, usage records, and experiments stay on your
-              machine by default.
+              We invest in clear boundaries and durable interfaces so the same
+              foundation can support many different ideas.
             </p>
           </article>
           <article>
-            <code>02_open_source</code>
-            <h3>Inspect the implementation.</h3>
+            <code>02_open</code>
+            <h3>Understand every layer.</h3>
             <p>
-              Understand behavior and tradeoffs directly from the code—not
-              through a platform promise.
+              The core stays inspectable and replaceable. You should be able to
+              see the tradeoffs and choose how each piece runs.
             </p>
           </article>
           <article>
-            <code>03_purpose_built</code>
-            <h3>Do one job clearly.</h3>
+            <code>03_adaptable</code>
+            <h3>Built for a moving field.</h3>
             <p>
-              Focused commands and libraries that fit into existing systems
-              without requiring a migration.
+              Focused components adapt better than heavy abstractions. We keep
+              the pieces small enough to evolve and strong enough to depend on.
             </p>
           </article>
+        </div>
+
+        <div class="toolchain" aria-label="Primary technologies">
+          <span><strong>Rust</strong> / durable systems</span>
+          <span><strong>TypeScript</strong> / product surfaces</span>
+          <span><strong>Python</strong> / model research</span>
         </div>
       </section>
 
       <section class="cta">
         <div class="container cta-inner">
           <div>
-            <p class="overline">Available now</p>
-            <h2>Start by measuring your agents.</h2>
+            <p class="overline">Build with us</p>
+            <h2>Build on open foundations.</h2>
+            <p>
+              Explore the projects, use what fits, and help improve the layers
+              beneath the next generation of AI products.
+            </p>
           </div>
-          <div class="install-command">
-            <code><span>$</span> npm i -g @tokn-ai/llm-tokei</code>
-            <button type="button" data-copy-command aria-label="Copy install command">
-              Copy
-            </button>
+          <div class="cta-actions">
+            <a
+              class="button cta-primary"
+              href="https://github.com/tokn-ai"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Explore GitHub <span aria-hidden="true">↗</span>
+            </a>
+            <a class="button cta-secondary" href="#projects">Browse projects</a>
           </div>
         </div>
       </section>
@@ -244,7 +300,7 @@ total        47.2M      $56.67</code></pre>
     <footer>
       <div class="container footer-inner">
         <Brand />
-        <p>Open tools for people building with language models.</p>
+        <p>Open foundations for models and agents.</p>
         <div class="footer-links">
           <a href="#projects">Projects</a>
           <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">GitHub</a>
@@ -253,34 +309,18 @@ total        47.2M      $56.67</code></pre>
       </div>
     </footer>
 
-    <script>
-      const copyButton = document.querySelector<HTMLButtonElement>("[data-copy-command]");
-      const command = "npm i -g @tokn-ai/llm-tokei";
-
-      copyButton?.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(command);
-          copyButton.textContent = "Copied";
-          window.setTimeout(() => {
-            copyButton.textContent = "Copy";
-          }, 1600);
-        } catch {
-          copyButton.textContent = command;
-        }
-      });
-    </script>
   </body>
 </html>
 
 <style>
   :root {
-    --background: #fbfbfa;
+    --background: #fcfbf8;
     --surface: #ffffff;
-    --surface-subtle: #f4f4f1;
-    --text: #151714;
-    --text-secondary: #5f645e;
-    --border: #dedfda;
-    --border-strong: #b9bcb5;
+    --surface-subtle: #f5f3ef;
+    --text: #15172a;
+    --text-secondary: #626575;
+    --border: #e0dfdc;
+    --border-strong: #bcbcc2;
     --blue: #5853d8;
     --blue-dark: #413cad;
     --cyan: #36ccec;
@@ -331,7 +371,7 @@ total        47.2M      $56.67</code></pre>
     z-index: 10;
     top: 0;
     border-bottom: 1px solid var(--border);
-    background: rgba(251, 251, 250, 0.92);
+    background: rgba(252, 251, 248, 0.92);
     backdrop-filter: blur(12px);
   }
 
@@ -363,11 +403,11 @@ total        47.2M      $56.67</code></pre>
 
   .hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.04fr) minmax(400px, 0.96fr);
-    gap: clamp(48px, 8vw, 100px);
+    grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+    gap: clamp(48px, 7vw, 88px);
     align-items: center;
-    min-height: 670px;
-    padding-block: 92px;
+    min-height: 700px;
+    padding-block: 104px;
   }
 
   .overline {
@@ -390,16 +430,16 @@ total        47.2M      $56.67</code></pre>
   }
 
   h1 {
-    max-width: 680px;
+    max-width: 700px;
     margin: 0;
-    font-size: clamp(48px, 6vw, 72px);
+    font-size: clamp(54px, 6.2vw, 78px);
     font-weight: 650;
     letter-spacing: -0.052em;
     line-height: 1.02;
   }
 
   .lede {
-    max-width: 610px;
+    max-width: 620px;
     margin: 28px 0 0;
     color: var(--text-secondary);
     font-size: 20px;
@@ -447,51 +487,87 @@ total        47.2M      $56.67</code></pre>
     border-color: var(--text-secondary);
   }
 
-  .terminal {
+  .stack-map {
     overflow: hidden;
     border: 1px solid #31365f;
-    border-radius: 8px;
+    border-radius: 12px;
     background: var(--terminal);
     color: var(--terminal-text);
     box-shadow: 0 18px 45px rgba(11, 16, 36, 0.18);
     font-family: var(--mono);
   }
 
-  .terminal-header {
+  .stack-map-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 11px 14px;
+    padding: 12px 16px;
     border-bottom: 1px solid #292e50;
     color: #9ca1bd;
     font-size: 10px;
   }
 
-  .terminal-dots {
+  .stack-map-dots {
     color: var(--coral);
     font-size: 7px;
     letter-spacing: 4px;
   }
 
-  pre {
-    margin: 0;
-    padding: 25px 22px 28px;
-    overflow-x: auto;
-    font-family: inherit;
-    font-size: 12px;
-    line-height: 1.75;
+  .stack-map-body {
+    padding: 16px 22px;
   }
 
-  .prompt {
-    color: var(--cyan);
+  .stack-line {
+    display: grid;
+    grid-template-columns: 76px 18px minmax(92px, 1fr) 18px 78px;
+    gap: 6px;
+    align-items: center;
+    padding-block: 14px;
+    border-bottom: 1px solid #252a49;
+    font-size: 11px;
   }
 
-  .dim {
+  .stack-line:last-child {
+    border-bottom: 0;
+  }
+
+  .stack-node,
+  .stack-result {
     color: #9298b5;
   }
 
-  .rule {
-    color: #373d64;
+  .stack-node::before {
+    color: #555c82;
+    content: "[";
+  }
+
+  .stack-node::after {
+    color: #555c82;
+    content: "]";
+  }
+
+  .stack-line strong {
+    color: #f7f1e7;
+    font-weight: 600;
+  }
+
+  .stack-arrow {
+    color: var(--cyan);
+    text-align: center;
+  }
+
+  .stack-result {
+    text-align: right;
+  }
+
+  .stack-map-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px;
+    border-top: 1px solid #292e50;
+    color: #777e9f;
+    font-size: 9px;
   }
 
   .projects-section {
@@ -549,6 +625,12 @@ total        47.2M      $56.67</code></pre>
 
   .project-meta > span:first-child {
     color: var(--text-secondary);
+  }
+
+  .project-meta > span:last-child {
+    color: var(--blue);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .project-status {
@@ -621,16 +703,48 @@ total        47.2M      $56.67</code></pre>
     padding-block: 112px 124px;
   }
 
+  .thesis {
+    display: flex;
+    min-height: 190px;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 68px;
+    padding: 34px 38px;
+    border: 1px solid #31365f;
+    border-radius: 12px;
+    background:
+      radial-gradient(circle at 80% 0%, rgba(88, 83, 216, 0.28), transparent 38%),
+      var(--terminal);
+    color: var(--terminal-text);
+  }
+
+  .thesis p {
+    max-width: 620px;
+    margin: 0;
+    font-size: clamp(30px, 4.2vw, 48px);
+    font-weight: 650;
+    letter-spacing: -0.045em;
+    line-height: 1.08;
+  }
+
+  .thesis span {
+    max-width: 230px;
+    color: #aeb3ca;
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
   .values {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 22px;
-    margin-top: 68px;
+    margin-top: 22px;
   }
 
   .values article {
-    min-height: 250px;
-    padding: 25px;
+    min-height: 265px;
+    padding: 28px;
     border: 1px solid var(--border);
     border-radius: 8px;
     background: var(--surface);
@@ -643,7 +757,7 @@ total        47.2M      $56.67</code></pre>
   }
 
   .values h3 {
-    margin: 58px 0 12px;
+    margin: 62px 0 12px;
     font-size: 20px;
     letter-spacing: -0.025em;
   }
@@ -654,10 +768,47 @@ total        47.2M      $56.67</code></pre>
     font-size: 14px;
   }
 
+  .toolchain {
+    display: flex;
+    justify-content: space-between;
+    gap: 26px;
+    margin-top: 22px;
+    padding: 20px 24px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .toolchain strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
   .cta {
-    padding-block: 84px;
-    border-top: 1px solid var(--border);
-    background: var(--surface-subtle);
+    position: relative;
+    padding-block: 92px;
+    overflow: hidden;
+    border-top: 1px solid #31365f;
+    background: var(--terminal);
+    color: var(--terminal-text);
+  }
+
+  .cta::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      var(--cyan) 0 58%,
+      var(--blue) 58% 82%,
+      var(--coral) 82%
+    );
+    content: "";
   }
 
   .cta-inner {
@@ -667,45 +818,45 @@ total        47.2M      $56.67</code></pre>
     align-items: center;
   }
 
-  .install-command {
+  .cta .overline {
+    color: #9298b5;
+  }
+
+  .cta-inner > div:first-child > p:last-child {
+    max-width: 580px;
+    margin: 18px 0 0;
+    color: #aeb3ca;
+    font-size: 16px;
+  }
+
+  .cta-actions {
     display: flex;
-    min-height: 62px;
-    align-items: center;
-    justify-content: space-between;
-    gap: 18px;
-    padding: 0 10px 0 18px;
-    overflow: hidden;
-    border: 1px solid var(--border-strong);
-    border-radius: 7px;
-    background: var(--surface);
-    font-family: var(--mono);
+    justify-content: flex-end;
+    gap: 12px;
   }
 
-  .install-command code {
-    overflow-x: auto;
-    white-space: nowrap;
+  .button.cta-primary {
+    gap: 8px;
+    border-color: var(--coral);
+    background: var(--coral);
+    color: #16172a;
   }
 
-  .install-command code span {
-    color: var(--green);
+  .button.cta-primary:hover,
+  .button.cta-primary:focus-visible {
+    border-color: #ff746a;
+    background: #ff746a;
   }
 
-  .install-command button {
-    min-width: 66px;
-    min-height: 38px;
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    background: var(--surface-subtle);
-    color: var(--text-secondary);
-    cursor: pointer;
-    font-family: var(--mono);
-    font-size: 11px;
+  .button.cta-secondary {
+    border-color: #484e72;
+    color: #c9ccdb;
   }
 
-  .install-command button:hover,
-  .install-command button:focus-visible {
-    border-color: var(--border-strong);
-    color: var(--text);
+  .button.cta-secondary:hover,
+  .button.cta-secondary:focus-visible {
+    border-color: #747b9d;
+    color: white;
   }
 
   footer {
@@ -739,7 +890,7 @@ total        47.2M      $56.67</code></pre>
       min-height: auto;
     }
 
-    .terminal {
+    .stack-map {
       max-width: 620px;
     }
 
@@ -766,8 +917,22 @@ total        47.2M      $56.67</code></pre>
       margin-top: 38px;
     }
 
+    .thesis {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .toolchain {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
     .cta-inner {
       grid-template-columns: 1fr;
+    }
+
+    .cta-actions {
+      justify-content: flex-start;
     }
 
     .footer-inner {
@@ -798,7 +963,7 @@ total        47.2M      $56.67</code></pre>
     }
 
     h1 {
-      font-size: 47px;
+      font-size: 48px;
     }
 
     .lede {
@@ -839,14 +1004,29 @@ total        47.2M      $56.67</code></pre>
       grid-column: 1;
     }
 
-    .install-command {
-      align-items: stretch;
-      flex-direction: column;
-      padding: 16px;
+    .stack-map-body {
+      padding-inline: 14px;
     }
 
-    .install-command button {
-      align-self: flex-start;
+    .stack-line {
+      grid-template-columns: 62px 12px minmax(80px, 1fr) 12px 62px;
+      gap: 3px;
+      font-size: 9px;
+    }
+
+    .stack-map-footer {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .thesis {
+      min-height: 280px;
+      padding: 28px;
+    }
+
+    .cta-actions {
+      align-items: stretch;
+      flex-direction: column;
     }
 
     .footer-inner {
