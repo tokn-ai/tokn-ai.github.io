@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" rx="28" fill="#0b1024" />
+  <rect x="1" y="1" width="1198" height="718" rx="27" fill="none" stroke="#31365f" stroke-width="2" />
+  <path d="M0 76H1200" stroke="#292e50" stroke-width="2" />
+  <g font-family="Menlo, Consolas, monospace">
+    <text x="42" y="48" fill="#9ca1bd" font-size="18">tokn-router / local gateway</text>
+    <circle cx="1100" cy="39" r="6" fill="#36ccec" />
+    <circle cx="1130" cy="39" r="6" fill="#8b5cf6" />
+    <circle cx="1160" cy="39" r="6" fill="#ff5a4e" />
+
+    <rect x="54" y="164" width="220" height="94" rx="14" fill="#151a35" stroke="#373d64" />
+    <text x="82" y="202" fill="#9298b5" font-size="14">OPENAI CLIENT</text>
+    <text x="82" y="235" fill="#f7f1e7" font-size="17">stream: true</text>
+
+    <path d="M274 211H420" stroke="#36ccec" stroke-width="4" />
+    <path d="m404 197 16 14-16 14" fill="none" stroke="#36ccec" stroke-width="4" />
+
+    <rect x="420" y="130" width="340" height="162" rx="18" fill="#1d2144" stroke="#5853d8" stroke-width="3" />
+    <text x="454" y="178" fill="#ff5a4e" font-size="15">127.0.0.1:4141</text>
+    <text x="454" y="222" fill="#f7f1e7" font-size="25">tokn-gateway</text>
+    <text x="454" y="258" fill="#9ca1bd" font-size="15">mode=fuzzy · pool=round_robin</text>
+
+    <path d="M760 211H846" stroke="#36ccec" stroke-width="4" />
+    <path d="m830 197 16 14-16 14" fill="none" stroke="#36ccec" stroke-width="4" />
+
+    <g font-size="15">
+      <rect x="846" y="108" width="300" height="58" rx="10" fill="#151a35" stroke="#373d64" />
+      <text x="874" y="145" fill="#f7f1e7">github-copilot / personal</text>
+      <rect x="846" y="182" width="300" height="58" rx="10" fill="#151a35" stroke="#373d64" />
+      <text x="874" y="219" fill="#f7f1e7">openai / team</text>
+      <rect x="846" y="256" width="300" height="58" rx="10" fill="#151a35" stroke="#373d64" />
+      <text x="874" y="293" fill="#f7f1e7">deepseek / fallback</text>
+    </g>
+
+    <path d="M590 292V386" stroke="#8b5cf6" stroke-width="3" />
+    <path d="m578 372 12 14 12-14" fill="none" stroke="#8b5cf6" stroke-width="3" />
+
+    <rect x="238" y="386" width="704" height="176" rx="16" fill="#11162d" stroke="#292e50" />
+    <text x="274" y="430" fill="#9298b5" font-size="14">LOCAL STATE</text>
+    <g font-size="17">
+      <text x="274" y="482" fill="#f7f1e7">usage.db</text>
+      <text x="504" y="482" fill="#f7f1e7">sessions.db</text>
+      <text x="744" y="482" fill="#f7f1e7">requests/</text>
+      <text x="274" y="526" fill="#626b92" font-size="14">usage</text>
+      <text x="504" y="526" fill="#626b92" font-size="14">semantic trees</text>
+      <text x="744" y="526" fill="#626b92" font-size="14">day-rotated history</text>
+    </g>
+
+    <text x="54" y="640" fill="#9298b5" font-size="16">One local endpoint · multiple providers · account-aware routing</text>
+  </g>
+</svg>

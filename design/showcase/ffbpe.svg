@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" rx="28" fill="#0b1024" />
+  <rect x="1" y="1" width="1198" height="718" rx="27" fill="none" stroke="#31365f" stroke-width="2" />
+  <path d="M0 76H1200" stroke="#292e50" stroke-width="2" />
+  <g font-family="Menlo, Consolas, monospace">
+    <text x="42" y="48" fill="#9ca1bd" font-size="18">ffbpe / training benchmark</text>
+    <circle cx="1100" cy="39" r="6" fill="#36ccec" />
+    <circle cx="1130" cy="39" r="6" fill="#8b5cf6" />
+    <circle cx="1160" cy="39" r="6" fill="#ff5a4e" />
+
+    <text x="54" y="132" fill="#9298b5" font-size="18">$</text>
+    <text x="82" y="132" fill="#f7f1e7" font-size="18">ffbpe train fineweb2-zh --vocab-size 10000</text>
+
+    <text x="54" y="204" fill="#36ccec" font-size="16">UNICODE INVENTORY</text>
+    <text x="54" y="246" fill="#f7f1e7" font-size="26">Shape before training.</text>
+    <text x="54" y="280" fill="#9298b5" font-size="17">64 MiB FineWeb2 Chinese fixture · exact BPE</text>
+
+    <text x="54" y="362" fill="#9298b5" font-size="16">regular inventory</text>
+    <rect x="250" y="338" width="760" height="34" rx="8" fill="#373d64" />
+    <text x="1032" y="362" fill="#f7f1e7" font-size="16">1,803,009 words</text>
+
+    <text x="54" y="426" fill="#9298b5" font-size="16">retained bigrams</text>
+    <rect x="250" y="402" width="255" height="34" rx="8" fill="#36ccec" />
+    <text x="527" y="426" fill="#f7f1e7" font-size="16">606,153 words</text>
+
+    <path d="M54 490H1146" stroke="#292e50" stroke-width="2" />
+
+    <text x="54" y="548" fill="#9298b5" font-size="15">BPE TRAINING</text>
+    <text x="54" y="604" fill="#f7f1e7" font-size="34">26.681s</text>
+    <text x="238" y="604" fill="#555c82" font-size="30">→</text>
+    <text x="294" y="604" fill="#ff5a4e" font-size="34">3.702s</text>
+    <text x="54" y="647" fill="#9298b5" font-size="16">~3× smaller inventory · ~7× faster training</text>
+    <text x="1146" y="672" fill="#777e9f" font-size="13" text-anchor="end">measured release benchmark</text>
+  </g>
+</svg>

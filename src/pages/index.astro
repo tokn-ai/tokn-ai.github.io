@@ -42,12 +42,55 @@ const products = [
   {
     index: "04",
     name: "llm-tokei",
-    scope: "observability",
+    scope: "usage",
     status: "available",
     summary:
       "Fast, local reports that show where your coding-agent tokens and estimated costs went.",
     points: ["Six agent sources", "Human tables + stable JSON", "No log uploads"],
     language: "Rust",
+    href: "https://github.com/agentic-rs/llm-tokei",
+  },
+];
+
+const showcases = [
+  {
+    name: "ffbpe",
+    scope: "tokenization",
+    title: "Shape a multilingual inventory before training.",
+    description:
+      "A measured release benchmark showing the effect of retained Unicode bigrams on one FineWeb2 Chinese workload.",
+    image: "/showcase/ffbpe.png",
+    alt: "FFBPE training benchmark comparing regular and retained-bigram Unicode inventories.",
+    href: "https://github.com/tokn-ai/ffbpe",
+  },
+  {
+    name: "flm.py",
+    scope: "training",
+    title: "Compose a complete model experiment.",
+    description:
+      "Datasets, reusable modules, training, reinforcement learning, and inference remain visible parts of one workspace.",
+    image: "/showcase/flm-py.png",
+    alt: "FLM experiment configuration beside its composable package workflow.",
+    href: "https://github.com/tokn-ai/flm.py",
+  },
+  {
+    name: "tokn-router",
+    scope: "inference",
+    title: "Route one local endpoint across providers.",
+    description:
+      "An account-aware gateway handles compatible clients, provider selection, streaming, and local request state.",
+    image: "/showcase/tokn-router.png",
+    alt: "Tokn Router diagram connecting an OpenAI-compatible client to providers and local state.",
+    href: "https://github.com/agentic-rs/tokn",
+  },
+  {
+    name: "llm-tokei",
+    scope: "usage",
+    title: "Report where agent tokens went.",
+    description:
+      "A representative grouped usage report across local coding-agent sources, models, token classes, and cost.",
+    image: "/showcase/llm-tokei.png",
+    alt: "LLM Tokei sample usage table grouped by coding agent and model.",
     href: "https://github.com/agentic-rs/llm-tokei",
   },
 ];
@@ -101,6 +144,7 @@ const products = [
       <div class="container header-inner">
         <Brand />
         <nav aria-label="Primary navigation">
+          <a href="#showcase">Showcase</a>
           <a href="#projects">Projects</a>
           <a href="#about">Principles</a>
           <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">
@@ -166,13 +210,125 @@ const products = [
               <span class="stack-arrow" aria-hidden="true">→</span>
               <strong>llm-tokei</strong>
               <span class="stack-arrow" aria-hidden="true">→</span>
-              <span class="stack-result">insight</span>
+              <span class="stack-result">usage</span>
             </div>
           </div>
           <div class="stack-map-footer">
             <span>open core</span>
             <span>composable</span>
             <span>hosted when useful</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="showcase-section" id="showcase">
+        <div class="container">
+          <div class="section-intro">
+            <p class="overline">Showcase</p>
+            <div>
+              <h2>Foundations in practice.</h2>
+              <p>
+                Representative outputs from the current public projects. Each
+                one solves a different shared problem beneath AI products.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="showcase-carousel"
+            data-carousel
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Project showcases"
+          >
+            <div class="showcase-toolbar">
+              <p class="showcase-position" aria-live="polite">
+                <span data-carousel-position>01</span>
+                <span aria-hidden="true"> / </span>
+                <span class="sr-only">of</span>
+                <span>{String(showcases.length).padStart(2, "0")}</span>
+              </p>
+              <div class="showcase-controls">
+                <button
+                  type="button"
+                  data-carousel-previous
+                  aria-label="Show previous project"
+                >
+                  <span aria-hidden="true">←</span>
+                </button>
+                <button
+                  type="button"
+                  data-carousel-next
+                  aria-label="Show next project"
+                >
+                  <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="showcase-viewport"
+              data-carousel-viewport
+              tabindex="0"
+            >
+              <div class="showcase-track">
+                {
+                  showcases.map((showcase, index) => (
+                    <article
+                      class="showcase-card"
+                      id={`showcase-slide-${index}`}
+                      data-carousel-slide
+                      role="group"
+                      aria-roledescription="slide"
+                      aria-label={`${index + 1} of ${showcases.length}: ${showcase.name}`}
+                    >
+                      <a
+                        class="showcase-image"
+                        href={showcase.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open the ${showcase.name} repository`}
+                      >
+                        <img
+                          src={showcase.image}
+                          width="1200"
+                          height="720"
+                          loading="lazy"
+                          decoding="async"
+                          alt={showcase.alt}
+                        />
+                      </a>
+                      <div class="showcase-copy">
+                        <div class="showcase-meta">
+                          <span>{showcase.scope}</span>
+                          <span>{showcase.name}</span>
+                        </div>
+                        <h3>{showcase.title}</h3>
+                        <p>{showcase.description}</p>
+                        <a href={showcase.href} target="_blank" rel="noreferrer">
+                          View repository <span aria-hidden="true">↗</span>
+                        </a>
+                      </div>
+                    </article>
+                  ))
+                }
+              </div>
+            </div>
+
+            <div class="showcase-dots" aria-label="Choose a project showcase">
+              {
+                showcases.map((showcase, index) => (
+                  <button
+                    type="button"
+                    data-carousel-dot
+                    data-index={index}
+                    aria-controls={`showcase-slide-${index}`}
+                    aria-label={`Show ${showcase.name}`}
+                    aria-current={index === 0 ? "true" : undefined}
+                  />
+                ))
+              }
+            </div>
           </div>
         </div>
       </section>
@@ -308,6 +464,128 @@ const products = [
         <span>© 2026</span>
       </div>
     </footer>
+
+    <script>
+      const carousels =
+        document.querySelectorAll<HTMLElement>("[data-carousel]");
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+
+      carousels.forEach((carousel) => {
+        const viewport = carousel.querySelector<HTMLElement>(
+          "[data-carousel-viewport]",
+        );
+        const slides = Array.from(
+          carousel.querySelectorAll<HTMLElement>("[data-carousel-slide]"),
+        );
+        const dots = Array.from(
+          carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]"),
+        );
+        const position = carousel.querySelector<HTMLElement>(
+          "[data-carousel-position]",
+        );
+        const previous = carousel.querySelector<HTMLButtonElement>(
+          "[data-carousel-previous]",
+        );
+        const next = carousel.querySelector<HTMLButtonElement>(
+          "[data-carousel-next]",
+        );
+
+        if (!viewport || slides.length === 0) {
+          return;
+        }
+
+        let activeIndex = 0;
+
+        const updateActiveSlide = (index: number) => {
+          activeIndex = index;
+
+          if (position) {
+            position.textContent = String(index + 1).padStart(2, "0");
+          }
+
+          dots.forEach((dot, dotIndex) => {
+            if (dotIndex === index) {
+              dot.setAttribute("aria-current", "true");
+            } else {
+              dot.removeAttribute("aria-current");
+            }
+          });
+        };
+
+        const showSlide = (index: number) => {
+          const normalizedIndex =
+            (index + slides.length) % slides.length;
+          const slide = slides[normalizedIndex];
+          const left = slide.offsetLeft - slides[0].offsetLeft;
+
+          viewport.scrollTo({
+            left,
+            behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+          });
+          updateActiveSlide(normalizedIndex);
+        };
+
+        previous?.addEventListener("click", () => {
+          showSlide(activeIndex - 1);
+        });
+
+        next?.addEventListener("click", () => {
+          showSlide(activeIndex + 1);
+        });
+
+        dots.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const index = Number(dot.dataset.index);
+            if (Number.isInteger(index)) {
+              showSlide(index);
+            }
+          });
+        });
+
+        viewport.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            showSlide(activeIndex - 1);
+          }
+
+          if (event.key === "ArrowRight") {
+            event.preventDefault();
+            showSlide(activeIndex + 1);
+          }
+        });
+
+        let scrollSettleTimer: number | undefined;
+
+        viewport.addEventListener("scroll", () => {
+          window.clearTimeout(scrollSettleTimer);
+          scrollSettleTimer = window.setTimeout(() => {
+            const closestIndex = slides.reduce(
+              (closest, slide, index) => {
+                const currentDistance = Math.abs(
+                  slide.offsetLeft -
+                    slides[0].offsetLeft -
+                    viewport.scrollLeft,
+                );
+                const closestDistance = Math.abs(
+                  slides[closest].offsetLeft -
+                    slides[0].offsetLeft -
+                    viewport.scrollLeft,
+                );
+
+                return currentDistance < closestDistance
+                  ? index
+                  : closest;
+              },
+              0,
+            );
+
+            updateActiveSlide(closestIndex);
+          }, 100);
+        });
+      });
+    </script>
 
   </body>
 </html>
@@ -570,9 +848,209 @@ const products = [
     font-size: 9px;
   }
 
+  .showcase-section {
+    padding-block: 104px 112px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface-subtle);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    margin: -1px;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .showcase-carousel {
+    margin-top: 68px;
+  }
+
+  .showcase-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .showcase-position {
+    margin: 0;
+    color: var(--text-secondary);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .showcase-position span:first-child {
+    color: var(--blue);
+  }
+
+  .showcase-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .showcase-controls button {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 17px;
+  }
+
+  .showcase-controls button:hover,
+  .showcase-controls button:focus-visible {
+    border-color: var(--blue);
+    color: var(--blue);
+  }
+
+  .showcase-viewport {
+    overflow-x: auto;
+    border-radius: 12px;
+    outline: none;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .showcase-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .showcase-viewport:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 4px;
+  }
+
+  .showcase-track {
+    display: flex;
+  }
+
+  .showcase-card {
+    display: grid;
+    flex: 0 0 100%;
+    grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.75fr);
+    min-width: 0;
+    min-height: 470px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .showcase-image {
+    display: block;
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+    background: var(--terminal);
+  }
+
+  .showcase-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 180ms ease;
+  }
+
+  .showcase-image:hover img,
+  .showcase-image:focus-visible img {
+    transform: scale(1.012);
+  }
+
+  .showcase-copy {
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+  }
+
+  .showcase-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .showcase-meta span:last-child {
+    color: var(--text-secondary);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .showcase-card h3 {
+    margin: 52px 0 14px;
+    font-size: 28px;
+    letter-spacing: -0.035em;
+    line-height: 1.2;
+  }
+
+  .showcase-card p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+
+  .showcase-copy > a {
+    display: inline-block;
+    margin-top: auto;
+    padding-top: 28px;
+    color: var(--blue);
+    font-family: var(--mono);
+    font-size: 11px;
+  }
+
+  .showcase-copy > a:hover,
+  .showcase-copy > a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .showcase-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .showcase-dots button {
+    width: 24px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: #cccad0;
+    cursor: pointer;
+  }
+
+  .showcase-dots button[aria-current="true"] {
+    width: 42px;
+    background: var(--blue);
+  }
+
+  .showcase-dots button:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+  }
+
   .projects-section {
     padding-block: 100px 112px;
-    border-top: 1px solid var(--border);
     border-bottom: 1px solid var(--border);
     background: var(--surface);
   }
@@ -898,6 +1376,24 @@ const products = [
       grid-template-columns: 90px minmax(0, 1fr);
     }
 
+    .showcase-card {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .showcase-image {
+      border-right: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .showcase-image img {
+      height: auto;
+    }
+
+    .showcase-copy {
+      min-height: 310px;
+    }
+
     .project-link {
       grid-column: 2;
       flex-direction: row;
@@ -981,6 +1477,7 @@ const products = [
     }
 
     .projects-section,
+    .showcase-section,
     .about {
       padding-block: 80px;
     }
@@ -1042,6 +1539,10 @@ const products = [
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    .showcase-image img {
+      transition: none;
     }
   }
 </style>
