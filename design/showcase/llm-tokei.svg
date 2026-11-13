@@ -1,57 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720">
-  <rect width="1200" height="720" rx="28" fill="#0b1024" />
-  <rect x="1" y="1" width="1198" height="718" rx="27" fill="none" stroke="#31365f" stroke-width="2" />
-  <path d="M0 76H1200" stroke="#292e50" stroke-width="2" />
+  <rect width="1200" height="720" rx="28" fill="#231f2a" />
+  <rect x="1" y="1" width="1198" height="718" rx="27" fill="none" stroke="#45404d" stroke-width="2" />
+  <path d="M0 76H1200" stroke="#3b3544" stroke-width="2" />
   <g font-family="Menlo, Consolas, monospace">
-    <text x="42" y="48" fill="#9ca1bd" font-size="18">llm-tokei / usage</text>
-    <circle cx="1100" cy="39" r="6" fill="#36ccec" />
-    <circle cx="1130" cy="39" r="6" fill="#8b5cf6" />
-    <circle cx="1160" cy="39" r="6" fill="#ff5a4e" />
+    <text x="42" y="48" fill="#b5a9bf" font-size="18">llm-tokei / usage</text>
+    <circle cx="1100" cy="39" r="6" fill="#61b6af" />
+    <circle cx="1130" cy="39" r="6" fill="#b09ac3" />
+    <circle cx="1160" cy="39" r="6" fill="#c48257" />
 
-    <text x="54" y="130" fill="#36ccec" font-size="17">$</text>
-    <text x="82" y="130" fill="#f7f1e7" font-size="17">llm-tokei --cost-per provider --cost official --month -h</text>
-    <text x="1146" y="130" fill="#777e9f" font-size="13" text-anchor="end">sample usage</text>
+    <text x="54" y="130" fill="#61b6af" font-size="17">$</text>
+    <text x="82" y="130" fill="#ece7ef" font-size="17">llm-tokei --cost-per provider --cost official --month -h</text>
+    <text x="1146" y="130" fill="#a395ae" font-size="13" text-anchor="end">sample usage</text>
 
-    <rect x="48" y="170" width="1104" height="420" rx="14" fill="#11162d" stroke="#292e50" />
+    <rect x="48" y="170" width="1104" height="420" rx="14" fill="#292431" stroke="#3b3544" />
     <g font-size="15">
-      <text x="78" y="218" fill="#9298b5">SOURCE</text>
-      <text x="268" y="218" fill="#9298b5">MODEL</text>
-      <text x="532" y="218" fill="#9298b5">INPUT</text>
-      <text x="676" y="218" fill="#9298b5">OUTPUT</text>
-      <text x="836" y="218" fill="#9298b5">CACHE</text>
-      <text x="1036" y="218" fill="#9298b5">COST</text>
-      <path d="M78 240H1122" stroke="#292e50" />
+      <text x="78" y="218" fill="#ad9fb8">SOURCE</text>
+      <text x="268" y="218" fill="#ad9fb8">MODEL</text>
+      <text x="532" y="218" fill="#ad9fb8">INPUT</text>
+      <text x="676" y="218" fill="#ad9fb8">OUTPUT</text>
+      <text x="836" y="218" fill="#ad9fb8">CACHE</text>
+      <text x="1036" y="218" fill="#ad9fb8">COST</text>
+      <path d="M78 240H1122" stroke="#3b3544" />
 
-      <text x="78" y="282" fill="#f7f1e7">codex</text>
-      <text x="268" y="282" fill="#f7f1e7">gpt-5</text>
-      <text x="532" y="282" fill="#f7f1e7">18.7M</text>
-      <text x="676" y="282" fill="#f7f1e7">1.9M</text>
-      <text x="836" y="282" fill="#f7f1e7">12.4M</text>
-      <text x="1036" y="282" fill="#f7f1e7">$24.18</text>
+      <text x="78" y="282" fill="#ece7ef">codex</text>
+      <text x="268" y="282" fill="#ece7ef">gpt-5</text>
+      <text x="532" y="282" fill="#ece7ef">18.7M</text>
+      <text x="676" y="282" fill="#ece7ef">1.9M</text>
+      <text x="836" y="282" fill="#ece7ef">12.4M</text>
+      <text x="1036" y="282" fill="#ece7ef">$24.18</text>
 
-      <text x="78" y="334" fill="#f7f1e7">claude</text>
-      <text x="268" y="334" fill="#f7f1e7">sonnet</text>
-      <text x="532" y="334" fill="#f7f1e7">8.2M</text>
-      <text x="676" y="334" fill="#f7f1e7">1.2M</text>
-      <text x="836" y="334" fill="#f7f1e7">5.1M</text>
-      <text x="1036" y="334" fill="#f7f1e7">$15.06</text>
+      <text x="78" y="334" fill="#ece7ef">claude</text>
+      <text x="268" y="334" fill="#ece7ef">sonnet</text>
+      <text x="532" y="334" fill="#ece7ef">8.2M</text>
+      <text x="676" y="334" fill="#ece7ef">1.2M</text>
+      <text x="836" y="334" fill="#ece7ef">5.1M</text>
+      <text x="1036" y="334" fill="#ece7ef">$15.06</text>
 
-      <text x="78" y="386" fill="#f7f1e7">opencode</text>
-      <text x="268" y="386" fill="#f7f1e7">deepseek</text>
-      <text x="532" y="386" fill="#f7f1e7">4.6M</text>
-      <text x="676" y="386" fill="#f7f1e7">0.8M</text>
-      <text x="836" y="386" fill="#f7f1e7">2.3M</text>
-      <text x="1036" y="386" fill="#f7f1e7">$3.41</text>
+      <text x="78" y="386" fill="#ece7ef">opencode</text>
+      <text x="268" y="386" fill="#ece7ef">deepseek</text>
+      <text x="532" y="386" fill="#ece7ef">4.6M</text>
+      <text x="676" y="386" fill="#ece7ef">0.8M</text>
+      <text x="836" y="386" fill="#ece7ef">2.3M</text>
+      <text x="1036" y="386" fill="#ece7ef">$3.41</text>
 
-      <path d="M78 420H1122" stroke="#373d64" />
-      <text x="78" y="468" fill="#36ccec">total</text>
-      <text x="532" y="468" fill="#36ccec">31.5M</text>
-      <text x="676" y="468" fill="#36ccec">3.9M</text>
-      <text x="836" y="468" fill="#36ccec">19.8M</text>
-      <text x="1036" y="468" fill="#ff5a4e">$42.65</text>
+      <path d="M78 420H1122" stroke="#554960" />
+      <text x="78" y="468" fill="#61b6af">total</text>
+      <text x="532" y="468" fill="#61b6af">31.5M</text>
+      <text x="676" y="468" fill="#61b6af">3.9M</text>
+      <text x="836" y="468" fill="#61b6af">19.8M</text>
+      <text x="1036" y="468" fill="#c48257">$42.65</text>
 
-      <text x="78" y="538" fill="#777e9f">6 sources · grouped usage · local reads · stable JSON</text>
+      <text x="78" y="538" fill="#a395ae">6 sources · grouped usage · local reads · stable JSON</text>
     </g>
-    <text x="54" y="648" fill="#9298b5" font-size="16">See where your local coding-agent tokens went.</text>
+    <text x="54" y="648" fill="#ad9fb8" font-size="16">See where your local coding-agent tokens went.</text>
   </g>
 </svg>
