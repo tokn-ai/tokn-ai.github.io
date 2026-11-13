@@ -3,7 +3,7 @@
   <rect x="1" y="1" width="1198" height="718" rx="27" fill="none" stroke="#45404d" stroke-width="2" />
   <path d="M0 76H1200" stroke="#3b3544" stroke-width="2" />
   <g font-family="Menlo, Consolas, monospace">
-    <text x="42" y="48" fill="#b5a9bf" font-size="18">tokn-router / local gateway</text>
+    <text x="42" y="48" fill="#b5a9bf" font-size="18">tokn / local gateway</text>
     <circle cx="1100" cy="39" r="6" fill="#61b6af" />
     <circle cx="1130" cy="39" r="6" fill="#b09ac3" />
     <circle cx="1160" cy="39" r="6" fill="#c48257" />

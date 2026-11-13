@@ -61,7 +61,7 @@
     font-weight="650"
     letter-spacing="-1.5"
   >
-    Open foundations for models and agents.
+    Open tools for agents and models.
   </text>
   <text
     x="84"
@@ -70,6 +70,6 @@
     font-family="Menlo, Consolas, 'Liberation Mono', monospace"
     font-size="22"
   >
-    open core · composable · tokn-ai.dev
+    sessions · terminals · model tools · tokn-ai.dev
   </text>
 </svg>

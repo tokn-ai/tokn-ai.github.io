@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">ctl sessions and managed tasks</title>
+  <desc id="desc">The CLI and desktop connect to persistent ctmux terminals on local and SSH hosts. Managed tasks provide reusable command definitions, explicit start and stop, and logs.</desc>
+  <rect width="1200" height="720" rx="28" fill="#231f2a" />
+  <rect x="1" y="1" width="1198" height="718" rx="27" fill="none" stroke="#45404d" stroke-width="2" />
+  <path d="M0 76H1200" stroke="#3b3544" stroke-width="2" />
+  <g font-family="Menlo, Consolas, monospace">
+    <text x="42" y="48" fill="#b5a9bf" font-size="18">ctl / sessions and tasks</text>
+    <circle cx="1100" cy="39" r="6" fill="#61b6af" />
+    <circle cx="1130" cy="39" r="6" fill="#b09ac3" />
+    <circle cx="1160" cy="39" r="6" fill="#c48257" />
+
+    <text x="54" y="139" fill="#ad9fb8" font-size="14">CHOOSE A CLIENT</text>
+    <rect x="54" y="174" width="226" height="94" rx="14" fill="#302a39" stroke="#554960" />
+    <text x="82" y="213" fill="#ece7ef" font-size="22">CLI</text>
+    <text x="82" y="243" fill="#ad9fb8" font-size="15">ctl shell</text>
+    <rect x="54" y="328" width="226" height="94" rx="14" fill="#302a39" stroke="#554960" />
+    <text x="82" y="367" fill="#ece7ef" font-size="22">Desktop</text>
+    <text x="82" y="397" fill="#ad9fb8" font-size="15">ctmux app</text>
+
+    <path d="M280 221h40v77h36M280 375h40v-77" fill="none" stroke="#61b6af" stroke-width="3" />
+    <path d="m343 287 13 11-13 11" fill="none" stroke="#61b6af" stroke-width="3" />
+    <rect x="356" y="245" width="206" height="106" rx="16" fill="#38303f" stroke="#b09ac3" stroke-width="2" />
+    <text x="387" y="288" fill="#ece7ef" font-size="22">ctl</text>
+    <text x="387" y="320" fill="#b6a6c0" font-size="15">host access</text>
+
+    <path d="M562 298h48V211h64M610 298v92h64" fill="none" stroke="#61b6af" stroke-width="3" />
+    <path d="m661 200 13 11-13 11M661 379l13 11-13 11" fill="none" stroke="#61b6af" stroke-width="3" />
+
+    <rect x="674" y="123" width="472" height="171" rx="16" fill="#292431" stroke="#554960" />
+    <text x="702" y="159" fill="#61b6af" font-size="15">LOCAL HOST</text>
+    <text x="1081" y="159" fill="#ad9fb8" font-size="14" text-anchor="end">ctmuxd</text>
+    <rect x="702" y="178" width="188" height="87" rx="8" fill="#302a39" stroke="#45404d" />
+    <rect x="902" y="178" width="216" height="87" rx="8" fill="#302a39" stroke="#45404d" />
+    <text x="722" y="212" fill="#ece7ef" font-size="17">dev shell</text>
+    <text x="722" y="244" fill="#ad9fb8" font-size="14">$ _</text>
+    <text x="922" y="212" fill="#ece7ef" font-size="17">build output</text>
+    <path d="M922 237h90m-90 10h130" stroke="#6b6076" stroke-width="3" />
+
+    <rect x="674" y="321" width="472" height="171" rx="16" fill="#292431" stroke="#554960" />
+    <text x="702" y="357" fill="#b09ac3" font-size="15">SSH HOST</text>
+    <text x="1081" y="357" fill="#ad9fb8" font-size="14" text-anchor="end">ctmuxd</text>
+    <rect x="702" y="376" width="188" height="87" rx="8" fill="#302a39" stroke="#45404d" />
+    <rect x="902" y="376" width="216" height="87" rx="8" fill="#302a39" stroke="#45404d" />
+    <text x="722" y="410" fill="#ece7ef" font-size="17">remote shell</text>
+    <text x="722" y="442" fill="#ad9fb8" font-size="14">$ _</text>
+    <text x="922" y="410" fill="#ece7ef" font-size="17">service logs</text>
+    <path d="M922 435h130m-130 10h104" stroke="#6b6076" stroke-width="3" />
+
+    <rect x="54" y="544" width="1092" height="110" rx="16" fill="#302a39" stroke="#554960" />
+    <text x="82" y="580" fill="#b09ac3" font-size="14">MANAGED TASKS</text>
+    <text x="82" y="623" fill="#ece7ef" font-size="18">Reusable commands</text>
+    <path d="M333 615h67m-13-11 13 11-13 11" fill="none" stroke="#61b6af" stroke-width="3" />
+    <text x="435" y="623" fill="#ece7ef" font-size="18">Start / stop</text>
+    <path d="M649 615h67m-13-11 13 11-13 11" fill="none" stroke="#61b6af" stroke-width="3" />
+    <text x="752" y="623" fill="#ece7ef" font-size="18">Inspect status + logs</text>
+
+    <text x="54" y="692" fill="#ad9fb8" font-size="15">Reconnect to running terminal sessions · manage local and SSH tasks from the CLI</text>
+  </g>
+</svg>

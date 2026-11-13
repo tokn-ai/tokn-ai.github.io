@@ -1,99 +1,151 @@
 ---
 import Brand from "../components/Brand.astro";
 
+const site_title = "Tokn AI — Open tools for agents and models";
+const site_description =
+  "Browse agent conversations, manage local and remote terminals, and build model infrastructure with open-source tools from Tokn AI.";
+
 const products = [
   {
-    index: "01",
+    id: "tokn-session",
+    name: "tokn-session",
+    scope: "agent sessions",
+    status: "in development",
+    summary:
+      "Bring conversations from different agent tools and machines into one searchable view, with native details preserved.",
+    points: [
+      "Six agent sources",
+      "Desktop + web viewer",
+      "Encrypted access across machines",
+    ],
+    language: "Rust / TypeScript",
+    href: "https://github.com/tokn-ai/tokn-session",
+    showcase: {
+      title: "Pick up the thread across agent tools.",
+      description:
+        "Find past conversations in one place. Browse sessions from Codex, Pi, OpenCode, ZCode, WorkBuddy, and DSH, with live interactions where the provider supports them.",
+      image: "/showcase/tokn-session.png",
+      alt: "Six agent sources feed a shared session layer and a searchable desktop and web viewer.",
+    },
+  },
+  {
+    id: "ctl",
+    name: "ctl",
+    scope: "terminal control",
+    status: "in development",
+    summary:
+      "Keep terminal sessions running and manage work across local and SSH-connected machines from a CLI or desktop app.",
+    points: [
+      "Persistent sessions + split panes",
+      "Reusable task definitions",
+      "Local + SSH connections",
+    ],
+    language: "Rust / TypeScript",
+    href: "https://github.com/tokn-ai/ctl",
+    showcase: {
+      title: "Come back to the same running terminals.",
+      description:
+        "Reconnect to persistent shells across local and SSH hosts. Use the CLI to start tasks, check their status, and inspect logs.",
+      image: "/showcase/ctl.png",
+      alt: "CLI and desktop access to persistent local and SSH terminal sessions, with a separate CLI task workflow.",
+    },
+  },
+  {
+    id: "tokn",
+    name: "tokn",
+    scope: "model routing",
+    status: "in development",
+    summary:
+      "Route compatible clients through one local endpoint, with provider selection, streaming, and account pools.",
+    points: [
+      "OpenAI-compatible endpoint",
+      "Streaming + account pools",
+      "Local SQLite usage records",
+    ],
+    language: "Rust",
+    href: "https://github.com/tokn-ai/tokn",
+    showcase: {
+      title: "Connect your client to the models you use.",
+      description:
+        "A local gateway handles compatible requests, provider routing, streaming, and request history.",
+      image: "/showcase/tokn-router.png",
+      alt: "A local Tokn gateway connects an OpenAI-compatible client to providers and local request records.",
+    },
+  },
+  {
+    id: "llm-tokei",
+    name: "llm-tokei",
+    scope: "usage reports",
+    status: "available",
+    summary:
+      "See where coding-agent tokens and estimated costs went, using session records already on your machine.",
+    points: [
+      "Reports across coding agents",
+      "Human tables + stable JSON",
+      "Local session analysis",
+    ],
+    language: "Rust",
+    href: "https://github.com/agentic-rs/llm-tokei",
+    showcase: {
+      title: "See what your agent work adds up to.",
+      description:
+        "Group local usage by agent and model to compare token classes and estimated costs. The sample report shows the shape of the output.",
+      image: "/showcase/llm-tokei.png",
+      alt: "A sample usage table groups coding-agent tokens and estimated costs by source and model.",
+    },
+  },
+  {
+    id: "ffbpe",
     name: "ffbpe",
     scope: "tokenization",
     status: "available",
     summary:
-      "Fast and faithful byte-pair encoding for training exact tokenizers over large, multilingual corpora.",
+      "Train exact byte-pair tokenizers over large, multilingual corpora with bounded memory and compatible encoding.",
     points: [
-      "Python + Rust APIs",
+      "Python, Rust + WebAssembly",
       "Exact bounded-memory training",
       "Tiktoken-compatible encoding",
     ],
     language: "Rust / Python",
     href: "https://github.com/tokn-ai/ffbpe",
+    showcase: {
+      title: "Shape a multilingual inventory before training.",
+      description:
+        "A measured release benchmark shows how retained Unicode bigrams affect one FineWeb2 Chinese workload.",
+      image: "/showcase/ffbpe.png",
+      alt: "FFBPE training benchmark comparing regular and retained-bigram Unicode inventories.",
+    },
   },
   {
-    index: "02",
+    id: "flm-py",
     name: "flm.py",
-    scope: "training",
+    scope: "model research",
     status: "research preview",
     summary:
-      "A composable Python workspace for language-model research, training, reinforcement learning, and inference.",
-    points: ["PyTorch foundations", "Reusable model modules", "Portable training experiments"],
+      "Compose language-model experiments from reusable modules for datasets, training, reinforcement learning, and inference.",
+    points: [
+      "PyTorch foundations",
+      "Reusable model modules",
+      "Portable training experiments",
+    ],
     language: "Python",
     href: "https://github.com/tokn-ai/flm.py",
-  },
-  {
-    index: "03",
-    name: "tokn-router",
-    scope: "inference",
-    status: "in development",
-    summary:
-      "One local, OpenAI-compatible endpoint for supported coding plans and model providers.",
-    points: ["Single Rust binary", "Streaming + account pools", "Local SQLite usage records"],
-    language: "Rust",
-    href: "https://github.com/agentic-rs/tokn",
-  },
-  {
-    index: "04",
-    name: "llm-tokei",
-    scope: "usage",
-    status: "available",
-    summary:
-      "Fast, local reports that show where your coding-agent tokens and estimated costs went.",
-    points: ["Six agent sources", "Human tables + stable JSON", "No log uploads"],
-    language: "Rust",
-    href: "https://github.com/agentic-rs/llm-tokei",
+    showcase: {
+      title: "Build a model experiment from reusable parts.",
+      description:
+        "Follow the configuration from datasets and model modules through training, reinforcement learning, and inference.",
+      image: "/showcase/flm-py.png",
+      alt: "FLM experiment configuration beside its composable package workflow.",
+    },
   },
 ];
 
-const showcases = [
-  {
-    name: "ffbpe",
-    scope: "tokenization",
-    title: "Shape a multilingual inventory before training.",
-    description:
-      "A measured release benchmark showing the effect of retained Unicode bigrams on one FineWeb2 Chinese workload.",
-    image: "/showcase/ffbpe.png",
-    alt: "FFBPE training benchmark comparing regular and retained-bigram Unicode inventories.",
-    href: "https://github.com/tokn-ai/ffbpe",
-  },
-  {
-    name: "flm.py",
-    scope: "training",
-    title: "Compose a complete model experiment.",
-    description:
-      "Datasets, reusable modules, training, reinforcement learning, and inference remain visible parts of one workspace.",
-    image: "/showcase/flm-py.png",
-    alt: "FLM experiment configuration beside its composable package workflow.",
-    href: "https://github.com/tokn-ai/flm.py",
-  },
-  {
-    name: "tokn-router",
-    scope: "inference",
-    title: "Route one local endpoint across providers.",
-    description:
-      "An account-aware gateway handles compatible clients, provider selection, streaming, and local request state.",
-    image: "/showcase/tokn-router.png",
-    alt: "Tokn Router diagram connecting an OpenAI-compatible client to providers and local state.",
-    href: "https://github.com/agentic-rs/tokn",
-  },
-  {
-    name: "llm-tokei",
-    scope: "usage",
-    title: "Report where agent tokens went.",
-    description:
-      "A representative grouped usage report across local coding-agent sources, models, token classes, and cost.",
-    image: "/showcase/llm-tokei.png",
-    alt: "LLM Tokei sample usage table grouped by coding agent and model.",
-    href: "https://github.com/agentic-rs/llm-tokei",
-  },
-];
+const showcases = products.map(({ name, scope, href, showcase }) => ({
+  name,
+  scope,
+  href,
+  ...showcase,
+}));
 ---
 
 <!doctype html>
@@ -103,7 +155,7 @@ const showcases = [
     <meta name="viewport" content="width=device-width" />
     <meta
       name="description"
-      content="Tokn AI is an open-source lab building reusable foundations for models and agents."
+      content={site_description}
     />
     <meta name="theme-color" content="#fcfbf8" />
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
@@ -113,30 +165,30 @@ const showcases = [
     <meta property="og:site_name" content="Tokn AI" />
     <meta
       property="og:title"
-      content="Tokn AI — Open foundations for models and agents"
+      content={site_title}
     />
     <meta
       property="og:description"
-      content="Reusable primitives, developer tools, and hosted services for the hard problems shared across AI products."
+      content={site_description}
     />
     <meta property="og:url" content="https://tokn-ai.dev/" />
     <meta property="og:image" content="https://tokn-ai.dev/og.png" />
     <meta
       property="og:image:alt"
-      content="Tokn AI — Open foundations for models and agents."
+      content="Tokn AI — Open tools for agents and models."
     />
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Tokn AI — Open foundations for models and agents"
+      content={site_title}
     />
     <meta
       name="twitter:description"
-      content="Reusable primitives, developer tools, and hosted services for the hard problems shared across AI products."
+      content={site_description}
     />
     <meta name="twitter:image" content="https://tokn-ai.dev/og.png" />
     <meta name="generator" content={Astro.generator} />
-    <title>Tokn AI — Open foundations for models and agents</title>
+    <title>{site_title}</title>
   </head>
 
   <body>
@@ -146,7 +198,7 @@ const showcases = [
         <nav aria-label="Primary navigation">
           <a href="#showcase">Showcase</a>
           <a href="#projects">Projects</a>
-          <a href="#about">Principles</a>
+          <a href="#about">About</a>
           <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">
             GitHub <span aria-hidden="true">↗</span>
           </a>
@@ -158,67 +210,39 @@ const showcases = [
       <section class="hero container">
         <div class="hero-copy">
           <p class="overline">
-            <span class="status-dot"></span> Open source lab / models + agents
+            <span class="status-dot" aria-hidden="true"></span> Open source lab
           </p>
-          <h1>Open foundations for models and agents.</h1>
+          <h1>Open tools for working with agents.</h1>
           <p class="lede">
-            We build reusable primitives, developer tools, and hosted services
-            for the hard problems shared across AI products.
+            Browse conversations across agent tools. Keep local and remote
+            terminals running. Build on open components for routing, usage,
+            and model research.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#projects">Explore projects</a>
-            <a
-              class="button secondary"
-              href="https://github.com/tokn-ai"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View source <span aria-hidden="true">↗</span>
+            <a class="button primary" href="#tokn-session">Explore tokn-session</a>
+            <a class="button secondary" href="#ctl">
+              Explore ctl <span aria-hidden="true">↘</span>
             </a>
           </div>
         </div>
 
-        <div class="stack-map" aria-label="Tokn AI open project stack">
+        <aside class="stack-map" aria-label="Find a project by task">
           <div class="stack-map-header">
-            <span>tokn-ai / open_stack</span>
+            <span>tokn-ai / projects</span>
             <span class="stack-map-dots" aria-hidden="true">● ● ●</span>
           </div>
           <div class="stack-map-body">
-            <div class="stack-line">
-              <span class="stack-node">corpus</span>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <strong>ffbpe</strong>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <span class="stack-result">tokens</span>
-            </div>
-            <div class="stack-line">
-              <span class="stack-node">tokens</span>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <strong>flm.py</strong>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <span class="stack-result">model</span>
-            </div>
-            <div class="stack-line">
-              <span class="stack-node">request</span>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <strong>tokn-router</strong>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <span class="stack-result">inference</span>
-            </div>
-            <div class="stack-line">
-              <span class="stack-node">traces</span>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <strong>llm-tokei</strong>
-              <span class="stack-arrow" aria-hidden="true">→</span>
-              <span class="stack-result">usage</span>
-            </div>
+            {
+              products.map((product) => (
+                <a class="stack-line" href={`#${product.id}`}>
+                  <span class="stack-node">{product.scope}</span>
+                  <strong>{product.name}</strong>
+                  <span class="stack-arrow" aria-hidden="true">↘</span>
+                </a>
+              ))
+            }
           </div>
-          <div class="stack-map-footer">
-            <span>open core</span>
-            <span>composable</span>
-            <span>hosted when useful</span>
-          </div>
-        </div>
+        </aside>
       </section>
 
       <section class="showcase-section" id="showcase">
@@ -226,10 +250,10 @@ const showcases = [
           <div class="section-intro">
             <p class="overline">Showcase</p>
             <div>
-              <h2>Foundations in practice.</h2>
+              <h2>A closer look at the tools.</h2>
               <p>
-                Representative outputs from the current public projects. Each
-                one solves a different shared problem beneath AI products.
+                Start with a shared view of your agent sessions and terminals.
+                Explore the tools for routing, usage, and model research.
               </p>
             </div>
           </div>
@@ -338,10 +362,10 @@ const showcases = [
           <div class="section-intro">
             <p class="overline">Open projects</p>
             <div>
-              <h2>Four projects, one direction.</h2>
+              <h2>Find the part you need.</h2>
               <p>
-                Each project tackles a difficult shared layer. Use one on its
-                own, or combine them without adopting an entire stack.
+                Each project has its own job. Follow a repository for setup
+                instructions, current capabilities, and development progress.
               </p>
             </div>
           </div>
@@ -349,9 +373,8 @@ const showcases = [
           <div class="project-list">
             {
               products.map((product) => (
-                <article class="project">
+                <article class="project" id={product.id}>
                   <div class="project-meta">
-                    <span>{product.index}</span>
                     <span>{product.scope}</span>
                   </div>
                   <div class="project-content">
@@ -380,43 +403,40 @@ const showcases = [
         <div class="section-intro">
           <p class="overline">About the lab</p>
           <div>
-            <h2>The hard parts should be built once.</h2>
+            <h2>Useful tools, open foundations.</h2>
             <p>
-              Most teams focus on the product they need to ship today. We focus
-              on the foundations many products need, but few teams have the
-              time to build well.
+              Tokn AI builds tools for the work around agents and models, from
+              finding a conversation to keeping a remote terminal running or
+              training a tokenizer.
             </p>
           </div>
         </div>
 
         <div class="thesis">
-          <p>We build the tools behind AI products.</p>
-          <span>Open at the core. Local when preferred. Hosted when useful.</span>
+          <p>Start with the problem in front of you.</p>
+          <span>Browse the code, run a tool, and make it part of your workflow.</span>
         </div>
 
         <div class="values">
           <article>
-            <code>01_reusable</code>
-            <h3>Useful beyond one product.</h3>
+            <h3>Choose what fits.</h3>
             <p>
-              We invest in clear boundaries and durable interfaces so the same
-              foundation can support many different ideas.
+              Use a session viewer, a terminal tool, or a research library on
+              its own. Each project documents its interfaces and setup.
             </p>
           </article>
           <article>
-            <code>02_open</code>
-            <h3>Understand every layer.</h3>
+            <h3>See how it works.</h3>
             <p>
-              The core stays inspectable and replaceable. You should be able to
-              see the tradeoffs and choose how each piece runs.
+              Read the source and follow the decisions behind each tool.
+              Repositories make capabilities and limitations visible.
             </p>
           </article>
           <article>
-            <code>03_adaptable</code>
-            <h3>Built for a moving field.</h3>
+            <h3>Build on shared work.</h3>
             <p>
-              Focused components adapt better than heavy abstractions. We keep
-              the pieces small enough to evolve and strong enough to depend on.
+              Report a rough edge, contribute a fix, or reuse a component.
+              Practical feedback helps the tools improve with the work.
             </p>
           </article>
         </div>
@@ -431,11 +451,11 @@ const showcases = [
       <section class="cta">
         <div class="container cta-inner">
           <div>
-            <p class="overline">Build with us</p>
-            <h2>Build on open foundations.</h2>
+            <p class="overline">Get involved</p>
+            <h2>Find a tool. Make it yours.</h2>
             <p>
-              Explore the projects, use what fits, and help improve the layers
-              beneath the next generation of AI products.
+              Read the docs, try a project, or share what would make it more
+              useful. Development happens in the open on GitHub.
             </p>
           </div>
           <div class="cta-actions">
@@ -456,7 +476,7 @@ const showcases = [
     <footer>
       <div class="container footer-inner">
         <Brand />
-        <p>Open foundations for models and agents.</p>
+        <p>Open tools for agents and models.</p>
         <div class="footer-links">
           <a href="#projects">Projects</a>
           <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">GitHub</a>
@@ -800,8 +820,8 @@ const showcases = [
 
   .stack-line {
     display: grid;
-    grid-template-columns: 76px 18px minmax(92px, 1fr) 18px 78px;
-    gap: 6px;
+    grid-template-columns: minmax(0, 1fr) max-content 12px;
+    gap: 16px;
     align-items: center;
     padding-block: 14px;
     border-bottom: 1px solid #3b3544;
@@ -812,43 +832,28 @@ const showcases = [
     border-bottom: 0;
   }
 
-  .stack-node,
-  .stack-result {
+  .stack-line:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 4px;
+  }
+
+  .stack-line:hover strong,
+  .stack-line:focus-visible strong {
+    color: var(--teal);
+  }
+
+  .stack-node {
     color: var(--terminal-muted);
   }
 
-  .stack-node::before {
-    color: #9a8fa4;
-    content: "[";
-  }
-
-  .stack-node::after {
-    color: #9a8fa4;
-    content: "]";
-  }
-
   .stack-line strong {
-    color: #f7f1e7;
+    color: var(--terminal-text);
     font-weight: 600;
   }
 
   .stack-arrow {
     color: var(--teal);
     text-align: center;
-  }
-
-  .stack-result {
-    text-align: right;
-  }
-
-  .stack-map-footer {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 12px 16px;
-    border-top: 1px solid #3b3544;
-    color: #9a8fa4;
-    font-size: 9px;
   }
 
   .showcase-section {
@@ -1088,10 +1093,11 @@ const showcases = [
 
   .project {
     display: grid;
-    grid-template-columns: 150px minmax(0, 1fr) 170px;
+    grid-template-columns: 128px minmax(0, 1fr) 160px;
     gap: 30px;
     padding-block: 40px;
     border-bottom: 1px solid var(--border);
+    scroll-margin-top: 88px;
   }
 
   .project-meta,
@@ -1104,11 +1110,7 @@ const showcases = [
     font-size: 10px;
   }
 
-  .project-meta > span:first-child {
-    color: var(--text-secondary);
-  }
-
-  .project-meta > span:last-child {
+  .project-meta span {
     color: var(--plum);
     letter-spacing: 0.05em;
     text-transform: uppercase;
@@ -1123,14 +1125,14 @@ const showcases = [
 
   .project-content {
     display: grid;
-    grid-template-columns: minmax(260px, 1fr) minmax(200px, 0.72fr);
-    gap: 48px;
+    grid-template-columns: minmax(0, 1fr) minmax(160px, 0.72fr);
+    gap: 32px;
   }
 
   .project h3 {
     margin: -6px 0 10px;
     font-family: var(--mono);
-    font-size: clamp(26px, 3vw, 36px);
+    font-size: clamp(24px, 2.7vw, 34px);
     letter-spacing: -0.045em;
   }
 
@@ -1231,14 +1233,8 @@ const showcases = [
     background: var(--surface);
   }
 
-  .values code {
-    color: var(--plum);
-    font-family: var(--mono);
-    font-size: 11px;
-  }
-
   .values h3 {
-    margin: 62px 0 12px;
+    margin: 0 0 18px;
     font-size: 20px;
     letter-spacing: -0.025em;
   }
@@ -1412,10 +1408,6 @@ const showcases = [
       min-height: auto;
     }
 
-    .values h3 {
-      margin-top: 38px;
-    }
-
     .thesis {
       align-items: flex-start;
       flex-direction: column;
@@ -1509,14 +1501,7 @@ const showcases = [
     }
 
     .stack-line {
-      grid-template-columns: 62px 12px minmax(80px, 1fr) 12px 62px;
-      gap: 3px;
-      font-size: 9px;
-    }
-
-    .stack-map-footer {
-      align-items: flex-start;
-      flex-direction: column;
+      gap: 12px;
     }
 
     .thesis {

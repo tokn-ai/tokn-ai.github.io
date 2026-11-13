@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title description">
+  <title id="title">Tokn Session shared session layer</title>
+  <desc id="description">Session histories from six agent tools pass through a shared session layer into a searchable desktop or web view. Live controls depend on the source provider.</desc>
+  <rect width="1200" height="720" rx="28" fill="#231f2a" />
+  <rect x="1" y="1" width="1198" height="718" rx="27" fill="none" stroke="#45404d" stroke-width="2" />
+  <path d="M0 76H1200" stroke="#3b3544" stroke-width="2" />
+  <g font-family="Menlo, Consolas, monospace">
+    <text x="42" y="48" fill="#b5a9bf" font-size="18">tokn-session / shared agent history</text>
+    <circle cx="1100" cy="39" r="6" fill="#61b6af" />
+    <circle cx="1130" cy="39" r="6" fill="#b09ac3" />
+    <circle cx="1160" cy="39" r="6" fill="#c48257" />
+
+    <text x="54" y="146" fill="#ad9fb8" font-size="15">SIX AGENT SOURCES</text>
+    <g fill="#302a39" stroke="#554960">
+      <rect x="54" y="184" width="226" height="42" rx="10" />
+      <rect x="54" y="239" width="226" height="42" rx="10" />
+      <rect x="54" y="294" width="226" height="42" rx="10" />
+      <rect x="54" y="349" width="226" height="42" rx="10" />
+      <rect x="54" y="404" width="226" height="42" rx="10" />
+      <rect x="54" y="459" width="226" height="42" rx="10" />
+    </g>
+    <g fill="#ece7ef" font-size="17">
+      <text x="78" y="211">Codex</text>
+      <text x="78" y="266">Pi</text>
+      <text x="78" y="321">OpenCode</text>
+      <text x="78" y="376">ZCode</text>
+      <text x="78" y="431">WorkBuddy</text>
+      <text x="78" y="486">DSH</text>
+    </g>
+
+    <g fill="none" stroke="#61b6af" stroke-width="3" stroke-linejoin="round">
+      <path d="M280 205H330V480H280M280 260H330M280 315H330M280 370H330M280 425H330" />
+      <path d="M330 342H422m-14-12 14 12-14 12" />
+    </g>
+
+    <rect x="422" y="252" width="310" height="180" rx="18" fill="#38303f" stroke="#b09ac3" stroke-width="3" />
+    <text x="454" y="294" fill="#b09ac3" font-size="14">SHARED SESSION LAYER</text>
+    <text x="454" y="337" fill="#ece7ef" font-size="25">tokn-session</text>
+    <text x="454" y="376" fill="#ad9fb8" font-size="16">Normalized history</text>
+    <text x="454" y="405" fill="#ad9fb8" font-size="16">Provider-native detail</text>
+
+    <path d="M732 342H824m-14-12 14 12-14 12" fill="none" stroke="#61b6af" stroke-width="3" stroke-linejoin="round" />
+    <rect x="824" y="214" width="322" height="270" rx="16" fill="#292431" stroke="#554960" stroke-width="2" />
+    <text x="848" y="247" fill="#ad9fb8" font-size="14">DESKTOP / WEB</text>
+    <rect x="848" y="269" width="274" height="40" rx="8" fill="#231f2a" stroke="#554960" />
+    <circle cx="867" cy="287" r="6" fill="none" stroke="#ad9fb8" stroke-width="2" />
+    <path d="m872 292 5 5" stroke="#ad9fb8" stroke-width="2" />
+    <text x="889" y="295" fill="#ad9fb8" font-size="14">Search sessions</text>
+    <text x="848" y="350" fill="#ece7ef" font-size="17">Conversations</text>
+    <text x="848" y="384" fill="#ece7ef" font-size="17">Tools + native events</text>
+    <path d="M848 411H1122" stroke="#3b3544" />
+    <text x="848" y="448" fill="#61b6af" font-size="14">Browse across providers</text>
+
+    <path d="M577 432V549H985V484" fill="none" stroke="#b09ac3" stroke-width="3" stroke-linejoin="round" stroke-dasharray="7 7" />
+    <rect x="676" y="532" width="210" height="34" rx="7" fill="#231f2a" />
+    <text x="692" y="554" fill="#b09ac3" font-size="14">Supported live events</text>
+    <text x="54" y="624" fill="#ece7ef" font-size="19">One view of agent work.</text>
+    <text x="54" y="659" fill="#ad9fb8" font-size="15">Live controls depend on each provider's native capabilities.</text>
+  </g>
+</svg>
