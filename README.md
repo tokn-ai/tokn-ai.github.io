@@ -34,6 +34,10 @@ Their conversations and terminal output are fictional, run entirely in the
 browser, and have readable fallbacks without JavaScript. The page honors reduced
 motion and includes a motion control.
 
+The ctl example follows the desktop app's host sidebar, terminal tabs, and status
+bar. Close a tab and reopen its session from Hosts to explore persistence; sample
+session definitions live in `src/data/terminal-sessions.ts`.
+
 Supporting projects are listed in `src/data/projects.ts`. Shared styles live in
 `src/styles/`, and the research behind the page is in
 [`docs/landing-page-research.md`](docs/landing-page-research.md).

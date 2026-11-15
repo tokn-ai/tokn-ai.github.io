@@ -1,85 +1,159 @@
+---
+import { terminal_sessions } from "../data/terminal-sessions";
+import "../styles/terminal-demo.css";
+
+const icons = {
+  terminal: "m5 6 4 4-4 4m7 0h4M3 3h14v14H3z",
+  tasks: "m3 5 1 1 2-2m3 1h8M3 10l1 1 2-2m3 1h8M3 15l1 1 2-2m3 1h8",
+  ports: "M4 4h12v5H4zM7 9v4m6-4v4M3 16h5m4 0h5M5 13v3m10-3v3",
+  shield: "m10 2 6 3v5c0 4-6 8-6 8s-6-4-6-8V5z",
+  settings: "M10 2v3m0 10v3M2 10h3m10 0h3M4 4l2 2m8 8 2 2M4 16l2-2m8-8 2-2M14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0",
+  monitor: "M2 3h16v11H2zM7 18h6m-3-4v4",
+  server: "M3 2h14v6H3zM3 12h14v6H3zM6 5h1m-1 10h1",
+  panel: "M2 3h16v14H2zM7 3v14",
+};
+---
+
 <terminal-demo class="terminal-demo">
-  <div class="demo-label">Interactive example · simulated terminal</div>
+  <div class="demo-label">Interactive example · simulated ctl workspace</div>
   <div class="terminal-window">
     <div class="window-bar">
       <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span>ctl <span class="window-divider">/</span> orbit</span>
-      <span class="window-mark" aria-hidden="true">↗</span>
+      <span class="window-title">ctl</span>
+      <span class="window-context">Orbit workspace</span>
     </div>
-    <div class="terminal-toolbar">
-      <div class="host-controls" role="group" aria-label="Example host" hidden>
-        <button type="button" data-host="local" aria-pressed="true">Local</button>
-        <button type="button" data-host="remote" aria-pressed="false">Remote <span>SSH</span></button>
-      </div>
-      <span class="connection-state"><i aria-hidden="true"></i><span data-connection>Connected</span></span>
-    </div>
-    <div class="session-content">
-      <div class="session-heading">
-        <span class="session-symbol" aria-hidden="true">⌁</span>
-        <div><strong>orbit</strong><span data-host-label>Local terminal session</span></div>
-        <span class="running-tag">running</span>
-      </div>
-      <div class="terminal-output" data-output aria-label="Simulated terminal output">
-        <p class="command"><span aria-hidden="true">❯</span> npm run dev</p>
-        <p class="boot-line">Orbit <span>· development server</span></p>
-        <div class="heartbeat-lines">
-          <p><span class="log-time" data-time>00:39</span><span class="log-marker">›</span> heartbeat <span data-tick>039</span> <span class="log-ok">ok</span></p>
-          <p><span class="log-time" data-time>00:40</span><span class="log-marker">›</span> heartbeat <span data-tick>040</span> <span class="log-ok">ok</span></p>
-          <p><span class="log-time" data-time>00:41</span><span class="log-marker">›</span> heartbeat <span data-tick>041</span> <span class="log-ok">ok</span></p>
-          <p><span class="log-time" data-time>00:42</span><span class="log-marker">›</span> heartbeat <span data-tick>042</span> <span class="log-ok">ok</span></p>
+    <div class="workbench">
+      <aside class="workspace-sidebar" id="ctl-demo-hosts" aria-label="Example hosts and sessions">
+        <div class="workspace-rail" aria-hidden="true">
+          {["terminal", "tasks", "ports", "shield"].map((name, index) => (
+            <span class:list={["rail-icon", { "rail-active": index === 0 }]}>
+              <svg viewBox="0 0 20 20"><path d={icons[name as keyof typeof icons]} /></svg>
+            </span>
+          ))}
+          <span class="rail-icon rail-settings"><svg viewBox="0 0 20 20"><path d={icons.settings} /></svg></span>
         </div>
-        <span class="terminal-cursor" aria-hidden="true"></span>
-      </div>
-      <div class="detached-panel" data-detached hidden>
-        <span class="detached-symbol" aria-hidden="true">⌁</span>
-        <strong>You stepped away.</strong>
-        <p>The session is still running.<br />Reconnect to see where it is now.</p>
-        <span class="detached-note">client disconnected · session alive</span>
+        <div class="hosts-tree">
+          <div class="hosts-heading"><span>Hosts</span><span class="host-count">2</span></div>
+          {terminal_sessions.map((session) => (
+            <div class={`host-group host-${session.id}`}>
+              <div class="host-heading">
+                <span class="host-chevron" aria-hidden="true">⌄</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d={session.id === "local" ? icons.monitor : icons.server} /></svg>
+                <span>{session.host}</span>
+              </div>
+              <button class="session-row" type="button" data-session={session.id} aria-pressed={session.id === "local" ? "true" : "false"} disabled>
+                <i class="session-dot" aria-hidden="true"></i>
+                <span class="session-copy"><strong>{session.name}</strong><small>sh progress.sh</small></span>
+                <span class="session-open" data-open-marker={session.id} aria-hidden="true">•</span>
+              </button>
+            </div>
+          ))}
+          <p class="hosts-note"><i aria-hidden="true"></i> 2 sessions running</p>
+        </div>
+      </aside>
+      <div class="workspace-main">
+        <div class="tab-bar">
+          <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-label="Hide hosts" aria-expanded="true" aria-controls="ctl-demo-hosts" title="Show or hide hosts" hidden>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d={icons.panel} /></svg>
+          </button>
+          <div class="terminal-tabs" role="tablist" aria-label="Example terminal tabs">
+            {terminal_sessions.map((session) => (
+              <div class={`terminal-tab host-${session.id}`} data-tab={session.id}>
+                <button id={`ctl-tab-${session.id}`} class="tab-select" type="button" role="tab" data-select={session.id} aria-selected={session.id === "local" ? "true" : "false"} aria-controls="ctl-demo-output" tabindex={session.id === "local" ? 0 : -1} disabled>
+                  <span aria-hidden="true">›_</span>{session.name}
+                </button>
+                <button class="tab-close" type="button" data-close={session.id} aria-label={`Close ${session.name} tab`} title="Close tab · session keeps running" hidden><span aria-hidden="true">×</span></button>
+              </div>
+            ))}
+          </div>
+          <span class="no-tabs-label" data-no-tabs hidden>No open tabs</span>
+        </div>
+        <div class="terminal-surface" id="ctl-demo-output" role="tabpanel" aria-labelledby="ctl-tab-local" tabindex="0" data-panel>
+          <div class="terminal-output" data-output>
+            <p class="command"><span class="prompt" data-prompt>orbit-web</span><span class="prompt-marker" aria-hidden="true">$</span> sh progress.sh</p>
+            <p class="boot-line">Orbit <span class="service-label" data-service>/ web</span></p>
+            <p class="process-note">Sample process started. Waiting for work.</p>
+            <div class="heartbeat-lines">
+              {[39, 40, 41, 42].map((tick) => (
+                <p><span class="log-time" data-time>00:{tick}</span><span class="log-marker" aria-hidden="true">›</span><span>heartbeat <span data-tick>{String(tick).padStart(3, "0")}</span></span><span class="log-ok">ok</span></p>
+              ))}
+            </div>
+            <span class="terminal-cursor" aria-hidden="true"></span>
+          </div>
+          <div class="empty-workspace" data-empty hidden>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d={icons.terminal} /></svg>
+            <strong>Tabs closed. Sessions alive.</strong>
+            <p>Your processes keep running.<br />Open a session from Hosts to return.</p>
+            <button type="button" class="reopen-button" data-reopen>Reopen orbit-web <span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="terminal-bottom">
-      <span><i aria-hidden="true"></i> <span data-session-state>Session alive</span></span>
-      <button type="button" class="connection-button" data-toggle hidden>Disconnect <span aria-hidden="true">↗</span></button>
+    <div class="workspace-status">
+      <span class="status-host"><i aria-hidden="true"></i><span data-status-host>Local</span></span>
+      <span class="status-process" data-status-process>sh progress.sh</span>
+      <span class="status-persistence">ctmux <span aria-hidden="true">·</span> persistent sessions</span>
     </div>
   </div>
-  <p class="demo-caption" data-announcement role="status" aria-live="polite">Shells survive a client disconnect while the session daemon keeps running.</p>
+  <p class="demo-caption" data-announcement role="status" aria-live="polite">Close a tab, then reopen it from Hosts. Sessions stay alive while the daemon runs.</p>
 </terminal-demo>
 
 <script>
+  import { terminal_sessions } from "../data/terminal-sessions";
+
+  type SessionId = typeof terminal_sessions[number]["id"];
+
   class TerminalDemo extends HTMLElement {
     cleanup?: () => void;
 
     connectedCallback() {
       this.cleanup?.();
 
-      const host_controls = this.querySelector<HTMLElement>(".host-controls");
-      const host_buttons = [...this.querySelectorAll<HTMLButtonElement>("[data-host]")];
-      const toggle_button = this.querySelector<HTMLButtonElement>("[data-toggle]");
+      const sidebar = this.querySelector<HTMLElement>(".workspace-sidebar");
+      const sidebar_toggle = this.querySelector<HTMLButtonElement>("[data-sidebar-toggle]");
+      const session_buttons = [...this.querySelectorAll<HTMLButtonElement>("[data-session]")];
+      const tab_buttons = [...this.querySelectorAll<HTMLButtonElement>("[data-select]")];
+      const close_buttons = [...this.querySelectorAll<HTMLButtonElement>("[data-close]")];
+      const tab_list = this.querySelector<HTMLElement>(".terminal-tabs");
+      const panel = this.querySelector<HTMLElement>("[data-panel]");
       const output = this.querySelector<HTMLElement>("[data-output]");
-      const detached = this.querySelector<HTMLElement>("[data-detached]");
-      const connection = this.querySelector<HTMLElement>("[data-connection]");
-      const host_label = this.querySelector<HTMLElement>("[data-host-label]");
+      const empty = this.querySelector<HTMLElement>("[data-empty]");
+      const no_tabs = this.querySelector<HTMLElement>("[data-no-tabs]");
+      const reopen_button = this.querySelector<HTMLButtonElement>("[data-reopen]");
+      const prompt = this.querySelector<HTMLElement>("[data-prompt]");
+      const service = this.querySelector<HTMLElement>("[data-service]");
+      const status_host = this.querySelector<HTMLElement>("[data-status-host]");
+      const status_process = this.querySelector<HTMLElement>("[data-status-process]");
       const announcement = this.querySelector<HTMLElement>("[data-announcement]");
       const times = [...this.querySelectorAll<HTMLElement>("[data-time]")];
       const ticks = [...this.querySelectorAll<HTMLElement>("[data-tick]")];
 
-      if (!host_controls || !toggle_button || !output || !detached || !connection || !host_label || !announcement) return;
+      if (!sidebar || !sidebar_toggle || !tab_list || !panel || !output || !empty || !no_tabs || !reopen_button || !prompt || !service || !status_host || !status_process || !announcement) return;
 
-      const started_at = performance.now();
-      const sessions = {
-        local: { connected: true, detached_tick: 0 },
-        remote: { connected: true, detached_tick: 0 },
-      };
-      let active_host: keyof typeof sessions = "local";
+      const sessions = terminal_sessions.map(session => ({ ...session, open: true, closed_tick: 0 }));
+      let active_id: SessionId | null = "local";
+      let sidebar_preference: boolean | undefined;
       let in_view = false;
       let interval_id: ReturnType<typeof setInterval> | undefined;
+      const started_at = performance.now();
       const controller = new AbortController();
       const reduced_motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const elapsedSeconds = () => Math.floor((performance.now() - started_at) / 1000);
+      const isCompact = () => this.getBoundingClientRect().width <= 520;
 
-      const currentTick = () => 42 + Math.floor((performance.now() - started_at) / 1000);
+      const renderSidebar = () => {
+        const visible = sidebar_preference ?? !isCompact();
+        if (!visible && sidebar.contains(document.activeElement)) sidebar_toggle.focus({ preventScroll: true });
+        sidebar.hidden = !visible;
+        this.dataset.sidebar = String(visible);
+        sidebar_toggle.setAttribute("aria-expanded", String(visible));
+        sidebar_toggle.setAttribute("aria-label", visible ? "Hide hosts" : "Show hosts");
+      };
 
       const renderOutput = () => {
-        const tick = currentTick();
+        const session = sessions.find(session => session.id === active_id);
+        if (!session) return;
+        const tick = session.initial_tick + elapsedSeconds();
         times.forEach((time, index) => {
           const value = tick - (times.length - index - 1);
           time.textContent = `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`;
@@ -87,18 +161,63 @@
         });
       };
 
-      const renderConnection = () => {
-        const connected = sessions[active_host].connected;
-        this.dataset.connected = String(connected);
-        output.hidden = !connected;
-        detached.hidden = connected;
-        connection.textContent = connected ? "Connected" : "Detached";
-        host_label.textContent = active_host === "local" ? "Local terminal session" : "Remote terminal session · SSH";
-        toggle_button.replaceChildren(document.createTextNode(connected ? "Disconnect ↗" : "Reconnect ↙"));
-        host_buttons.forEach((button) => {
-          button.setAttribute("aria-pressed", String(button.dataset.host === active_host));
+      const renderWorkspace = () => {
+        const active_session = sessions.find(session => session.id === active_id);
+        output.hidden = !active_session;
+        empty.hidden = !!active_session;
+        no_tabs.hidden = !!active_session;
+        if (active_session) {
+          panel.setAttribute("role", "tabpanel");
+          panel.setAttribute("aria-labelledby", `ctl-tab-${active_session.id}`);
+          panel.removeAttribute("aria-label");
+          panel.tabIndex = 0;
+          prompt.textContent = active_session.name;
+          service.textContent = `/ ${active_session.service}`;
+          status_host.textContent = active_session.host;
+          status_process.textContent = "sh progress.sh";
+        } else {
+          panel.setAttribute("role", "region");
+          panel.setAttribute("aria-label", "No open terminal tabs");
+          panel.removeAttribute("aria-labelledby");
+          panel.tabIndex = -1;
+          status_host.textContent = "No active tab";
+          status_process.textContent = "2 sessions running";
+        }
+        sessions.forEach(session => {
+          const tab = this.querySelector<HTMLElement>(`[data-tab="${session.id}"]`);
+          const marker = this.querySelector<HTMLElement>(`[data-open-marker="${session.id}"]`);
+          if (tab) tab.hidden = !session.open;
+          if (marker) marker.hidden = !session.open;
+        });
+        session_buttons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.session === active_id)));
+        tab_buttons.forEach(button => {
+          const selected = button.dataset.select === active_id;
+          button.setAttribute("aria-selected", String(selected));
+          button.tabIndex = selected ? 0 : -1;
         });
         renderOutput();
+      };
+
+      const focusActiveTab = () => tab_buttons.find(button => button.dataset.select === active_id)?.focus({ preventScroll: true });
+
+      const selectSession = (id: string | undefined, from_sidebar = false) => {
+        const session = sessions.find(session => session.id === id);
+        if (!session) return;
+        const was_closed = !session.open;
+        session.open = true;
+        active_id = session.id;
+        renderWorkspace();
+        if (was_closed) {
+          const elapsed = elapsedSeconds() - session.closed_tick;
+          announcement.textContent = `${session.name} reopened. Same running process; ${elapsed} ${elapsed === 1 ? "heartbeat" : "heartbeats"} passed while its tab was closed.`;
+        } else {
+          announcement.textContent = `${session.name} selected on ${session.host}. Close its tab, then reopen it from Hosts.`;
+        }
+        if (from_sidebar && isCompact()) {
+          sidebar_preference = false;
+          renderSidebar();
+          focusActiveTab();
+        }
       };
 
       const syncTimer = () => {
@@ -106,51 +225,72 @@
         interval_id = undefined;
         if (!in_view || document.hidden || reduced_motion.matches || document.documentElement.dataset.motion === "paused") return;
         renderOutput();
-        interval_id = setInterval(() => {
-          if (sessions[active_host].connected) renderOutput();
-        }, 1000);
+        interval_id = setInterval(renderOutput, 1000);
       };
 
-      host_buttons.forEach((button) => {
-        button.addEventListener("click", () => {
-          const host = button.dataset.host;
-          if (host !== "local" && host !== "remote") return;
-          active_host = host;
-          renderConnection();
-          announcement.textContent = `${host === "local" ? "Local" : "Remote SSH"} example selected. Both keep the session alive while its daemon runs.`;
-        }, { signal: controller.signal });
-      });
+      session_buttons.forEach(button => button.addEventListener("click", () => selectSession(button.dataset.session, true), { signal: controller.signal }));
+      tab_buttons.forEach(button => button.addEventListener("click", () => selectSession(button.dataset.select), { signal: controller.signal }));
+      close_buttons.forEach(button => button.addEventListener("click", () => {
+        const session = sessions.find(session => session.id === button.dataset.close);
+        if (!session) return;
+        session.open = false;
+        session.closed_tick = elapsedSeconds();
+        if (active_id === session.id) active_id = sessions.find(session => session.open)?.id ?? null;
+        renderWorkspace();
+        announcement.textContent = `${session.name} tab closed. Its process is still running. ${isCompact() && sidebar.hidden ? "Show Hosts, then select" : "Select"} ${session.name} to return.`;
+        if (active_id) focusActiveTab();
+        else reopen_button.focus({ preventScroll: true });
+      }, { signal: controller.signal }));
 
-      toggle_button.addEventListener("click", () => {
-        const session = sessions[active_host];
-        session.connected = !session.connected;
-        if (session.connected) {
-          const elapsed = Math.max(0, currentTick() - session.detached_tick);
-          announcement.textContent = `Back in the same session. ${elapsed} ${elapsed === 1 ? "heartbeat" : "heartbeats"} passed while you were away.`;
-        } else {
-          session.detached_tick = currentTick();
-          announcement.textContent = "Client disconnected. The simulated process keeps running. Reconnect whenever you like.";
-        }
-        renderConnection();
+      tab_list.addEventListener("keydown", event => {
+        if (!(event.target instanceof HTMLButtonElement) || !event.target.matches("[data-select]")) return;
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        const open_tabs = tab_buttons.filter(button => sessions.some(session => session.open && session.id === button.dataset.select));
+        const index = open_tabs.indexOf(event.target);
+        if (index < 0) return;
+        event.preventDefault();
+        const next_index = event.key === "Home" ? 0 : event.key === "End" ? open_tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + open_tabs.length) % open_tabs.length;
+        selectSession(open_tabs[next_index].dataset.select);
+        focusActiveTab();
+      }, { signal: controller.signal });
+
+      sidebar_toggle.addEventListener("click", () => {
+        sidebar_preference = sidebar.hidden;
+        renderSidebar();
+        if (!sidebar.hidden && isCompact()) session_buttons[0]?.focus({ preventScroll: true });
+      }, { signal: controller.signal });
+      sidebar.addEventListener("keydown", event => {
+        if (event.key !== "Escape") return;
+        sidebar_preference = false;
+        renderSidebar();
+        sidebar_toggle.focus({ preventScroll: true });
+      }, { signal: controller.signal });
+      reopen_button.addEventListener("click", () => {
+        selectSession("local", true);
+        focusActiveTab();
       }, { signal: controller.signal });
 
       const visibility_observer = new IntersectionObserver(([entry]) => {
         in_view = entry.isIntersecting;
         syncTimer();
       });
+      const resize_observer = new ResizeObserver(renderSidebar);
       const motion_observer = new MutationObserver(syncTimer);
       visibility_observer.observe(this);
+      resize_observer.observe(this);
       motion_observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-motion"] });
       document.addEventListener("visibilitychange", syncTimer, { signal: controller.signal });
       reduced_motion.addEventListener("change", syncTimer, { signal: controller.signal });
 
-      host_controls.hidden = false;
-      toggle_button.hidden = false;
-      renderConnection();
+      [...session_buttons, ...tab_buttons].forEach(button => { button.disabled = false; });
+      [...close_buttons, sidebar_toggle].forEach(button => { button.hidden = false; });
+      renderSidebar();
+      renderWorkspace();
 
       this.cleanup = () => {
         controller.abort();
         visibility_observer.disconnect();
+        resize_observer.disconnect();
         motion_observer.disconnect();
         if (interval_id !== undefined) clearInterval(interval_id);
       };
@@ -163,70 +303,3 @@
 
   if (!customElements.get("terminal-demo")) customElements.define("terminal-demo", TerminalDemo);
 </script>
-
-<style>
-  .terminal-demo { display: block; width: 100%; min-width: 0; }
-  .demo-label { margin: 0 0 12px; color: var(--muted, #645d69); font: 11px/1.5 var(--mono, monospace); letter-spacing: .025em; }
-  .terminal-window { overflow: hidden; border: 1px solid #4d4357; border-radius: 20px; background: #231f2a; color: #eee8f1; box-shadow: 0 24px 60px -28px #33263c66; font-family: var(--mono, monospace); }
-  .window-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 46px; padding: 0 20px; border-bottom: 1px solid #ffffff12; color: #c4b6d0; font-size: 11px; }
-  .window-dots { display: flex; gap: 5px; }
-  .window-dots i { width: 6px; height: 6px; border-radius: 50%; background: #75667e; }
-  .window-dots i:first-child { background: #e1aa88; }
-  .window-dots i:last-child { background: #61b6af; }
-  .window-divider { padding: 0 5px; color: #75667e; }
-  .window-mark { color: #94849f; font-size: 18px; }
-  .terminal-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 62px; padding: 12px 20px; box-sizing: border-box; }
-  .host-controls { display: flex; padding: 3px; gap: 3px; border: 1px solid #4a4052; border-radius: 9px; }
-  button { font: inherit; cursor: pointer; }
-  .host-controls button { padding: 6px 10px; border: 0; border-radius: 5px; background: transparent; color: #c4b6d0; font-size: 11px; line-height: 1.4; }
-  .host-controls button[aria-pressed="true"] { background: #4d405a; color: #fff; }
-  .host-controls button:hover { background: #5d4e69; color: #fff; }
-  .host-controls button span { margin-left: 4px; color: #b7a3c4; font-size: 9px; }
-  button:focus-visible { outline: 2px solid #61b6af; outline-offset: 4px; }
-  .connection-state { display: inline-flex; align-items: center; gap: 6px; color: #b4dcd4; font-size: 10px; }
-  .connection-state i, .terminal-bottom > span i { width: 5px; height: 5px; border-radius: 50%; background: #61b6af; }
-  .session-content { padding: 0 22px; }
-  .session-heading { display: flex; align-items: center; gap: 10px; min-height: 46px; }
-  .session-symbol { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #65546f; border-radius: 8px; color: #d5c6e1; background: #3e3348; font: 27px/1 var(--sans, sans-serif); }
-  .session-heading div { display: grid; gap: 3px; }
-  .session-heading strong { font-size: 12px; font-weight: 500; }
-  .session-heading div > span { color: #b4a7bf; font-size: 9px; }
-  .running-tag { margin-left: auto; padding: 4px 7px; border: 1px solid #47615c; border-radius: 5px; color: #a9d4ca; font-size: 9px; }
-  .terminal-output, .detached-panel { box-sizing: border-box; height: 223px; padding-top: 19px; }
-  .terminal-output p { margin: 0; font-size: 11px; line-height: 1.85; }
-  .command { color: #f4edf7; }
-  .command > span { margin-right: 9px; color: #61b6af; }
-  .boot-line { padding: 8px 0 10px; color: #e1aa88; }
-  .boot-line > span { color: #b4a7bf; }
-  .heartbeat-lines p { display: flex; align-items: baseline; gap: 9px; color: #c4b6d0; white-space: nowrap; }
-  .heartbeat-lines p:last-child { color: #e4dbe9; }
-  .log-time { color: #a596b2; font-variant-numeric: tabular-nums; }
-  .log-marker { color: #6c5b7c; }
-  .log-ok { margin-left: auto; color: #83c7be; }
-  .terminal-cursor { display: block; width: 6px; height: 11px; margin-top: 12px; background: #c4b6d0; animation: cursor-blink 1.4s step-end infinite; }
-  .detached-panel { display: flex; align-items: center; flex-direction: column; text-align: center; }
-  .detached-symbol { color: #c4b6d0; font: 42px/.9 var(--sans, sans-serif); }
-  .detached-panel strong { margin-top: 14px; font: 500 18px/1.4 var(--sans, sans-serif); }
-  .detached-panel p { margin: 10px 0 16px; color: #c4b6d0; font: 12px/1.6 var(--sans, sans-serif); }
-  .detached-note { color: #83c7be; font-size: 9px; }
-  .terminal-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 10px 20px; box-sizing: border-box; border-top: 1px solid #ffffff12; background: #ffffff02; }
-  .terminal-bottom > span { display: inline-flex; align-items: center; gap: 7px; color: #b4a7bf; font-size: 10px; }
-  .connection-button { min-height: 34px; padding: 7px 11px; border: 1px solid #6f5b7f; border-radius: 7px; color: #e6d6f1; background: #45354f; font-size: 11px; }
-  .connection-button:hover { background: #5d466b; border-color: #b99ccb; }
-  .connection-button span { padding-left: 6px; }
-  .demo-caption { min-height: 38px; max-width: 48ch; margin: 13px 0 0; color: var(--muted, #645d69); font: 12px/1.6 var(--sans, sans-serif); }
-  .terminal-demo [hidden] { display: none !important; }
-  .terminal-demo[data-connected="false"] .connection-state { color: #e1aa88; }
-  .terminal-demo[data-connected="false"] .connection-state i { background: #e1aa88; }
-  .terminal-demo[data-connected="false"] .connection-button { color: #c9eee7; border-color: #527c72; background: #314a43; }
-  :global(html[data-motion="paused"]) .terminal-cursor { animation: none; }
-  @keyframes cursor-blink { 50% { opacity: 0; } }
-  @media (prefers-reduced-motion: reduce) { .terminal-cursor { animation: none; } }
-  @media (max-width: 400px) {
-    .window-bar, .terminal-toolbar, .terminal-bottom { padding-left: 14px; padding-right: 14px; }
-    .session-content { padding: 0 15px; }
-    .host-controls button { padding: 6px 8px; }
-    .connection-state { font-size: 9px; }
-    .heartbeat-lines p { gap: 6px; font-size: 10px; }
-  }
-</style>

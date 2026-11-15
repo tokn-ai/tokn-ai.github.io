@@ -54,7 +54,7 @@ models.
 tokn-session and ctl remain the featured starting points. Introduce them with
 concrete actions: “Run & resume agents” and “Control shells & tasks.” Explain
 supported live agent control and ctl's broader CLI capabilities alongside the
-focused history and reconnect demonstrations. They are separate tools with
+focused history and persistent-terminal demonstrations. They are separate tools with
 related uses. The expressive typography, thread motif, and playful product
 examples provide character while the opening clearly describes what Tokn makes
 and why. The closing loop describes the direction these components support;
@@ -68,9 +68,12 @@ it does not imply a shipped integration that autonomously closes the loop.
 2. **Find the conversation.** A tokn-session scene lets visitors filter a small
    fictional session set and inspect a conversation. Follow with concise
    capabilities, development status, and a repository link.
-3. **Return to the terminal.** A separate ctl scene illustrates detach and
-   reconnect while retaining the same shell content. Explain the specific
-   persistence behavior, then link to the repository.
+3. **Return to the terminal.** A separate ctl scene follows the desktop app's
+   charcoal workbench, tool rail, host/session sidebar, terminal tabs, and slim
+   status bar. Close a tab, switch sessions, and reopen it from Hosts to see the
+   counter advance. On narrow screens, the host panel is available through the
+   sidebar toggle. Explain the specific persistence behavior, then link to the
+   repository.
 4. **In the workshop.** Order the projects as tokn, expri, ffbpe, flm.py,
    Apell, doi, llm-tokei, and vpsctl. Give each project a useful description and direct
    source link. Keep the two-column grid and link both source organizations.
@@ -84,7 +87,7 @@ it does not imply a shipped integration that autonomously closes the loop.
   occasional apricot accent for emphasis.
 - Add expressive typography, generous spacing, and a thread motif with a clear
   visual role. Avoid filling every section with equivalent cards.
-- Make playfulness useful: filtering, selection, and reconnecting should reveal
+- Make playfulness useful: filtering, selection, and reopening sessions should reveal
   something about the product immediately.
 - Label each demonstration as a sample. Use fictional fixtures and generic
   machine labels, with no real conversations or identifying information.
@@ -116,6 +119,15 @@ it does not imply a shipped integration that autonomously closes the loop.
 - Reduced motion and keyboard navigation retain the full meaning of the page.
 - The presentation feels more playful while retaining the approved comfortable
   brand character.
+
+### ctl interface reference
+
+The workbench layout follows the implemented [desktop interface](https://github.com/tokn-ai/ctl/tree/main/apps/desktop/src/components),
+including the host tree, host-colored tabs, and compact status bar. The
+close-and-reopen interaction follows the repository's [persistence demo](https://github.com/tokn-ai/ctl/blob/main/docs/demos.md).
+Only session selection, tab closing/reopening, and sidebar visibility are
+interactive in the landing-page example; the tool rail is illustrative. Output
+and hosts are fictional, and no terminal commands or SSH connections run.
 
 ## Workshop additions
 
