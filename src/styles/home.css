@@ -92,8 +92,10 @@
 .workshop-project:hover .project-arrow { transform: translate(3px, -3px); }
 .workshop-project > p { margin-top: 16px; margin-bottom: 29px; max-width: 410px; min-height: 52px; color: var(--muted); font-size: 14px; line-height: 1.7; }
 .project-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); font: 10px var(--mono); color: var(--muted); }
-.project-ffbpe { background: #f4f0f5; }
-.project-llm-tokei { background: #eff4ef; }
+.project-apell, .project-ffbpe { background: #f4f0f5; }
+.project-expri, .project-llm-tokei { background: #eff4ef; }
+.workshop-sources { margin-top: 28px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.workshop-sources a { color: var(--plum); text-decoration: underline; text-underline-offset: 4px; white-space: nowrap; }
 .open-section { background: #eee9f0; padding-block: 85px; border-radius: 38px 38px 0 0; overflow: hidden; }
 .open-inner { display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 100px; }
 .open-copy .eyebrow { margin-bottom: 22px; }

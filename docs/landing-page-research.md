@@ -5,8 +5,8 @@ Reviewed: 2026-11-15
 ## Purpose and method
 
 Rebuild the Tokn homepage around useful, memorable product experiences. Lead with
-tokn-session and ctl, while giving the other four projects a clear place in the
-lab. Keep the approved logo and plum/teal palette, and introduce a more playful
+tokn-session and ctl, while giving the supporting projects a clear place in the
+workshop. Keep the approved logo and plum/teal palette, and introduce a more playful
 voice and interaction.
 
 The observations below come from current official product pages. Most were
@@ -71,8 +71,9 @@ it does not imply a shipped integration that autonomously closes the loop.
 3. **Return to the terminal.** A separate ctl scene illustrates detach and
    reconnect while retaining the same shell content. Explain the specific
    persistence behavior, then link to the repository.
-4. **In the workshop.** Give tokn, llm-tokei, ffbpe, and flm.py a compact,
-   scannable section with a useful description and direct project links.
+4. **In the workshop.** Order the projects as tokn, expri, ffbpe, flm.py,
+   Apell, doi, llm-tokei, and vpsctl. Give each project a useful description and direct
+   source link. Keep the two-column grid and link both source organizations.
 5. **The RSI direction.** Close with Inspect → Experiment → Measure → Improve,
    and an invitation to explore the source. Usage reports measure tokens and
    estimated cost; they do not establish correctness or capability improvement.
@@ -110,8 +111,22 @@ it does not imply a shipped integration that autonomously closes the loop.
 - A first-time visitor can explain the difference between the two lead tools.
 - Each sample interaction communicates one real capability and has an obvious
   next step.
-- The remaining four projects are discoverable without dominating the page.
+- The supporting projects are discoverable without dominating the page.
 - Small screens preserve readable product content and usable controls.
 - Reduced motion and keyboard navigation retain the full meaning of the page.
 - The presentation feels more playful while retaining the approved comfortable
   brand character.
+
+## Workshop additions
+
+Reviewed against the public repositories on 2026-11-15. These tools extend the
+collection into applets, paper reading, experiment workflows, and compute
+management. They support the RSI direction without implying an integrated,
+autonomous improvement loop.
+
+| Project | Verified scope | Presentation |
+| --- | --- | --- |
+| [Apell](https://github.com/agentic-rs/apell#readme) | Applet host for iOS, Android, and macOS with sandboxed interfaces, shared AI services, private storage, and optional Rust/WASM backends. | In development; no public release. Do not imply uninterrupted background execution when the host is suspended or terminated. |
+| [doi](https://github.com/agentic-rs/doi#readme) | Paper Reader applet for Apell: arXiv reading, reference navigation, saved AI explanations, and notes. | [Nightly preview](https://github.com/agentic-rs/doi/releases/tag/nightly). Keep the repository name visible and clarify the applet's display name. |
+| [expri](https://github.com/agentic-rs/expri#readme) | Local and remote experiment workflows with metrics, artifacts, and result comparison. SSH and optional ctl transport are implemented. | Available through a [published GitHub release](https://github.com/agentic-rs/expri/releases/tag/v0.1.6); avoid assuming package registry availability. |
+| [vpsctl](https://github.com/agentic-rs/vpsctl#readme) | Multi-account compute CLI for Vultr, RunPod, and Vast.ai, with machine discovery, instance management, and ctl connections. | In development; source-based Bun workflow, with no GitHub release. Do not imply general-purpose orchestration or support for unlisted providers. |
