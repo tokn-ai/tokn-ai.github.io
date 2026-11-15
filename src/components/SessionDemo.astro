@@ -1,0 +1,324 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id = "session-example" } = Astro.props;
+const sessions = [
+  {
+    id: "keyboard",
+    source: "Codex",
+    title: "Review keyboard navigation",
+    preview: "Give every control a clear focus state.",
+    prompt: "Can you make the Orbit dashboard easier to use with a keyboard?",
+    response: "The activity list now follows a predictable tab order. Each control has a visible focus state, and Escape closes the detail panel.",
+    tool: "Read keyboard.ts",
+    output: "Tab → next control\nShift + Tab → previous control\nEscape → close details",
+    time: "Today",
+  },
+  {
+    id: "release",
+    source: "Pi",
+    title: "Simplify release notes",
+    preview: "Make the changes easy to scan.",
+    prompt: "Help me turn these Orbit updates into a short set of release notes.",
+    response: "Start with what changed for the reader: a clearer activity timeline, keyboard navigation, and a more useful detail panel. Keep one idea per bullet.",
+    tool: "Read release-notes.md",
+    output: "• A clearer activity timeline\n• Keyboard navigation throughout\n• Details when you need them",
+    time: "Yesterday",
+  },
+  {
+    id: "timeline",
+    source: "OpenCode",
+    title: "Add an activity timeline",
+    preview: "Keep recent updates together.",
+    prompt: "Let's add a compact activity timeline to Orbit. Keep it simple.",
+    response: "The timeline groups updates by day, with a short description for each event. Selecting an event opens its details without losing your place in the list.",
+    tool: "Read ActivityTimeline.tsx",
+    output: "ActivityTimeline\n  DayGroup\n    ActivityItem\n    ActivityItem\n  DetailPanel",
+    time: "Yesterday",
+  },
+];
+---
+
+<session-example class="session-example" aria-label="Try the session viewer with fictional conversations">
+  <div class="example-caption">
+    <span class="example-spark" aria-hidden="true">✳</span>
+    <span>Interactive example · sample conversations</span>
+  </div>
+
+  <div class="session-window">
+    <div class="window-bar">
+      <div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+      <span class="window-title">tokn-session</span>
+      <span class="window-project">Orbit</span>
+    </div>
+
+    <div class="session-workspace">
+      <aside class="session-sidebar" aria-label="Example conversations">
+        <div class="sidebar-heading"><span>Your threads</span><span aria-hidden="true">↙</span></div>
+
+        <div data-fallback>
+          <p class="fallback-note">Three tools. One familiar place.</p>
+          <div class="fallback-session"><span class="source-mark" aria-hidden="true">C</span><span>Review keyboard navigation<small>Codex · Orbit</small></span></div>
+        </div>
+
+        <div data-controls hidden>
+          <label class="session-search">
+            <svg aria-hidden="true" viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5"></circle><path d="m12.5 12.5 4 4"></path></svg>
+            <span class="visually-hidden">Search example session titles and previews</span>
+            <input type="search" placeholder="Find a thread…" autocomplete="off" data-search />
+          </label>
+          <div class="source-filters" role="group" aria-label="Filter example sessions by source">
+            {['All', 'Codex', 'Pi', 'OpenCode'].map((source) => (
+              <button type="button" data-source={source} aria-pressed={source === 'All'}>{source}</button>
+            ))}
+          </div>
+          <p class="result-count" role="status" aria-live="polite" aria-atomic="true" data-result-count>3 conversations</p>
+          <div class="session-list">
+            {sessions.map((session, index) => (
+              <button
+                class="session-row"
+                type="button"
+                data-session={session.id}
+                data-provider={session.source}
+                data-search-text={`${session.title} ${session.preview}`}
+                aria-pressed={index === 0}
+                aria-controls={`${id}-${session.id}`}
+              >
+                <span class="session-row-meta"><span class="source-mark" aria-hidden="true">{session.source === 'OpenCode' ? 'O' : session.source[0]}</span><span>{session.source}</span><span class="session-time">{session.time}</span></span>
+                <strong>{session.title}</strong>
+                <span class="session-preview">{session.preview}</span>
+              </button>
+            ))}
+          </div>
+          <div class="sidebar-empty" data-sidebar-empty hidden>
+            <span aria-hidden="true">⌕</span>
+            <p>No threads found.</p>
+            <button type="button" data-clear>Clear filters</button>
+          </div>
+        </div>
+        <p class="sidebar-footnote"><span aria-hidden="true">◌</span> A little less searching.</p>
+      </aside>
+
+      <div class="conversation-area">
+        {sessions.map((session, index) => (
+          <article id={`${id}-${session.id}`} class="conversation" data-conversation={session.id} hidden={index !== 0} aria-label={`${session.title}, example ${session.source} conversation`}>
+            <div class="conversation-heading">
+              <span class="conversation-breadcrumb">Orbit <span aria-hidden="true">/</span> {session.source}</span>
+              <span class="history-label">History</span>
+            </div>
+            <h3>{session.title}</h3>
+            <div class="message message-user">
+              <span class="message-author">You</span>
+              <p>{session.prompt}</p>
+            </div>
+            <div class="message message-agent">
+              <span class="message-author"><span class="agent-spark" aria-hidden="true">✳</span>{session.source}</span>
+              <p>{session.response}</p>
+            </div>
+            <details class="recorded-step">
+              <summary><span class="step-icon" aria-hidden="true">↳</span><span>{session.tool}<small>Recorded tool step</small></span><span class="step-toggle" aria-hidden="true">+</span></summary>
+              <pre><code>{session.output}</code></pre>
+            </details>
+            <p class="conversation-note"><span aria-hidden="true">✓</span> The conversation, with its context.</p>
+          </article>
+        ))}
+        <div class="conversation-empty" data-conversation-empty hidden>
+          <span aria-hidden="true">⌕</span>
+          <p>A different word might find it.</p>
+          <span>Try “keyboard”, “release”, or “timeline”.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</session-example>
+
+<script>
+  class SessionExample extends HTMLElement {
+    connectedCallback() {
+      if (this.dataset.ready) return;
+
+      const controls = this.querySelector<HTMLElement>("[data-controls]");
+      const search = this.querySelector<HTMLInputElement>("[data-search]");
+      const result_count = this.querySelector<HTMLElement>("[data-result-count]");
+      const sidebar_empty = this.querySelector<HTMLElement>("[data-sidebar-empty]");
+      const conversation_empty = this.querySelector<HTMLElement>("[data-conversation-empty]");
+      const rows = [...this.querySelectorAll<HTMLButtonElement>("[data-session]")];
+      const filters = [...this.querySelectorAll<HTMLButtonElement>("[data-source]")];
+      const conversations = [...this.querySelectorAll<HTMLElement>("[data-conversation]")];
+      if (!controls || !search || !result_count || !sidebar_empty || !conversation_empty) return;
+
+      let active_source = "All";
+      let selected_session = rows[0]?.dataset.session;
+
+      const showConversation = (session_id: string | undefined) => {
+        selected_session = session_id;
+        rows.forEach((row) => row.setAttribute("aria-pressed", String(row.dataset.session === session_id)));
+        conversations.forEach((conversation) => {
+          conversation.hidden = conversation.dataset.conversation !== session_id;
+        });
+        conversation_empty.hidden = session_id !== undefined;
+      };
+
+      const updateResults = () => {
+        const query = search.value.trim().toLocaleLowerCase();
+        const visible_rows = rows.filter((row) => {
+          const matches_source = active_source === "All" || row.dataset.provider === active_source;
+          const matches_search = row.dataset.searchText?.toLocaleLowerCase().includes(query) ?? false;
+          row.hidden = !(matches_source && matches_search);
+          return !row.hidden;
+        });
+        filters.forEach((filter) => filter.setAttribute("aria-pressed", String(filter.dataset.source === active_source)));
+        result_count.textContent = `${visible_rows.length} conversation${visible_rows.length === 1 ? "" : "s"}`;
+        sidebar_empty.hidden = visible_rows.length !== 0;
+        const next_session = visible_rows.find((row) => row.dataset.session === selected_session) ?? visible_rows[0];
+        showConversation(next_session?.dataset.session);
+      };
+
+      filters.forEach((filter) => filter.addEventListener("click", () => {
+        active_source = filter.dataset.source ?? "All";
+        updateResults();
+      }));
+      rows.forEach((row) => row.addEventListener("click", () => showConversation(row.dataset.session)));
+      search.addEventListener("input", updateResults);
+      this.querySelector<HTMLButtonElement>("[data-clear]")?.addEventListener("click", () => {
+        active_source = "All";
+        search.value = "";
+        updateResults();
+        search.focus();
+      });
+
+      this.querySelector<HTMLElement>("[data-fallback]")?.setAttribute("hidden", "");
+      controls.hidden = false;
+      this.dataset.ready = "true";
+    }
+  }
+
+  if (!customElements.get("session-example")) customElements.define("session-example", SessionExample);
+</script>
+
+<style>
+  .session-example {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: left;
+  }
+
+  .session-example [hidden] { display: none !important; }
+  .session-example *, .session-example *::before, .session-example *::after { box-sizing: border-box; }
+  .session-example button, .session-example input { font: inherit; }
+  .session-example button { cursor: pointer; }
+  .session-example button:focus-visible, .session-example input:focus-visible, .session-example summary:focus-visible { outline: 3px solid var(--teal-dark); outline-offset: 3px; }
+
+  .example-caption { display: flex; align-items: center; gap: 8px; margin: 0 0 13px 5px; color: var(--muted); font-size: 11px; letter-spacing: .01em; }
+  .example-spark { color: var(--plum); font-size: 20px; line-height: 1; }
+  .session-window { overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: #fff; box-shadow: 0 18px 50px -28px #49365040, 0 2px 5px #49365004; }
+  .window-bar { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 20px; border-bottom: 1px solid var(--line); background: #faf8fb; }
+  .window-dots { display: flex; gap: 5px; }
+  .window-dots i { width: 7px; height: 7px; border-radius: 50%; background: #d9d1df; }
+  .window-dots i:nth-child(2) { background: #e3dce8; }
+  .window-dots i:nth-child(3) { background: #c6ded9; }
+  .window-title { font-size: 12px; font-weight: 650; }
+  .window-project { margin-left: auto; color: var(--muted); font: 10px var(--mono); }
+  .session-workspace { display: grid; grid-template-columns: minmax(190px, 31%) minmax(0, 1fr); min-height: 432px; }
+  .session-sidebar { display: flex; flex-direction: column; padding: 22px 12px 15px; border-right: 1px solid var(--line); background: #faf9f7; }
+  .sidebar-heading { display: flex; justify-content: space-between; align-items: center; margin: 0 7px 15px; font-size: 12px; font-weight: 650; }
+  .sidebar-heading > span:last-child { color: #9a8aa9; font-size: 18px; font-weight: 400; }
+  .session-search { display: flex; align-items: center; gap: 6px; min-width: 0; border: 1px solid #e2dce4; border-radius: 8px; padding: 8px; background: #fff; }
+  .session-search svg { width: 15px; height: 15px; flex-shrink: 0; stroke: var(--muted); stroke-width: 1.5; }
+  .session-search input { width: 100%; min-width: 0; padding: 0; border: 0; background: transparent; color: var(--ink); font-size: 11px; }
+  .session-search input::placeholder { color: var(--muted); opacity: 1; }
+  .session-search:focus-within { outline: 3px solid var(--teal-dark); outline-offset: 3px; }
+  .session-search input:focus-visible { outline: none; }
+  .source-filters { display: flex; flex-wrap: wrap; gap: 3px; margin: 12px 0 15px; }
+  .source-filters button { padding: 5px 7px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: #6c626f; font-size: 10px; }
+  .source-filters button:hover { background: #efebf1; }
+  .source-filters button[aria-pressed="true"] { border-color: #ddd1e5; background: #ece5f0; color: #564361; font-weight: 650; }
+  .result-count { margin: 0 7px 8px; color: var(--muted); font-size: 10px; }
+  .session-list { display: flex; flex-direction: column; gap: 6px; }
+  .session-row { width: 100%; padding: 11px 9px; border: 1px solid transparent; border-radius: 9px; background: transparent; color: var(--ink); text-align: left; }
+  .session-row:hover { background: #f1edf3; }
+  .session-row[aria-pressed="true"] { border-color: #dacee1; background: #eee7f3; }
+  .session-row-meta { display: flex; align-items: center; gap: 5px; color: #6c5b78; font-size: 9px; }
+  .source-mark { display: inline-grid; place-items: center; width: 17px; height: 17px; flex-shrink: 0; border-radius: 5px; background: #e0d5e9; color: #574467; font-size: 9px; font-weight: 700; }
+  .session-time { margin-left: auto; color: #786e80; font-size: 8px; }
+  .session-row strong { display: block; margin-top: 6px; font-size: 11px; font-weight: 600; line-height: 1.4; }
+  .session-preview { display: block; margin-top: 4px; color: #716577; font-size: 10px; line-height: 1.5; }
+  .sidebar-footnote { display: flex; align-items: center; gap: 6px; margin: auto 7px 0; padding-top: 20px; color: var(--muted); font-size: 9px; }
+  .sidebar-footnote span { color: var(--teal-dark); font-size: 16px; }
+  .conversation-area { min-width: 0; background: #fffefa; }
+  .conversation { padding: 25px 28px 20px; }
+  .conversation-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .conversation-breadcrumb { display: flex; gap: 8px; color: var(--muted); font-size: 10px; }
+  .conversation-breadcrumb span { color: #c6bbcc; }
+  .history-label { border: 1px solid #e7e1e9; border-radius: 5px; padding: 2px 6px; color: var(--muted); font-size: 9px; }
+  .conversation h3 { margin: 15px 0 24px; color: var(--ink); font-family: var(--sans); font-size: clamp(17px, 2vw, 21px); font-weight: 620; letter-spacing: -.025em; line-height: 1.25; }
+  .message { margin-bottom: 21px; }
+  .message-author { display: flex; align-items: center; gap: 5px; margin-bottom: 7px; color: #6a5679; font-size: 10px; font-weight: 650; }
+  .agent-spark { color: var(--teal-dark); font-size: 15px; line-height: 1; }
+  .message p { margin: 0; font-size: 12px; line-height: 1.75; }
+  .message-user { padding: 13px 15px; border-radius: 3px 12px 12px 12px; background: #f0ebf4; }
+  .message-user p { color: #514459; }
+  .message-agent { padding: 0 3px; }
+  .recorded-step { border: 1px solid #e3dedf; border-radius: 9px; background: #faf9f6; }
+  .recorded-step summary { display: flex; align-items: center; gap: 9px; padding: 10px 12px; list-style: none; cursor: pointer; font: 10px var(--mono); }
+  .recorded-step summary::-webkit-details-marker { display: none; }
+  .step-icon { color: var(--teal-dark); font-size: 17px; }
+  .recorded-step small { display: block; margin-top: 4px; color: var(--muted); font-family: var(--sans); font-size: 9px; }
+  .step-toggle { margin-left: auto; color: var(--muted); font: 16px var(--sans); }
+  .recorded-step[open] .step-toggle { transform: rotate(45deg); }
+  .recorded-step pre { margin: 0; padding: 12px; border-top: 1px solid #e3dedf; overflow-x: auto; color: #4e625f; font: 10px/1.7 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
+  .conversation-note { display: flex; align-items: center; gap: 6px; margin: 18px 0 0; color: var(--muted); font-size: 10px; }
+  .conversation-note span { color: var(--teal-dark); }
+  .sidebar-empty { padding: 25px 8px; text-align: center; color: var(--muted); }
+  .sidebar-empty > span { font-size: 30px; color: #aa9ab8; }
+  .sidebar-empty p { margin: 4px 0 12px; font-size: 11px; }
+  .sidebar-empty button { padding: 6px 9px; border: 1px solid #dacee1; border-radius: 6px; background: #eee7f3; color: #564361; font-size: 10px; }
+  .conversation-empty { display: flex; min-height: 390px; height: 100%; flex-direction: column; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+  .conversation-empty > span:first-child { color: #b0a2ba; font-size: 48px; }
+  .conversation-empty p { margin: 12px 0 6px; font-size: 16px; font-weight: 550; }
+  .conversation-empty > span:last-child { color: var(--muted); font-size: 11px; }
+  .fallback-note { margin: 0 7px 18px; color: var(--muted); font-size: 11px; }
+  .fallback-session { display: flex; align-items: flex-start; gap: 8px; padding: 12px 9px; border: 1px solid #dacee1; border-radius: 9px; background: #eee7f3; font-size: 11px; }
+  .fallback-session small { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+  @media (max-width: 620px) {
+    .session-workspace { grid-template-columns: minmax(150px, 35%) minmax(0, 1fr); }
+    .session-sidebar { padding: 18px 9px 14px; }
+    .conversation { padding: 22px 18px; }
+    .session-time { display: none; }
+    .source-filters { gap: 1px; }
+    .source-filters button { padding: 5px; }
+    .session-preview { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .example-caption { font-size: 10px; }
+    .session-workspace { display: block; }
+    .session-sidebar { border-right: 0; border-bottom: 1px solid var(--line); padding: 16px; }
+    .sidebar-heading { margin: 0 0 10px; }
+    .sidebar-heading > span:last-child, .sidebar-footnote { display: none; }
+    .session-search { padding: 10px; }
+    .session-search input { font-size: 12px; }
+    .source-filters { gap: 5px; margin: 10px 0; }
+    .source-filters button { padding: 6px 9px; font-size: 11px; }
+    .result-count { margin-left: 1px; }
+    .session-list { gap: 4px; }
+    .session-row { display: flex; align-items: center; gap: 8px; padding: 8px; }
+    .session-row-meta > span:not(.source-mark) { display: none; }
+    .session-row strong { margin: 0; font-size: 11px; }
+    .conversation { padding: 22px; }
+    .conversation h3 { font-size: 20px; }
+    .message p { font-size: 12px; }
+    .conversation-empty { min-height: 240px; }
+    .sidebar-empty { padding: 12px 0; }
+    .sidebar-empty > span { display: none; }
+  }
+</style>

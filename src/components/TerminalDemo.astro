@@ -1,0 +1,232 @@
+<terminal-demo class="terminal-demo">
+  <div class="demo-label">Interactive example · simulated terminal</div>
+  <div class="terminal-window">
+    <div class="window-bar">
+      <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span>ctl <span class="window-divider">/</span> orbit</span>
+      <span class="window-mark" aria-hidden="true">↗</span>
+    </div>
+    <div class="terminal-toolbar">
+      <div class="host-controls" role="group" aria-label="Example host" hidden>
+        <button type="button" data-host="local" aria-pressed="true">Local</button>
+        <button type="button" data-host="remote" aria-pressed="false">Remote <span>SSH</span></button>
+      </div>
+      <span class="connection-state"><i aria-hidden="true"></i><span data-connection>Connected</span></span>
+    </div>
+    <div class="session-content">
+      <div class="session-heading">
+        <span class="session-symbol" aria-hidden="true">⌁</span>
+        <div><strong>orbit</strong><span data-host-label>Local terminal session</span></div>
+        <span class="running-tag">running</span>
+      </div>
+      <div class="terminal-output" data-output aria-label="Simulated terminal output">
+        <p class="command"><span aria-hidden="true">❯</span> npm run dev</p>
+        <p class="boot-line">Orbit <span>· development server</span></p>
+        <div class="heartbeat-lines">
+          <p><span class="log-time" data-time>00:39</span><span class="log-marker">›</span> heartbeat <span data-tick>039</span> <span class="log-ok">ok</span></p>
+          <p><span class="log-time" data-time>00:40</span><span class="log-marker">›</span> heartbeat <span data-tick>040</span> <span class="log-ok">ok</span></p>
+          <p><span class="log-time" data-time>00:41</span><span class="log-marker">›</span> heartbeat <span data-tick>041</span> <span class="log-ok">ok</span></p>
+          <p><span class="log-time" data-time>00:42</span><span class="log-marker">›</span> heartbeat <span data-tick>042</span> <span class="log-ok">ok</span></p>
+        </div>
+        <span class="terminal-cursor" aria-hidden="true"></span>
+      </div>
+      <div class="detached-panel" data-detached hidden>
+        <span class="detached-symbol" aria-hidden="true">⌁</span>
+        <strong>You stepped away.</strong>
+        <p>The session is still running.<br />Reconnect to see where it is now.</p>
+        <span class="detached-note">client disconnected · session alive</span>
+      </div>
+    </div>
+    <div class="terminal-bottom">
+      <span><i aria-hidden="true"></i> <span data-session-state>Session alive</span></span>
+      <button type="button" class="connection-button" data-toggle hidden>Disconnect <span aria-hidden="true">↗</span></button>
+    </div>
+  </div>
+  <p class="demo-caption" data-announcement role="status" aria-live="polite">Shells survive a client disconnect while the session daemon keeps running.</p>
+</terminal-demo>
+
+<script>
+  class TerminalDemo extends HTMLElement {
+    cleanup?: () => void;
+
+    connectedCallback() {
+      this.cleanup?.();
+
+      const host_controls = this.querySelector<HTMLElement>(".host-controls");
+      const host_buttons = [...this.querySelectorAll<HTMLButtonElement>("[data-host]")];
+      const toggle_button = this.querySelector<HTMLButtonElement>("[data-toggle]");
+      const output = this.querySelector<HTMLElement>("[data-output]");
+      const detached = this.querySelector<HTMLElement>("[data-detached]");
+      const connection = this.querySelector<HTMLElement>("[data-connection]");
+      const host_label = this.querySelector<HTMLElement>("[data-host-label]");
+      const announcement = this.querySelector<HTMLElement>("[data-announcement]");
+      const times = [...this.querySelectorAll<HTMLElement>("[data-time]")];
+      const ticks = [...this.querySelectorAll<HTMLElement>("[data-tick]")];
+
+      if (!host_controls || !toggle_button || !output || !detached || !connection || !host_label || !announcement) return;
+
+      const started_at = performance.now();
+      const sessions = {
+        local: { connected: true, detached_tick: 0 },
+        remote: { connected: true, detached_tick: 0 },
+      };
+      let active_host: keyof typeof sessions = "local";
+      let in_view = false;
+      let interval_id: ReturnType<typeof setInterval> | undefined;
+      const controller = new AbortController();
+      const reduced_motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      const currentTick = () => 42 + Math.floor((performance.now() - started_at) / 1000);
+
+      const renderOutput = () => {
+        const tick = currentTick();
+        times.forEach((time, index) => {
+          const value = tick - (times.length - index - 1);
+          time.textContent = `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`;
+          ticks[index].textContent = String(value).padStart(3, "0");
+        });
+      };
+
+      const renderConnection = () => {
+        const connected = sessions[active_host].connected;
+        this.dataset.connected = String(connected);
+        output.hidden = !connected;
+        detached.hidden = connected;
+        connection.textContent = connected ? "Connected" : "Detached";
+        host_label.textContent = active_host === "local" ? "Local terminal session" : "Remote terminal session · SSH";
+        toggle_button.replaceChildren(document.createTextNode(connected ? "Disconnect ↗" : "Reconnect ↙"));
+        host_buttons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.host === active_host));
+        });
+        renderOutput();
+      };
+
+      const syncTimer = () => {
+        if (interval_id !== undefined) clearInterval(interval_id);
+        interval_id = undefined;
+        if (!in_view || document.hidden || reduced_motion.matches || document.documentElement.dataset.motion === "paused") return;
+        renderOutput();
+        interval_id = setInterval(() => {
+          if (sessions[active_host].connected) renderOutput();
+        }, 1000);
+      };
+
+      host_buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const host = button.dataset.host;
+          if (host !== "local" && host !== "remote") return;
+          active_host = host;
+          renderConnection();
+          announcement.textContent = `${host === "local" ? "Local" : "Remote SSH"} example selected. Both keep the session alive while its daemon runs.`;
+        }, { signal: controller.signal });
+      });
+
+      toggle_button.addEventListener("click", () => {
+        const session = sessions[active_host];
+        session.connected = !session.connected;
+        if (session.connected) {
+          const elapsed = Math.max(0, currentTick() - session.detached_tick);
+          announcement.textContent = `Back in the same session. ${elapsed} ${elapsed === 1 ? "heartbeat" : "heartbeats"} passed while you were away.`;
+        } else {
+          session.detached_tick = currentTick();
+          announcement.textContent = "Client disconnected. The simulated process keeps running. Reconnect whenever you like.";
+        }
+        renderConnection();
+      }, { signal: controller.signal });
+
+      const visibility_observer = new IntersectionObserver(([entry]) => {
+        in_view = entry.isIntersecting;
+        syncTimer();
+      });
+      const motion_observer = new MutationObserver(syncTimer);
+      visibility_observer.observe(this);
+      motion_observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-motion"] });
+      document.addEventListener("visibilitychange", syncTimer, { signal: controller.signal });
+      reduced_motion.addEventListener("change", syncTimer, { signal: controller.signal });
+
+      host_controls.hidden = false;
+      toggle_button.hidden = false;
+      renderConnection();
+
+      this.cleanup = () => {
+        controller.abort();
+        visibility_observer.disconnect();
+        motion_observer.disconnect();
+        if (interval_id !== undefined) clearInterval(interval_id);
+      };
+    }
+
+    disconnectedCallback() {
+      this.cleanup?.();
+    }
+  }
+
+  if (!customElements.get("terminal-demo")) customElements.define("terminal-demo", TerminalDemo);
+</script>
+
+<style>
+  .terminal-demo { display: block; width: 100%; min-width: 0; }
+  .demo-label { margin: 0 0 12px; color: var(--muted, #645d69); font: 11px/1.5 var(--mono, monospace); letter-spacing: .025em; }
+  .terminal-window { overflow: hidden; border: 1px solid #4d4357; border-radius: 20px; background: #231f2a; color: #eee8f1; box-shadow: 0 24px 60px -28px #33263c66; font-family: var(--mono, monospace); }
+  .window-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 46px; padding: 0 20px; border-bottom: 1px solid #ffffff12; color: #c4b6d0; font-size: 11px; }
+  .window-dots { display: flex; gap: 5px; }
+  .window-dots i { width: 6px; height: 6px; border-radius: 50%; background: #75667e; }
+  .window-dots i:first-child { background: #e1aa88; }
+  .window-dots i:last-child { background: #61b6af; }
+  .window-divider { padding: 0 5px; color: #75667e; }
+  .window-mark { color: #94849f; font-size: 18px; }
+  .terminal-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 62px; padding: 12px 20px; box-sizing: border-box; }
+  .host-controls { display: flex; padding: 3px; gap: 3px; border: 1px solid #4a4052; border-radius: 9px; }
+  button { font: inherit; cursor: pointer; }
+  .host-controls button { padding: 6px 10px; border: 0; border-radius: 5px; background: transparent; color: #c4b6d0; font-size: 11px; line-height: 1.4; }
+  .host-controls button[aria-pressed="true"] { background: #4d405a; color: #fff; }
+  .host-controls button:hover { background: #5d4e69; color: #fff; }
+  .host-controls button span { margin-left: 4px; color: #b7a3c4; font-size: 9px; }
+  button:focus-visible { outline: 2px solid #61b6af; outline-offset: 4px; }
+  .connection-state { display: inline-flex; align-items: center; gap: 6px; color: #b4dcd4; font-size: 10px; }
+  .connection-state i, .terminal-bottom > span i { width: 5px; height: 5px; border-radius: 50%; background: #61b6af; }
+  .session-content { padding: 0 22px; }
+  .session-heading { display: flex; align-items: center; gap: 10px; min-height: 46px; }
+  .session-symbol { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #65546f; border-radius: 8px; color: #d5c6e1; background: #3e3348; font: 27px/1 var(--sans, sans-serif); }
+  .session-heading div { display: grid; gap: 3px; }
+  .session-heading strong { font-size: 12px; font-weight: 500; }
+  .session-heading div > span { color: #b4a7bf; font-size: 9px; }
+  .running-tag { margin-left: auto; padding: 4px 7px; border: 1px solid #47615c; border-radius: 5px; color: #a9d4ca; font-size: 9px; }
+  .terminal-output, .detached-panel { box-sizing: border-box; height: 223px; padding-top: 19px; }
+  .terminal-output p { margin: 0; font-size: 11px; line-height: 1.85; }
+  .command { color: #f4edf7; }
+  .command > span { margin-right: 9px; color: #61b6af; }
+  .boot-line { padding: 8px 0 10px; color: #e1aa88; }
+  .boot-line > span { color: #b4a7bf; }
+  .heartbeat-lines p { display: flex; align-items: baseline; gap: 9px; color: #c4b6d0; white-space: nowrap; }
+  .heartbeat-lines p:last-child { color: #e4dbe9; }
+  .log-time { color: #a596b2; font-variant-numeric: tabular-nums; }
+  .log-marker { color: #6c5b7c; }
+  .log-ok { margin-left: auto; color: #83c7be; }
+  .terminal-cursor { display: block; width: 6px; height: 11px; margin-top: 12px; background: #c4b6d0; animation: cursor-blink 1.4s step-end infinite; }
+  .detached-panel { display: flex; align-items: center; flex-direction: column; text-align: center; }
+  .detached-symbol { color: #c4b6d0; font: 42px/.9 var(--sans, sans-serif); }
+  .detached-panel strong { margin-top: 14px; font: 500 18px/1.4 var(--sans, sans-serif); }
+  .detached-panel p { margin: 10px 0 16px; color: #c4b6d0; font: 12px/1.6 var(--sans, sans-serif); }
+  .detached-note { color: #83c7be; font-size: 9px; }
+  .terminal-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 10px 20px; box-sizing: border-box; border-top: 1px solid #ffffff12; background: #ffffff02; }
+  .terminal-bottom > span { display: inline-flex; align-items: center; gap: 7px; color: #b4a7bf; font-size: 10px; }
+  .connection-button { min-height: 34px; padding: 7px 11px; border: 1px solid #6f5b7f; border-radius: 7px; color: #e6d6f1; background: #45354f; font-size: 11px; }
+  .connection-button:hover { background: #5d466b; border-color: #b99ccb; }
+  .connection-button span { padding-left: 6px; }
+  .demo-caption { min-height: 38px; max-width: 48ch; margin: 13px 0 0; color: var(--muted, #645d69); font: 12px/1.6 var(--sans, sans-serif); }
+  .terminal-demo [hidden] { display: none !important; }
+  .terminal-demo[data-connected="false"] .connection-state { color: #e1aa88; }
+  .terminal-demo[data-connected="false"] .connection-state i { background: #e1aa88; }
+  .terminal-demo[data-connected="false"] .connection-button { color: #c9eee7; border-color: #527c72; background: #314a43; }
+  :global(html[data-motion="paused"]) .terminal-cursor { animation: none; }
+  @keyframes cursor-blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .terminal-cursor { animation: none; } }
+  @media (max-width: 400px) {
+    .window-bar, .terminal-toolbar, .terminal-bottom { padding-left: 14px; padding-right: 14px; }
+    .session-content { padding: 0 15px; }
+    .host-controls button { padding: 6px 8px; }
+    .connection-state { font-size: 9px; }
+    .heartbeat-lines p { gap: 6px; font-size: 10px; }
+  }
+</style>

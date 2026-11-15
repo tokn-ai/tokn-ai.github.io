@@ -26,6 +26,18 @@ pnpm run build
 
 The static site is written to `dist/`.
 
+## Landing page
+
+The homepage introduces tokn-session and ctl through interactive examples in
+`src/components/SessionDemo.astro` and `src/components/TerminalDemo.astro`.
+Their conversations and terminal output are fictional, run entirely in the
+browser, and have readable fallbacks without JavaScript. The page honors reduced
+motion and includes a motion control.
+
+Supporting projects are listed in `src/data/projects.ts`. Shared styles live in
+`src/styles/`, and the research behind the page is in
+[`docs/landing-page-research.md`](docs/landing-page-research.md).
+
 ## Brand assets
 
 The approved logo is `public/logo.svg`, shared by the header and footer.

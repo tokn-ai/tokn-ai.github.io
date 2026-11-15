@@ -1,151 +1,13 @@
 ---
 import Brand from "../components/Brand.astro";
+import SessionDemo from "../components/SessionDemo.astro";
+import TerminalDemo from "../components/TerminalDemo.astro";
+import { workshop_projects } from "../data/projects";
+import "../styles/global.css";
+import "../styles/home.css";
 
-const site_title = "Tokn AI — Open tools for agents and models";
-const site_description =
-  "Browse agent conversations, manage local and remote terminals, and build model infrastructure with open-source tools from Tokn AI.";
-
-const products = [
-  {
-    id: "tokn-session",
-    name: "tokn-session",
-    scope: "agent sessions",
-    status: "in development",
-    summary:
-      "Bring conversations from different agent tools and machines into one searchable view, with native details preserved.",
-    points: [
-      "Six agent sources",
-      "Desktop + web viewer",
-      "Encrypted access across machines",
-    ],
-    language: "Rust / TypeScript",
-    href: "https://github.com/tokn-ai/tokn-session",
-    showcase: {
-      title: "Pick up the thread across agent tools.",
-      description:
-        "Find past conversations in one place. Browse sessions from Codex, Pi, OpenCode, ZCode, WorkBuddy, and DSH, with live interactions where the provider supports them.",
-      image: "/showcase/tokn-session.png",
-      alt: "Six agent sources feed a shared session layer and a searchable desktop and web viewer.",
-    },
-  },
-  {
-    id: "ctl",
-    name: "ctl",
-    scope: "terminal control",
-    status: "in development",
-    summary:
-      "Keep terminal sessions running and manage work across local and SSH-connected machines from a CLI or desktop app.",
-    points: [
-      "Persistent sessions + split panes",
-      "Reusable task definitions",
-      "Local + SSH connections",
-    ],
-    language: "Rust / TypeScript",
-    href: "https://github.com/tokn-ai/ctl",
-    showcase: {
-      title: "Come back to the same running terminals.",
-      description:
-        "Reconnect to persistent shells across local and SSH hosts. Use the CLI to start tasks, check their status, and inspect logs.",
-      image: "/showcase/ctl.png",
-      alt: "CLI and desktop access to persistent local and SSH terminal sessions, with a separate CLI task workflow.",
-    },
-  },
-  {
-    id: "tokn",
-    name: "tokn",
-    scope: "model routing",
-    status: "in development",
-    summary:
-      "Route compatible clients through one local endpoint, with provider selection, streaming, and account pools.",
-    points: [
-      "OpenAI-compatible endpoint",
-      "Streaming + account pools",
-      "Local SQLite usage records",
-    ],
-    language: "Rust",
-    href: "https://github.com/tokn-ai/tokn",
-    showcase: {
-      title: "Connect your client to the models you use.",
-      description:
-        "A local gateway handles compatible requests, provider routing, streaming, and request history.",
-      image: "/showcase/tokn-router.png",
-      alt: "A local Tokn gateway connects an OpenAI-compatible client to providers and local request records.",
-    },
-  },
-  {
-    id: "llm-tokei",
-    name: "llm-tokei",
-    scope: "usage reports",
-    status: "available",
-    summary:
-      "See where coding-agent tokens and estimated costs went, using session records already on your machine.",
-    points: [
-      "Reports across coding agents",
-      "Human tables + stable JSON",
-      "Local session analysis",
-    ],
-    language: "Rust",
-    href: "https://github.com/agentic-rs/llm-tokei",
-    showcase: {
-      title: "See what your agent work adds up to.",
-      description:
-        "Group local usage by agent and model to compare token classes and estimated costs. The sample report shows the shape of the output.",
-      image: "/showcase/llm-tokei.png",
-      alt: "A sample usage table groups coding-agent tokens and estimated costs by source and model.",
-    },
-  },
-  {
-    id: "ffbpe",
-    name: "ffbpe",
-    scope: "tokenization",
-    status: "available",
-    summary:
-      "Train exact byte-pair tokenizers over large, multilingual corpora with bounded memory and compatible encoding.",
-    points: [
-      "Python, Rust + WebAssembly",
-      "Exact bounded-memory training",
-      "Tiktoken-compatible encoding",
-    ],
-    language: "Rust / Python",
-    href: "https://github.com/tokn-ai/ffbpe",
-    showcase: {
-      title: "Shape a multilingual inventory before training.",
-      description:
-        "A measured release benchmark shows how retained Unicode bigrams affect one FineWeb2 Chinese workload.",
-      image: "/showcase/ffbpe.png",
-      alt: "FFBPE training benchmark comparing regular and retained-bigram Unicode inventories.",
-    },
-  },
-  {
-    id: "flm-py",
-    name: "flm.py",
-    scope: "model research",
-    status: "research preview",
-    summary:
-      "Compose language-model experiments from reusable modules for datasets, training, reinforcement learning, and inference.",
-    points: [
-      "PyTorch foundations",
-      "Reusable model modules",
-      "Portable training experiments",
-    ],
-    language: "Python",
-    href: "https://github.com/tokn-ai/flm.py",
-    showcase: {
-      title: "Build a model experiment from reusable parts.",
-      description:
-        "Follow the configuration from datasets and model modules through training, reinforcement learning, and inference.",
-      image: "/showcase/flm-py.png",
-      alt: "FLM experiment configuration beside its composable package workflow.",
-    },
-  },
-];
-
-const showcases = products.map(({ name, scope, href, showcase }) => ({
-  name,
-  scope,
-  href,
-  ...showcase,
-}));
+const site_title = "Tokn AI — Building the wheels for RSI";
+const site_description = "Open-source wheels for recursive self-improvement (RSI): agent sessions, terminal control, model routing, usage reports, tokenization, and model research.";
 ---
 
 <!doctype html>
@@ -153,1384 +15,197 @@ const showcases = products.map(({ name, scope, href, showcase }) => ({
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <meta
-      name="description"
-      content={site_description}
-    />
+    <meta name="description" content={site_description} />
     <meta name="theme-color" content="#fcfbf8" />
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
     <link rel="canonical" href="https://tokn-ai.dev/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Tokn AI" />
-    <meta
-      property="og:title"
-      content={site_title}
-    />
-    <meta
-      property="og:description"
-      content={site_description}
-    />
+    <meta property="og:title" content={site_title} />
+    <meta property="og:description" content={site_description} />
     <meta property="og:url" content="https://tokn-ai.dev/" />
     <meta property="og:image" content="https://tokn-ai.dev/og.png" />
-    <meta
-      property="og:image:alt"
-      content="Tokn AI — Open tools for agents and models."
-    />
+    <meta property="og:image:alt" content="Tokn AI. Building the wheels. For RSI. Open-source building blocks for recursive self-improvement." />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content={site_title}
-    />
-    <meta
-      name="twitter:description"
-      content={site_description}
-    />
+    <meta name="twitter:title" content={site_title} />
+    <meta name="twitter:description" content={site_description} />
     <meta name="twitter:image" content="https://tokn-ai.dev/og.png" />
     <meta name="generator" content={Astro.generator} />
     <title>{site_title}</title>
   </head>
-
   <body>
-    <header>
-      <div class="container header-inner">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="top">
+      <div class="shell header-inner">
         <Brand />
-        <nav aria-label="Primary navigation">
-          <a href="#showcase">Showcase</a>
-          <a href="#projects">Projects</a>
-          <a href="#about">About</a>
-          <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">
-            GitHub <span aria-hidden="true">↗</span>
-          </a>
+        <nav aria-label="Main navigation">
+          <a href="#tools">The tools</a>
+          <a href="#workshop">The workshop</a>
+          <a class="nav-github" href="https://github.com/tokn-ai">GitHub <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </header>
-
-    <main>
-      <section class="hero container">
-        <div class="hero-copy">
-          <p class="overline">
-            <span class="status-dot" aria-hidden="true"></span> Open source lab
-          </p>
-          <h1>Open tools for working with agents.</h1>
-          <p class="lede">
-            Browse conversations across agent tools. Keep local and remote
-            terminals running. Build on open components for routing, usage,
-            and model research.
-          </p>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <svg class="hero-thread" viewBox="0 0 1440 670" fill="none" aria-hidden="true">
+          <path class="thread-plum" pathLength="1" d="M-65 180C145 15 210 80 171 235S-24 460 131 487C272 512 228 319 147 391S230 657 460 587" />
+          <path class="thread-teal" pathLength="1" d="M972 605C1120 637 1362 612 1260 434S1094 394 1199 453S1485 343 1450 202" />
+        </svg>
+        <div class="shell hero-inner">
+          <p class="eyebrow hero-eyebrow"><span class="little-star" aria-hidden="true">✳</span> Agents · tools · models</p>
+          <h1 id="hero-title"><span class="hero-line hero-line-intro">Building the <em class="hero-emphasis">wheels.</em></span> <span class="hero-line hero-line-context">For <em class="hero-emphasis-teal">RSI.</em></span></h1>
+          <p class="hero-description">Open-source building blocks for recursive self-improvement.<br class="desktop-break" /> For AI to inspect its work, run experiments, and improve its own systems.</p>
           <div class="hero-actions">
-            <a class="button primary" href="#tokn-session">Explore tokn-session</a>
-            <a class="button secondary" href="#ctl">
-              Explore ctl <span aria-hidden="true">↘</span>
-            </a>
+            <a class="button button-plum" href="#tools">Explore the tools <span aria-hidden="true">↘</span></a>
+            <a class="text-link" href="https://github.com/tokn-ai">View the source <span aria-hidden="true">↗</span></a>
+          </div>
+          <a class="floating-note note-session" href="#tokn-session">
+            <span class="note-icon" aria-hidden="true">↳</span>
+            <span><small>tokn-session</small><strong>Run &amp; resume <br />agents</strong></span>
+            <span class="note-check" aria-hidden="true">✓</span>
+          </a>
+          <a class="floating-note note-terminal" href="#ctl">
+            <span class="note-icon" aria-hidden="true">&gt;_</span>
+            <span><small>ctl</small><strong>Control shells <br />&amp; tasks</strong></span>
+            <span class="running-dot" aria-hidden="true"></span>
+          </a>
+          <div class="hero-bottom">
+            <span>Start with tokn-session and ctl.</span>
+            <a href="#tools"><span aria-hidden="true">↓</span> Take a look around</a>
+            <button class="motion-toggle" type="button" data-motion-toggle hidden aria-pressed="false">Pause motion <span aria-hidden="true">Ⅱ</span></button>
           </div>
         </div>
-
-        <aside class="stack-map" aria-label="Find a project by task">
-          <div class="stack-map-header">
-            <span>tokn-ai / projects</span>
-            <span class="stack-map-dots" aria-hidden="true">● ● ●</span>
-          </div>
-          <div class="stack-map-body">
-            {
-              products.map((product) => (
-                <a class="stack-line" href={`#${product.id}`}>
-                  <span class="stack-node">{product.scope}</span>
-                  <strong>{product.name}</strong>
-                  <span class="stack-arrow" aria-hidden="true">↘</span>
-                </a>
-              ))
-            }
-          </div>
-        </aside>
       </section>
-
-      <section class="showcase-section" id="showcase">
-        <div class="container">
-          <div class="section-intro">
-            <p class="overline">Showcase</p>
-            <div>
-              <h2>A closer look at the tools.</h2>
-              <p>
-                Start with a shared view of your agent sessions and terminals.
-                Explore the tools for routing, usage, and model research.
-              </p>
+      <div id="tools" class="tools">
+        <section class="session-section shell" id="tokn-session" aria-labelledby="session-title">
+          <div class="section-topline"><span>Run agents and inspect their work</span><span class="topline-doodle" aria-hidden="true">↶</span></div>
+          <div class="product-story session-story">
+            <div class="story-copy" data-reveal>
+              <div class="product-heading"><span class="product-name">tokn-session</span><span class="development">In development</span></div>
+              <h2 id="session-title">Run agents. <br /><em>Keep the <br />context.</em></h2>
+              <p>Start and continue agent sessions with supported runtimes. Follow live work, browse histories, and inspect recorded tool steps across providers and paired machines.</p>
+              <ul class="feature-list">
+                <li>Create and continue supported agent sessions</li>
+                <li>Search session titles and previews</li>
+                <li>Use local and paired machines</li>
+              </ul>
+              <a class="text-link" href="https://github.com/tokn-ai/tokn-session">Explore tokn-session <span aria-hidden="true">↗</span></a>
+              <p class="small-note">CLI, desktop + web. Live controls vary by provider.</p>
+            </div>
+            <div class="demo-scene session-scene" data-reveal>
+              <p class="handwritten demo-hint">Try finding “keyboard” <span aria-hidden="true">↴</span></p>
+              <SessionDemo />
+              <p class="source-line"><span>Reads histories from</span> Codex · Pi · OpenCode · ZCode · WorkBuddy · DSH</p>
             </div>
           </div>
-
-          <div
-            class="showcase-carousel"
-            data-carousel
-            role="region"
-            aria-roledescription="carousel"
-            aria-label="Project showcases"
-          >
-            <div class="showcase-toolbar">
-              <p class="showcase-position" aria-live="polite">
-                <span data-carousel-position>01</span>
-                <span aria-hidden="true"> / </span>
-                <span class="sr-only">of</span>
-                <span>{String(showcases.length).padStart(2, "0")}</span>
-              </p>
-              <div class="showcase-controls">
-                <button
-                  type="button"
-                  data-carousel-previous
-                  aria-label="Show previous project"
-                >
-                  <span aria-hidden="true">←</span>
-                </button>
-                <button
-                  type="button"
-                  data-carousel-next
-                  aria-label="Show next project"
-                >
-                  <span aria-hidden="true">→</span>
-                </button>
+        </section>
+        <section class="terminal-section" id="ctl" aria-labelledby="terminal-title">
+          <div class="shell">
+            <div class="section-topline"><span>Give the next experiment a place to run</span><span class="topline-doodle" aria-hidden="true">↳</span></div>
+            <div class="product-story terminal-story">
+              <div class="demo-scene terminal-scene" data-reveal>
+                <p class="handwritten demo-hint">Go on. Disconnect. <span aria-hidden="true">↴</span></p>
+                <TerminalDemo />
+              </div>
+              <div class="story-copy" data-reveal>
+                <div class="product-heading"><span class="product-name">ctl</span><span class="development">In development</span></div>
+                <h2 id="terminal-title">More control. <br /><em>From your CLI.</em></h2>
+                <p>Control persistent shells, managed tasks, file copies, and port forwards across local and SSH hosts. Bundled skills help agents use the CLI, too.</p>
+                <ul class="feature-list">
+                  <li>Persistent sessions and split panes</li>
+                  <li>Reusable tasks, status, and logs</li>
+                  <li>File copies, port forwarding, and host control</li>
+                </ul>
+                <a class="text-link" href="https://github.com/tokn-ai/ctl">Explore ctl <span aria-hidden="true">↗</span></a>
+                <p class="small-note">CLI control + desktop terminal access. Built around ctmux.</p>
               </div>
             </div>
-
-            <div
-              class="showcase-viewport"
-              data-carousel-viewport
-              tabindex="0"
-            >
-              <div class="showcase-track">
-                {
-                  showcases.map((showcase, index) => (
-                    <article
-                      class="showcase-card"
-                      id={`showcase-slide-${index}`}
-                      data-carousel-slide
-                      role="group"
-                      aria-roledescription="slide"
-                      aria-label={`${index + 1} of ${showcases.length}: ${showcase.name}`}
-                    >
-                      <a
-                        class="showcase-image"
-                        href={showcase.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`Open the ${showcase.name} repository`}
-                      >
-                        <img
-                          src={showcase.image}
-                          width="1200"
-                          height="720"
-                          loading="lazy"
-                          decoding="async"
-                          alt={showcase.alt}
-                        />
-                      </a>
-                      <div class="showcase-copy">
-                        <div class="showcase-meta">
-                          <span>{showcase.scope}</span>
-                          <span>{showcase.name}</span>
-                        </div>
-                        <h3>{showcase.title}</h3>
-                        <p>{showcase.description}</p>
-                        <a href={showcase.href} target="_blank" rel="noreferrer">
-                          View repository <span aria-hidden="true">↗</span>
-                        </a>
-                      </div>
-                    </article>
-                  ))
-                }
-              </div>
-            </div>
-
-            <div class="showcase-dots" aria-label="Choose a project showcase">
-              {
-                showcases.map((showcase, index) => (
-                  <button
-                    type="button"
-                    data-carousel-dot
-                    data-index={index}
-                    aria-controls={`showcase-slide-${index}`}
-                    aria-label={`Show ${showcase.name}`}
-                    aria-current={index === 0 ? "true" : undefined}
-                  />
-                ))
-              }
-            </div>
+            <div class="break-note" aria-hidden="true"><span>✳</span> room for a coffee break</div>
           </div>
+        </section>
+      </div>
+      <section class="workshop-section shell" id="workshop" aria-labelledby="workshop-title">
+        <div class="workshop-intro" data-reveal>
+          <p class="eyebrow">More wheels for the loop</p>
+          <h2 id="workshop-title">Build the next<br /><em>iteration.</em></h2>
+          <p>Routing, usage reports, tokenization, and model experiments. Open components to study, adapt, and improve.</p>
+        </div>
+        <div class="workshop-grid">
+          {workshop_projects.map((project) => (
+            <article class={`workshop-project project-${project.id}`} id={project.id} data-reveal>
+              <div class="project-top"><span class="project-symbol" aria-hidden="true">{project.symbol}</span><span class="project-status">{project.status}</span></div>
+              <div class="project-title"><h3><a href={project.href}>{project.name}<span class="project-arrow" aria-hidden="true">↗</span></a></h3><span>{project.scope}</span></div>
+              <p>{project.summary}</p>
+              <div class="project-bottom"><span>{project.language}</span><span>{project.detail}</span></div>
+            </article>
+          ))}
         </div>
       </section>
-
-      <section class="projects-section" id="projects">
-        <div class="container">
-          <div class="section-intro">
-            <p class="overline">Open projects</p>
-            <div>
-              <h2>Find the part you need.</h2>
-              <p>
-                Each project has its own job. Follow a repository for setup
-                instructions, current capabilities, and development progress.
-              </p>
-            </div>
+      <section class="open-section" id="about" aria-labelledby="open-title">
+        <div class="shell open-inner">
+          <div class="open-art" aria-hidden="true">
+            <span class="orbit-label orbit-label-top">one more iteration</span>
+            <div class="logo-pebble"><img src="/logo-icon.svg" width="130" height="130" alt="" loading="lazy" /></div>
+            <svg viewBox="0 0 300 300" fill="none"><ellipse cx="150" cy="150" rx="139" ry="82" transform="rotate(-32 150 150)" /><path d="m30 131-13 7 3-15" /></svg>
+            <span class="orbit-label orbit-label-bottom">made to be opened</span>
           </div>
-
-          <div class="project-list">
-            {
-              products.map((product) => (
-                <article class="project" id={product.id}>
-                  <div class="project-meta">
-                    <span>{product.scope}</span>
-                  </div>
-                  <div class="project-content">
-                    <div>
-                      <h3>{product.name}</h3>
-                      <p>{product.summary}</p>
-                    </div>
-                    <ul>
-                      {product.points.map((point) => <li>{point}</li>)}
-                    </ul>
-                  </div>
-                  <div class="project-link">
-                    <span class="project-status">{product.status}</span>
-                    <a href={product.href} target="_blank" rel="noreferrer">
-                      {product.language} <span aria-hidden="true">↗</span>
-                    </a>
-                  </div>
-                </article>
-              ))
-            }
-          </div>
-        </div>
-      </section>
-
-      <section class="about container" id="about">
-        <div class="section-intro">
-          <p class="overline">About the lab</p>
-          <div>
-            <h2>Useful tools, open foundations.</h2>
-            <p>
-              Tokn AI builds tools for the work around agents and models, from
-              finding a conversation to keeping a remote terminal running or
-              training a tokenizer.
-            </p>
-          </div>
-        </div>
-
-        <div class="thesis">
-          <p>Start with the problem in front of you.</p>
-          <span>Browse the code, run a tool, and make it part of your workflow.</span>
-        </div>
-
-        <div class="values">
-          <article>
-            <h3>Choose what fits.</h3>
-            <p>
-              Use a session viewer, a terminal tool, or a research library on
-              its own. Each project documents its interfaces and setup.
-            </p>
-          </article>
-          <article>
-            <h3>See how it works.</h3>
-            <p>
-              Read the source and follow the decisions behind each tool.
-              Repositories make capabilities and limitations visible.
-            </p>
-          </article>
-          <article>
-            <h3>Build on shared work.</h3>
-            <p>
-              Report a rough edge, contribute a fix, or reuse a component.
-              Practical feedback helps the tools improve with the work.
-            </p>
-          </article>
-        </div>
-
-        <div class="toolchain" aria-label="Primary technologies">
-          <span><strong>Rust</strong> / durable systems</span>
-          <span><strong>TypeScript</strong> / product surfaces</span>
-          <span><strong>Python</strong> / model research</span>
-        </div>
-      </section>
-
-      <section class="cta">
-        <div class="container cta-inner">
-          <div>
-            <p class="overline">Get involved</p>
-            <h2>Find a tool. Make it yours.</h2>
-            <p>
-              Read the docs, try a project, or share what would make it more
-              useful. Development happens in the open on GitHub.
-            </p>
-          </div>
-          <div class="cta-actions">
-            <a
-              class="button cta-primary"
-              href="https://github.com/tokn-ai"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Explore GitHub <span aria-hidden="true">↗</span>
-            </a>
-            <a class="button cta-secondary" href="#projects">Browse projects</a>
+          <div class="open-copy" data-reveal>
+            <p class="eyebrow">The loop we’re building for</p>
+            <h2 id="open-title">Build. Measure.<br /><em>Improve.</em></h2>
+            <p>Tokn AI builds the wheels for RSI: open-source tools for AI to inspect its work, run experiments, measure results, and improve its own tools and models.</p>
+            <ol class="rsi-loop" aria-label="Recursive self-improvement research loop">
+              <li>Inspect <span aria-hidden="true">→</span></li>
+              <li>Experiment <span aria-hidden="true">→</span></li>
+              <li>Measure <span aria-hidden="true">→</span></li>
+              <li>Improve <span aria-hidden="true">↺</span></li>
+            </ol>
+            <a class="button button-plum" href="https://github.com/tokn-ai">Come explore on GitHub <span aria-hidden="true">↗</span></a>
           </div>
         </div>
       </section>
     </main>
-
-    <footer>
-      <div class="container footer-inner">
-        <Brand />
-        <p>Open tools for agents and models.</p>
-        <div class="footer-links">
-          <a href="#projects">Projects</a>
-          <a href="https://github.com/tokn-ai" target="_blank" rel="noreferrer">GitHub</a>
-        </div>
-        <span>© 2026</span>
-      </div>
+    <footer class="shell site-footer">
+      <Brand />
+      <p>Open-source wheels for RSI.</p>
+      <a href="#top">Back to the top <span aria-hidden="true">↑</span></a>
+      <span class="copyright">© {new Date().getFullYear()} Tokn AI</span>
     </footer>
-
     <script>
-      const carousels =
-        document.querySelectorAll<HTMLElement>("[data-carousel]");
-      const prefersReducedMotion = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      );
+      const motionButton = document.querySelector<HTMLButtonElement>("[data-motion-toggle]");
+      const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let motionPaused = motionPreference.matches;
 
-      carousels.forEach((carousel) => {
-        const viewport = carousel.querySelector<HTMLElement>(
-          "[data-carousel-viewport]",
-        );
-        const slides = Array.from(
-          carousel.querySelectorAll<HTMLElement>("[data-carousel-slide]"),
-        );
-        const dots = Array.from(
-          carousel.querySelectorAll<HTMLButtonElement>("[data-carousel-dot]"),
-        );
-        const position = carousel.querySelector<HTMLElement>(
-          "[data-carousel-position]",
-        );
-        const previous = carousel.querySelector<HTMLButtonElement>(
-          "[data-carousel-previous]",
-        );
-        const next = carousel.querySelector<HTMLButtonElement>(
-          "[data-carousel-next]",
-        );
-
-        if (!viewport || slides.length === 0) {
-          return;
+      function setMotion(paused: boolean) {
+        motionPaused = paused || motionPreference.matches;
+        document.documentElement.dataset.motion = motionPaused ? "paused" : "playing";
+        motionButton?.setAttribute("aria-pressed", String(motionPaused));
+        if (motionButton) {
+          motionButton.disabled = motionPreference.matches;
+          motionButton.textContent = motionPreference.matches
+            ? "Reduced motion · system preference"
+            : motionPaused ? "Enable motion ▷" : "Pause motion Ⅱ";
         }
+      }
 
-        let activeIndex = 0;
+      setMotion(motionPaused);
+      if (motionButton) {
+        motionButton.hidden = false;
+        motionButton.addEventListener("click", () => setMotion(!motionPaused));
+      }
+      motionPreference.addEventListener("change", (event) => setMotion(event.matches));
 
-        const updateActiveSlide = (index: number) => {
-          activeIndex = index;
-
-          if (position) {
-            position.textContent = String(index + 1).padStart(2, "0");
-          }
-
-          dots.forEach((dot, dotIndex) => {
-            if (dotIndex === index) {
-              dot.setAttribute("aria-current", "true");
-            } else {
-              dot.removeAttribute("aria-current");
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("has-arrived");
+              observer.unobserve(entry.target);
             }
-          });
-        };
-
-        const showSlide = (index: number) => {
-          const normalizedIndex =
-            (index + slides.length) % slides.length;
-          const slide = slides[normalizedIndex];
-          const left = slide.offsetLeft - slides[0].offsetLeft;
-
-          viewport.scrollTo({
-            left,
-            behavior: prefersReducedMotion.matches ? "auto" : "smooth",
-          });
-          updateActiveSlide(normalizedIndex);
-        };
-
-        previous?.addEventListener("click", () => {
-          showSlide(activeIndex - 1);
-        });
-
-        next?.addEventListener("click", () => {
-          showSlide(activeIndex + 1);
-        });
-
-        dots.forEach((dot) => {
-          dot.addEventListener("click", () => {
-            const index = Number(dot.dataset.index);
-            if (Number.isInteger(index)) {
-              showSlide(index);
-            }
-          });
-        });
-
-        viewport.addEventListener("keydown", (event) => {
-          if (event.key === "ArrowLeft") {
-            event.preventDefault();
-            showSlide(activeIndex - 1);
           }
-
-          if (event.key === "ArrowRight") {
-            event.preventDefault();
-            showSlide(activeIndex + 1);
-          }
-        });
-
-        let scrollSettleTimer: number | undefined;
-
-        viewport.addEventListener("scroll", () => {
-          window.clearTimeout(scrollSettleTimer);
-          scrollSettleTimer = window.setTimeout(() => {
-            const closestIndex = slides.reduce(
-              (closest, slide, index) => {
-                const currentDistance = Math.abs(
-                  slide.offsetLeft -
-                    slides[0].offsetLeft -
-                    viewport.scrollLeft,
-                );
-                const closestDistance = Math.abs(
-                  slides[closest].offsetLeft -
-                    slides[0].offsetLeft -
-                    viewport.scrollLeft,
-                );
-
-                return currentDistance < closestDistance
-                  ? index
-                  : closest;
-              },
-              0,
-            );
-
-            updateActiveSlide(closestIndex);
-          }, 100);
-        });
-      });
+        }, { threshold: 0.12 });
+        document.querySelectorAll("[data-reveal]").forEach((element) => observer.observe(element));
+      }
     </script>
-
   </body>
 </html>
-
-<style>
-  :root {
-    --background: #fcfbf8;
-    --surface: #ffffff;
-    --surface-subtle: #f5f3ef;
-    --text: #2e2935;
-    --text-secondary: #645d69;
-    --border: #e0dfdc;
-    --border-strong: #bcbcc2;
-    --plum: #6a5a7d;
-    --plum-light: #7d6b91;
-    --plum-dark: #574768;
-    --teal-dark: #2c706a;
-    --teal: #61b6af;
-    --orange: #c48257;
-    --terminal: #231f2a;
-    --terminal-border: #45404d;
-    --terminal-muted: #ad9fb8;
-    --terminal-text: #ece7ef;
-    --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-      sans-serif;
-    --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    margin: 0;
-    background: var(--background);
-    color: var(--text);
-    font-family: var(--sans);
-    font-size: 16px;
-    line-height: 1.6;
-    text-rendering: optimizeLegibility;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  button,
-  a {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .container {
-    width: min(100% - 40px, 1120px);
-    margin-inline: auto;
-  }
-
-  header {
-    position: sticky;
-    z-index: 10;
-    top: 0;
-    border-bottom: 1px solid var(--border);
-    background: rgba(252, 251, 248, 0.92);
-    backdrop-filter: blur(12px);
-  }
-
-  .header-inner {
-    display: flex;
-    min-height: 64px;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  nav {
-    display: flex;
-    gap: 28px;
-    font-family: var(--mono);
-    font-size: 12px;
-  }
-
-  nav a,
-  .footer-links a {
-    color: var(--text-secondary);
-  }
-
-  nav a:hover,
-  nav a:focus-visible,
-  .footer-links a:hover,
-  .footer-links a:focus-visible {
-    color: var(--text);
-  }
-
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
-    gap: clamp(48px, 7vw, 88px);
-    align-items: center;
-    min-height: 700px;
-    padding-block: 104px;
-  }
-
-  .overline {
-    margin: 0 0 18px;
-    color: var(--text-secondary);
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-
-  .status-dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    margin-right: 7px;
-    border-radius: 50%;
-    background: var(--orange);
-    vertical-align: 1px;
-  }
-
-  h1 {
-    max-width: 700px;
-    margin: 0;
-    font-size: clamp(54px, 6.2vw, 78px);
-    font-weight: 650;
-    letter-spacing: -0.052em;
-    line-height: 1.02;
-  }
-
-  .lede {
-    max-width: 620px;
-    margin: 28px 0 0;
-    color: var(--text-secondary);
-    font-size: 20px;
-    line-height: 1.55;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 34px;
-  }
-
-  .button {
-    display: inline-flex;
-    min-height: 43px;
-    align-items: center;
-    justify-content: center;
-    padding: 0 17px;
-    border: 1px solid var(--border-strong);
-    border-radius: 6px;
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  .button.primary {
-    border-color: var(--plum);
-    background: var(--plum);
-    color: white;
-  }
-
-  .button.primary:hover,
-  .button.primary:focus-visible {
-    border-color: var(--plum-dark);
-    background: var(--plum-dark);
-  }
-
-  .button.secondary {
-    gap: 9px;
-    background: var(--surface);
-  }
-
-  .button.secondary:hover,
-  .button.secondary:focus-visible {
-    border-color: var(--text-secondary);
-  }
-
-  .stack-map {
-    overflow: hidden;
-    border: 1px solid var(--terminal-border);
-    border-radius: 12px;
-    background: var(--terminal);
-    color: var(--terminal-text);
-    box-shadow: 0 18px 45px rgb(35 31 42 / 18%);
-    font-family: var(--mono);
-  }
-
-  .stack-map-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    border-bottom: 1px solid #3b3544;
-    color: var(--terminal-muted);
-    font-size: 10px;
-  }
-
-  .stack-map-dots {
-    color: var(--teal);
-    font-size: 7px;
-    letter-spacing: 4px;
-  }
-
-  .stack-map-body {
-    padding: 16px 22px;
-  }
-
-  .stack-line {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) max-content 12px;
-    gap: 16px;
-    align-items: center;
-    padding-block: 14px;
-    border-bottom: 1px solid #3b3544;
-    font-size: 11px;
-  }
-
-  .stack-line:last-child {
-    border-bottom: 0;
-  }
-
-  .stack-line:focus-visible {
-    outline: 2px solid var(--teal);
-    outline-offset: 4px;
-  }
-
-  .stack-line:hover strong,
-  .stack-line:focus-visible strong {
-    color: var(--teal);
-  }
-
-  .stack-node {
-    color: var(--terminal-muted);
-  }
-
-  .stack-line strong {
-    color: var(--terminal-text);
-    font-weight: 600;
-  }
-
-  .stack-arrow {
-    color: var(--teal);
-    text-align: center;
-  }
-
-  .showcase-section {
-    padding-block: 104px 112px;
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--surface-subtle);
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
-    margin: -1px;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-  }
-
-  .showcase-carousel {
-    margin-top: 68px;
-  }
-
-  .showcase-toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .showcase-position {
-    margin: 0;
-    color: var(--text-secondary);
-    font-family: var(--mono);
-    font-size: 11px;
-  }
-
-  .showcase-position span:first-child {
-    color: var(--plum);
-  }
-
-  .showcase-controls {
-    display: flex;
-    gap: 8px;
-  }
-
-  .showcase-controls button {
-    display: inline-flex;
-    width: 42px;
-    height: 42px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border-strong);
-    border-radius: 6px;
-    background: var(--surface);
-    color: var(--text);
-    cursor: pointer;
-    font-family: var(--mono);
-    font-size: 17px;
-  }
-
-  .showcase-controls button:hover,
-  .showcase-controls button:focus-visible {
-    border-color: var(--teal-dark);
-    color: var(--teal-dark);
-  }
-
-  .showcase-viewport {
-    overflow-x: auto;
-    border-radius: 12px;
-    outline: none;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-
-  .showcase-viewport::-webkit-scrollbar {
-    display: none;
-  }
-
-  .showcase-viewport:focus-visible {
-    outline: 2px solid var(--teal-dark);
-    outline-offset: 4px;
-  }
-
-  .showcase-track {
-    display: flex;
-  }
-
-  .showcase-card {
-    display: grid;
-    flex: 0 0 100%;
-    grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.75fr);
-    min-width: 0;
-    min-height: 470px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: var(--surface);
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-
-  .showcase-image {
-    display: block;
-    overflow: hidden;
-    border-right: 1px solid var(--border);
-    background: var(--terminal);
-  }
-
-  .showcase-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 180ms ease;
-  }
-
-  .showcase-image:hover img,
-  .showcase-image:focus-visible img {
-    transform: scale(1.012);
-  }
-
-  .showcase-copy {
-    display: flex;
-    flex-direction: column;
-    padding: 32px;
-  }
-
-  .showcase-meta {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    color: var(--teal-dark);
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .showcase-meta span:last-child {
-    color: var(--text-secondary);
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  .showcase-card h3 {
-    margin: 52px 0 14px;
-    font-size: 28px;
-    letter-spacing: -0.035em;
-    line-height: 1.2;
-  }
-
-  .showcase-card p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: 14px;
-  }
-
-  .showcase-copy > a {
-    display: inline-block;
-    margin-top: auto;
-    padding-top: 28px;
-    color: var(--teal-dark);
-    font-family: var(--mono);
-    font-size: 11px;
-  }
-
-  .showcase-copy > a:hover,
-  .showcase-copy > a:focus-visible {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .showcase-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 18px;
-  }
-
-  .showcase-dots button {
-    width: 24px;
-    height: 6px;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-    background: #cccad0;
-    cursor: pointer;
-  }
-
-  .showcase-dots button[aria-current="true"] {
-    width: 42px;
-    background: var(--teal-dark);
-  }
-
-  .showcase-dots button:focus-visible {
-    outline: 2px solid var(--teal-dark);
-    outline-offset: 3px;
-  }
-
-  .projects-section {
-    padding-block: 100px 112px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  .section-intro {
-    display: grid;
-    grid-template-columns: 180px minmax(0, 660px);
-    gap: 44px;
-    align-items: start;
-  }
-
-  .section-intro h2,
-  .cta h2 {
-    margin: 0;
-    font-size: clamp(34px, 4.5vw, 48px);
-    font-weight: 650;
-    letter-spacing: -0.042em;
-    line-height: 1.12;
-  }
-
-  .section-intro > div > p {
-    max-width: 590px;
-    margin: 18px 0 0;
-    color: var(--text-secondary);
-    font-size: 18px;
-  }
-
-  .project-list {
-    margin-top: 68px;
-    border-top: 1px solid var(--border-strong);
-  }
-
-  .project {
-    display: grid;
-    grid-template-columns: 128px minmax(0, 1fr) 160px;
-    gap: 30px;
-    padding-block: 40px;
-    border-bottom: 1px solid var(--border);
-    scroll-margin-top: 88px;
-  }
-
-  .project-meta,
-  .project-link {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    font-family: var(--mono);
-    font-size: 10px;
-  }
-
-  .project-meta span {
-    color: var(--plum);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-
-  .project-status {
-    padding: 3px 7px;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    color: var(--text-secondary);
-  }
-
-  .project-content {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(160px, 0.72fr);
-    gap: 32px;
-  }
-
-  .project h3 {
-    margin: -6px 0 10px;
-    font-family: var(--mono);
-    font-size: clamp(24px, 2.7vw, 34px);
-    letter-spacing: -0.045em;
-  }
-
-  .project-content p {
-    max-width: 510px;
-    margin: 0;
-    color: var(--text-secondary);
-  }
-
-  .project ul {
-    margin: 0;
-    padding: 0;
-    color: var(--text-secondary);
-    font-size: 14px;
-    list-style: none;
-  }
-
-  .project li {
-    position: relative;
-    padding: 3px 0 3px 17px;
-  }
-
-  .project li::before {
-    position: absolute;
-    left: 0;
-    color: var(--teal-dark);
-    content: "→";
-    font-family: var(--mono);
-  }
-
-  .project-link {
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  .project-link > span {
-    color: var(--text-secondary);
-  }
-
-  .project-link a {
-    color: var(--teal-dark);
-  }
-
-  .project-link a:hover,
-  .project-link a:focus-visible {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  .about {
-    padding-block: 112px 124px;
-  }
-
-  .thesis {
-    display: flex;
-    min-height: 190px;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 40px;
-    margin-top: 68px;
-    padding: 34px 38px;
-    border: 1px solid var(--terminal-border);
-    border-radius: 12px;
-    background:
-      radial-gradient(circle at 80% 0%, rgb(125 107 145 / 28%), transparent 38%),
-      var(--terminal);
-    color: var(--terminal-text);
-  }
-
-  .thesis p {
-    max-width: 620px;
-    margin: 0;
-    font-size: clamp(30px, 4.2vw, 48px);
-    font-weight: 650;
-    letter-spacing: -0.045em;
-    line-height: 1.08;
-  }
-
-  .thesis span {
-    max-width: 230px;
-    color: #c7bccc;
-    font-family: var(--mono);
-    font-size: 11px;
-  }
-
-  .values {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    margin-top: 22px;
-  }
-
-  .values article {
-    min-height: 265px;
-    padding: 28px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface);
-  }
-
-  .values h3 {
-    margin: 0 0 18px;
-    font-size: 20px;
-    letter-spacing: -0.025em;
-  }
-
-  .values p {
-    margin: 0;
-    color: var(--text-secondary);
-    font-size: 14px;
-  }
-
-  .toolchain {
-    display: flex;
-    justify-content: space-between;
-    gap: 26px;
-    margin-top: 22px;
-    padding: 20px 24px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--surface);
-    color: var(--text-secondary);
-    font-family: var(--mono);
-    font-size: 11px;
-  }
-
-  .toolchain strong {
-    color: var(--text);
-    font-weight: 600;
-  }
-
-  .cta {
-    position: relative;
-    padding-block: 92px;
-    overflow: hidden;
-    border-top: 1px solid var(--terminal-border);
-    background: var(--terminal);
-    color: var(--terminal-text);
-  }
-
-  .cta::before {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    height: 4px;
-    background: linear-gradient(
-      90deg,
-      var(--plum-light) 0 56%,
-      var(--teal) 56% 96%,
-      var(--orange) 96%
-    );
-    content: "";
-  }
-
-  .cta-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
-    align-items: center;
-  }
-
-  .cta .overline {
-    color: var(--terminal-muted);
-  }
-
-  .cta-inner > div:first-child > p:last-child {
-    max-width: 580px;
-    margin: 18px 0 0;
-    color: #c7bccc;
-    font-size: 16px;
-  }
-
-  .cta-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-  }
-
-  .button.cta-primary {
-    gap: 8px;
-    border-color: var(--teal);
-    background: var(--teal);
-    color: var(--terminal);
-  }
-
-  .button.cta-primary:hover,
-  .button.cta-primary:focus-visible {
-    border-color: #83c7c1;
-    background: #83c7c1;
-  }
-
-  .button.cta-secondary {
-    border-color: #796d83;
-    color: var(--terminal-text);
-  }
-
-  .button.cta-secondary:hover,
-  .button.cta-secondary:focus-visible {
-    border-color: #9a8fa4;
-    color: white;
-  }
-
-  footer {
-    padding-block: 36px;
-    border-top: 1px solid var(--border);
-    background: var(--surface);
-  }
-
-  .footer-inner {
-    display: grid;
-    grid-template-columns: 160px 1fr auto auto;
-    gap: 40px;
-    align-items: center;
-    color: var(--text-secondary);
-    font-family: var(--mono);
-    font-size: 10px;
-  }
-
-  .footer-inner p {
-    margin: 0;
-  }
-
-  .footer-links {
-    display: flex;
-    gap: 22px;
-  }
-
-  @media (max-width: 900px) {
-    .hero {
-      grid-template-columns: 1fr;
-      min-height: auto;
-    }
-
-    .stack-map {
-      max-width: 620px;
-    }
-
-    .project {
-      grid-template-columns: 90px minmax(0, 1fr);
-    }
-
-    .showcase-card {
-      grid-template-columns: 1fr;
-      min-height: 0;
-    }
-
-    .showcase-image {
-      border-right: 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .showcase-image img {
-      height: auto;
-    }
-
-    .showcase-copy {
-      min-height: 310px;
-    }
-
-    .project-link {
-      grid-column: 2;
-      flex-direction: row;
-      align-items: center;
-      text-align: left;
-    }
-
-    .values {
-      grid-template-columns: 1fr;
-    }
-
-    .values article {
-      min-height: auto;
-    }
-
-    .thesis {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .toolchain {
-      align-items: flex-start;
-      flex-direction: column;
-    }
-
-    .cta-inner {
-      grid-template-columns: 1fr;
-    }
-
-    .cta-actions {
-      justify-content: flex-start;
-    }
-
-    .footer-inner {
-      grid-template-columns: 1fr auto;
-    }
-
-    .footer-inner p {
-      order: 3;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .container {
-      width: min(100% - 30px, 1120px);
-    }
-
-    nav {
-      gap: 18px;
-    }
-
-    nav a:not(:last-child) {
-      display: none;
-    }
-
-    .hero {
-      gap: 54px;
-      padding-block: 70px;
-    }
-
-    h1 {
-      font-size: 48px;
-    }
-
-    .lede {
-      font-size: 18px;
-    }
-
-    .hero-actions {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    .section-intro {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .projects-section,
-    .showcase-section,
-    .about {
-      padding-block: 80px;
-    }
-
-    .project {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    .project-meta {
-      flex-direction: row;
-      align-items: center;
-    }
-
-    .project-content {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    .project-link {
-      grid-column: 1;
-    }
-
-    .stack-map-body {
-      padding-inline: 14px;
-    }
-
-    .stack-line {
-      gap: 12px;
-    }
-
-    .thesis {
-      min-height: 280px;
-      padding: 28px;
-    }
-
-    .cta-actions {
-      align-items: stretch;
-      flex-direction: column;
-    }
-
-    .footer-inner {
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    .footer-inner p {
-      order: initial;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
-    .showcase-image img {
-      transition: none;
-    }
-  }
-</style>
