@@ -1,4 +1,4 @@
-import { getLocalizedPath, type Locale } from "../i18n/locales";
+import type { Locale } from "../i18n/locales";
 
 export const workshop_projects = [
   {
@@ -54,7 +54,7 @@ export const workshop_projects = [
     summary: "Run small, installable applets with shared AI services, private storage, and optional Rust/WASM backends.",
     language: "Rust / TypeScript",
     detail: "iOS · Android · macOS",
-    href: "/appell/",
+    href: "https://github.com/agentic-rs/apell",
   },
   {
     id: "doi",
@@ -99,7 +99,7 @@ type ProjectCopy = {
 };
 
 type ProjectId = typeof workshop_projects[number]["id"];
-type WorkshopProject = Omit<typeof workshop_projects[number], keyof ProjectCopy | "href"> & ProjectCopy & { href: string };
+type WorkshopProject = Omit<typeof workshop_projects[number], keyof ProjectCopy> & ProjectCopy;
 
 const chinese_projects = {
   tokn: {
@@ -154,9 +154,5 @@ const chinese_projects = {
 
 export function getWorkshopProjects(locale: Locale): readonly WorkshopProject[] {
   if (locale === "en") return workshop_projects;
-  return workshop_projects.map(project => ({
-    ...project,
-    ...chinese_projects[project.id],
-    href: project.href.startsWith("/") ? getLocalizedPath(locale, project.href) : project.href,
-  }));
+  return workshop_projects.map(project => ({ ...project, ...chinese_projects[project.id] }));
 }
