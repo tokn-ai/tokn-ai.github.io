@@ -1,5 +1,6 @@
 ---
 import Brand from "./Brand.astro";
+import Navbar from "./design/Navbar.astro";
 import SessionDemo from "./SessionDemo.astro";
 import TerminalDemo from "./TerminalDemo.astro";
 import { getWorkshopProjects } from "../data/projects";
@@ -50,17 +51,7 @@ const og_image = new URL(locale === "en" ? "/og.png" : "/og-cn.png", Astro.site)
   </head>
   <body>
     <a class="skip-link" href="#main">{copy.skip_content}</a>
-    <header class="site-header" id="top">
-      <div class="shell header-inner">
-        <Brand locale={locale} />
-        <nav aria-label={copy.main_navigation}>
-          <a href="#tools">{copy.tools}</a>
-          <a href="#workshop">{copy.workshop}</a>
-          <a class="nav-github" href="https://github.com/tokn-ai">GitHub <span aria-hidden="true">↗</span></a>
-          <a class="language-switch" href={locale_paths[alternate_locale]} hreflang={alternate_locale} lang={alternate_locale} aria-label={copy.switch_language} data-language-switch>{locale === "en" ? "中文" : "EN"}</a>
-        </nav>
-      </div>
-    </header>
+    <Navbar id="top" locale={locale} links={[{ label: copy.tools, href: "#tools" }, { label: copy.workshop, href: "#workshop" }]} repository_href="https://github.com/tokn-ai" alternate={{ label: locale === "en" ? "中文" : "EN", href: locale_paths[alternate_locale], lang: alternate_locale, accessible_label: copy.switch_language }} navigation_label={copy.main_navigation} />
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <svg class="hero-thread" viewBox="0 0 1440 670" fill="none" aria-hidden="true">

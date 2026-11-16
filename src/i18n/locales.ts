@@ -6,6 +6,11 @@ export const locale_paths: Record<Locale, string> = {
   "zh-CN": "/cn/",
 };
 
+/** Use an English-rooted path; preserve the same route in each language. */
+export function getLocalizedPath(locale: Locale, path = "/"): string {
+  return `${locale_paths[locale]}${path.replace(/^\/+/, "")}`;
+}
+
 export function getLocale(value: string | null | undefined): Locale {
   return value === "zh-CN" ? "zh-CN" : "en";
 }

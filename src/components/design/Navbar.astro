@@ -1,0 +1,65 @@
+---
+import { getLocalizedPath, type Locale } from "../../i18n/locales";
+
+interface NavLink {
+  label: string;
+  href: string;
+  current?: "page" | "location";
+}
+
+interface Props {
+  locale?: Locale;
+  home_href?: string;
+  logo_src?: string;
+  mark_src?: string;
+  product?: { name: string; href: string };
+  links: NavLink[];
+  repository_href?: string;
+  primary_action?: NavLink;
+  alternate?: { label: string; href: string; lang: string; accessible_label: string };
+  navigation_label?: string;
+  id?: string;
+}
+
+const {
+  locale = "en", home_href = getLocalizedPath(locale), logo_src = "/logo.svg",
+  mark_src = "/logo-icon.svg", product, links, repository_href, primary_action,
+  alternate, navigation_label = locale === "en" ? "Main navigation" : "主导航", id,
+} = Astro.props;
+const home_label = locale === "en" ? "Tokn AI home" : "Tokn AI 首页";
+const menu_label = locale === "en" ? "Menu" : "菜单";
+---
+
+<header class="tokn-navbar" id={id}>
+  <tokn-navbar>
+    <div class="tokn-nav-inner">
+      <div class:list={["tokn-nav-identity", { "tokn-nav-has-product": !!product }]}>
+        <a class="tokn-nav-brand" href={home_href} aria-label={home_label}>
+          <img class="tokn-nav-wordmark" src={logo_src} width="118" height="32" alt="" />
+          {product && <img class="tokn-nav-mark" src={mark_src} width="32" height="32" alt="" />}
+        </a>
+        {product && <><span class="tokn-nav-divider" aria-hidden="true">/</span><a class="tokn-nav-product" href={product.href}>{product.name}</a></>}
+      </div>
+      <nav class="tokn-nav-desktop" aria-label={navigation_label}>
+        {links.map(link => <a href={link.href} aria-current={link.current}>{link.label}</a>)}
+      </nav>
+      <div class="tokn-nav-utilities">
+        {repository_href && <a class="tokn-nav-repository" href={repository_href}>GitHub <span aria-hidden="true">↗</span></a>}
+        {alternate && <a class="tokn-nav-language" href={alternate.href} lang={alternate.lang} hreflang={alternate.lang} aria-label={alternate.accessible_label} data-language-switch>{alternate.label}</a>}
+        {primary_action && <a class="tokn-nav-action" href={primary_action.href} aria-current={primary_action.current}>{primary_action.label}<span aria-hidden="true">↗</span></a>}
+      </div>
+      <details class="tokn-nav-menu" data-nav-menu>
+        <summary><span>{menu_label}</span><svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true"><path d="M3 6h14M3 14h14" /></svg></summary>
+        <nav class="tokn-nav-panel" aria-label={navigation_label}>
+          {links.map(link => <a href={link.href} aria-current={link.current}>{link.label}<span aria-hidden="true">↗</span></a>)}
+          {repository_href && <a class="tokn-nav-mobile-repository" href={repository_href}>GitHub <span aria-hidden="true">↗</span></a>}
+          {primary_action && <a class="tokn-nav-action" href={primary_action.href} aria-current={primary_action.current}>{primary_action.label}<span aria-hidden="true">↗</span></a>}
+        </nav>
+      </details>
+    </div>
+  </tokn-navbar>
+</header>
+
+<script>
+  import "../../scripts/navigation";
+</script>

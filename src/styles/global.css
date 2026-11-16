@@ -1,14 +1,16 @@
+@import "/brand/tokn.css";
+
 :root {
-  --paper: #fcfbf8;
-  --ink: #302937;
-  --muted: #716977;
-  --plum: #6a5a7d;
-  --teal: #61b6af;
-  --teal-dark: #2c706a;
-  --orange: #c48257;
-  --line: #ded8e1;
-  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --paper: var(--tokn-paper);
+  --ink: var(--tokn-ink);
+  --muted: var(--tokn-muted);
+  --plum: var(--tokn-plum);
+  --teal: var(--tokn-teal);
+  --teal-dark: var(--tokn-teal-ink);
+  --orange: var(--tokn-orange);
+  --line: var(--tokn-line);
+  --sans: var(--tokn-sans);
+  --mono: var(--tokn-mono);
   color: var(--ink);
   background: var(--paper);
   font-family: var(--sans);

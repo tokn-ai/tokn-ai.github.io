@@ -9,6 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "export:design": "bun scripts/export-design.ts",
+    "test:design": "bun test scripts/export-design.test.ts",
     "astro": "astro"
   },
   "dependencies": {

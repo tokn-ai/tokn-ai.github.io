@@ -1,13 +1,3 @@
-.site-header { padding-block: 26px; }
-.header-inner, .site-header nav { display: flex; align-items: center; }
-.header-inner { justify-content: space-between; gap: 28px; }
-.site-header nav { gap: 34px; font-size: 14px; font-weight: 550; }
-.site-header nav a { padding-block: 10px; white-space: nowrap; }
-.site-header nav a:hover { color: var(--teal-dark); }
-.nav-github { display: flex; align-items: center; gap: 20px; }
-.nav-github span { font-size: 22px; }
-.site-header nav .language-switch { padding: 5px 10px; border: 1px solid var(--line); border-radius: 7px; font-size: 12px; white-space: nowrap; }
-.language-switch:hover { background: #e7f0eb; }
 .hero { position: relative; isolation: isolate; overflow: clip; }
 .hero-inner { position: relative; padding-top: 61px; text-align: center; }
 .hero-eyebrow { justify-content: center; margin-bottom: 23px; }
@@ -174,13 +164,6 @@
   .logo-pebble { inset: 40px 25px; }
 }
 @media (max-width: 600px) {
-  .site-header { padding-block: 18px; }
-  .header-inner { gap: 12px; }
-  .site-header nav { gap: 10px; font-size: 11px; }
-  .site-header nav .language-switch { padding: 5px 7px; font-size: 10px; }
-  .site-header nav a:nth-child(2) { display: none; }
-  .nav-github { gap: 4px; }
-  .nav-github span { font-size: 18px; }
   .hero-inner { padding-top: 44px; }
   .hero-eyebrow { font-size: 9px; gap: 8px; margin-bottom: 24px; }
   .hero h1 { font-size: clamp(40px, 12.6vw, 72px); line-height: 1.1; letter-spacing: -.07em; }

@@ -1,0 +1,16 @@
+---
+interface Props {
+  variant?: "loop" | "wander" | "underline";
+  tone?: "plum" | "teal";
+  class?: string;
+}
+const { variant = "loop", tone = "plum", class: class_name } = Astro.props;
+const paths = {
+  loop: "M8 83C88 125 208 6 134 10S105 119 208 82C249 66 278 55 292 63",
+  wander: "M3 64C47 9 88 22 76 57S122 116 155 63S222 14 222 53S255 96 297 63",
+  underline: "M5 60C66 61 172 47 294 43M35 69C124 66 213 54 269 52",
+};
+---
+<svg class:list={["tokn-thread", `tokn-thread--${tone}`, class_name]} viewBox="0 0 300 120" aria-hidden="true" focusable="false">
+  <path d={paths[variant]} />
+</svg>

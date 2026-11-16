@@ -63,6 +63,46 @@ with its 1200 × 630 PNG export.
 The palette uses plum `#6A5A7D` and teal `#61B6AF`, with occasional
 apricot `#C48257` accents. Showcase artwork sources live in `design/showcase/`.
 
+## Subsite visual language
+
+The shared kit gives independently maintained product sites a family resemblance
+through color, type, controls, and decoration. Layout, narrative, navigation, and
+interaction belong to each product. It does not introduce a fixed page schema or
+move existing product sites into this repository.
+
+The shared navbar is used by the homepage, reference page, and starters. It keeps
+Tokn and product home links distinct, takes product-owned destinations, and moves
+all navigation into a native disclosure on narrow screens. Its optional script
+adds Escape handling, focus restoration, and closing after navigation.
+
+- [Visual language and usage](docs/product-pages.md)
+- [Reusable design prompt](templates/product-page.prompt.md)
+- [Starter and integration guide](templates/README.md)
+- [ctl downstream adoption task](templates/ctl-adoption.prompt.md)
+
+Preview the materials and two contrasting compositions at `/design/` or
+`/cn/design/`. These reference pages are marked `noindex`. The portable stylesheet
+is `public/brand/tokn.css`; the homepage uses the same color and font tokens.
+Optional workbench and editorial Astro starters and a plain HTML starter live in
+`templates/`. Copy individual pieces or export a complete handoff:
+
+```sh
+bun run export:design -- ./tokn-kit
+bun run test:design
+```
+
+Export requires a new or empty destination and includes only the listed design
+assets. Keep exported packs outside version control. Product sites retain their
+existing base paths, assets, and deployment workflows; ctl's website and bundle
+registry remain owned by its repository.
+
+To hand off to ctl, give its agent the complete exported kit and ask it to read
+`ctl-adoption.md` and implement that task in ctl. The export includes the shared
+specification, browser-ready navbar script, styles, logos, and integration
+instructions. A local export is usable immediately; GitHub-based consumption
+requires the shared changes to be committed and pushed first. Publishing the
+parent site does not modify or publish ctl automatically.
+
 ## Deployment
 
 Pushes to `main` run `.github/workflows/deploy.yml`. In the repository's

@@ -1,0 +1,67 @@
+---
+import { getLocalizedPath, type Locale } from "../i18n/locales";
+
+interface Props {
+  locale?: Locale;
+  path: string;
+  title: string;
+  description: string;
+  og_image?: string;
+  og_alt?: string;
+  noindex?: boolean;
+  body_class?: string;
+}
+
+const {
+  locale = "en", path, title, description, og_image = "/og.png",
+  og_alt = title, noindex = false, body_class = "tokn-site",
+} = Astro.props;
+const canonical_url = new URL(getLocalizedPath(locale, path), Astro.site);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#fcfbf8" />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="stylesheet" href="/brand/tokn.css" />
+    <link rel="canonical" href={canonical_url} />
+    <link rel="alternate" hreflang="en" href={new URL(getLocalizedPath("en", path), Astro.site)} />
+    <link rel="alternate" hreflang="zh-CN" href={new URL(getLocalizedPath("zh-CN", path), Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(getLocalizedPath("en", path), Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tokn AI" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical_url} />
+    <meta property="og:locale" content={locale === "en" ? "en_US" : "zh_CN"} />
+    <meta property="og:image" content={new URL(og_image, Astro.site)} />
+    <meta property="og:image:alt" content={og_alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(og_image, Astro.site)} />
+    <meta name="twitter:image:alt" content={og_alt} />
+    <title>{title}</title>
+    <slot name="head" />
+  </head>
+  <body class={body_class}>
+    <a class="tokn-skip" href="#main">{locale === "en" ? "Skip to content" : "跳转到正文"}</a>
+    <slot />
+    <script>
+      for (const link of document.querySelectorAll<HTMLAnchorElement>("[data-language-switch]")) {
+        const language_path = link.getAttribute("href");
+        const syncLanguageLink = () => {
+          if (language_path) link.href = `${language_path}${location.hash}`;
+        };
+        syncLanguageLink();
+        window.addEventListener("hashchange", syncLanguageLink);
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+---
+// OPTIONAL composition study for a library, research project, or documentation-led tool.
+// Copy to src/components/subsites/EditorialPage.astro and import it from a route.
+// This shares the brand foundation, not the workbench starter's page anatomy.
+// Replace all example copy/URLs. Add an actual translated route before enabling its switch.
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Navbar from "../design/Navbar.astro";
+import { getLocalizedPath, type Locale } from "../../i18n/locales";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const path = "/example/";
+const name = "project";
+const home_href = `https://tokn-ai.dev${getLocalizedPath(locale)}`;
+const copy = locale === "en" ? {
+  category: "Notes from the workshop",
+  title: "A small idea,",
+  emphasis: "carefully built.",
+  description: "For products explained best through a method, a result, or a piece of code. Lead with the idea and give the evidence room to breathe.",
+  read: "Read the approach",
+  source: "Explore the source",
+  annotation: "The interesting part starts here.",
+  chapter: "Explain the useful difference.",
+  detail: "Write this section around the thing your reader needs to understand. Show the actual API, a measured result with its method, or an honest comparison. One strong example may be all the page needs.",
+  proof: "Your evidence goes here.",
+  proof_detail: "Replace this region with an accessible figure, a real code sample, or a short worked example. Its layout belongs to the product.",
+} : {
+  category: "来自工坊的笔记",
+  title: "一个小想法，",
+  emphasis: "认真地实现。",
+  description: "适合用方法、结果或一段代码来解释的产品。从想法开始，给证据充分的空间。",
+  read: "了解方法",
+  source: "探索源码",
+  annotation: "有趣的部分，从这里开始。",
+  chapter: "讲清楚有用的不同之处。",
+  detail: "围绕读者需要理解的内容展开。展示真实的 API、附有测量方法的结果，或者诚实的对比。有时，一个扎实的例子就足够了。",
+  proof: "在这里展示你的证据。",
+  proof_detail: "替换为可访问的图表、真实代码或简短案例。这部分怎么布局，由产品决定。",
+};
+---
+
+<SiteLayout body_class="tokn-site" locale={locale} path={path} title={`${name} — Tokn AI`} description={copy.description} og_image={locale === "en" ? "/og.png" : "/og-cn.png"} og_alt={`${copy.title} ${copy.emphasis}`}>
+  <Navbar
+    locale={locale}
+    home_href={home_href}
+    product={{ name, href: getLocalizedPath(locale, path) }}
+    links={[{ label: copy.read, href: "#approach" }]}
+    repository_href="https://github.com/tokn-ai"
+    alternate={{
+      label: locale === "en" ? "中文" : "EN",
+      href: getLocalizedPath(locale === "en" ? "zh-CN" : "en", path),
+      lang: locale === "en" ? "zh-CN" : "en",
+      accessible_label: locale === "en" ? "切换到简体中文" : "Switch to English",
+    }}
+  />
+  <main id="main">
+    <header class="tokn-shell editorial-opening">
+      <p class="tokn-kicker">{name} <span aria-hidden="true">/</span> {copy.category}</p>
+      <h1>{copy.title}<br /><em>{copy.emphasis}</em></h1>
+      <p class="editorial-description">{copy.description}</p>
+      <a class="tokn-link" href="#approach">{copy.read} <span aria-hidden="true">↓</span></a>
+      <svg class="editorial-thread" viewBox="0 0 500 90" fill="none" aria-hidden="true"><path d="M4 43C85 9 137 82 208 52S280-6 301 21C334 64 276 86 319 66S416 12 494 43" /></svg>
+    </header>
+    <section class="tokn-shell editorial-body" id="approach" aria-labelledby="approach-title">
+      <aside class="editorial-note"><span aria-hidden="true">↳</span><p>{copy.annotation}</p></aside>
+      <div class="editorial-prose">
+        <h2 id="approach-title">{copy.chapter}</h2>
+        <p>{copy.detail}</p>
+        <slot name="evidence">
+          <figure class="evidence-placeholder"><strong>{copy.proof}</strong><figcaption>{copy.proof_detail}</figcaption></figure>
+        </slot>
+      </div>
+    </section>
+  </main>
+  <footer class="tokn-shell starter-footer"><a class="tokn-link" href={home_href}>← Tokn AI</a><span>{locale === "en" ? "Open-source wheels for RSI." : "为 RSI 造开源轮子。"}</span></footer>
+</SiteLayout>
+
+<style>
+  .starter-footer { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 25px; border-top: 1px solid var(--tokn-line); color: var(--tokn-muted); font: 10px/1.6 var(--tokn-mono); }
+  .editorial-opening { position: relative; padding-block: 65px 100px; text-align: center; }
+  .editorial-opening .tokn-kicker { justify-content: center; }
+  .editorial-opening .tokn-kicker > span { margin-inline: 5px; color: var(--tokn-orange); }
+  h1 { margin-top: 28px; font-size: clamp(45px, 7.5vw, 100px); font-weight: 500; letter-spacing: -.065em; line-height: 1.06; }
+  h1 em { color: var(--tokn-plum); font-family: var(--tokn-serif); font-weight: 400; }
+  .editorial-description { max-width: 570px; margin: 28px auto 12px; color: var(--tokn-muted); font-size: 17px; line-height: 1.8; text-wrap: pretty; }
+  .editorial-thread { display: block; width: min(440px, 85%); height: 70px; margin: 25px auto -20px; pointer-events: none; }
+  .editorial-thread path { stroke: var(--tokn-teal); stroke-width: 1.5; stroke-linecap: round; }
+  .editorial-body { display: grid; grid-template-columns: 150px minmax(0, 700px); justify-content: center; gap: 50px; padding-block: 20px 95px; }
+  .editorial-note { padding-top: 8px; color: var(--tokn-plum); font: italic 16px/1.6 var(--tokn-serif); transform: rotate(-4deg); }
+  .editorial-note > span { display: block; margin-bottom: 15px; color: var(--tokn-orange); font-size: 33px; }
+  h2 { max-width: 580px; font-size: clamp(30px, 3.5vw, 46px); font-weight: 500; letter-spacing: -.04em; line-height: 1.15; }
+  .editorial-prose > p { margin-top: 23px; color: var(--tokn-muted); font-size: 16px; line-height: 1.85; }
+  .evidence-placeholder { margin: 32px 0 0; padding: 30px; border: 1px solid var(--tokn-line); border-radius: 12px; background: var(--tokn-plum-wash); }
+  .evidence-placeholder strong { color: var(--tokn-plum); font: 14px/1.6 var(--tokn-mono); }
+  .evidence-placeholder figcaption { margin-top: 14px; color: var(--tokn-muted); font-size: 13px; line-height: 1.8; }
+  :global(html:lang(zh-CN)) h1 { line-height: 1.2; letter-spacing: -.03em; }
+  :global(html:lang(zh-CN)) h1 em { font-family: "Songti SC", "STSong", serif; font-style: normal; }
+  :global(html:lang(zh-CN)) .editorial-note { font-family: "Kaiti SC", "KaiTi", serif; font-style: normal; }
+  @media (max-width: 900px) {
+    .editorial-body { grid-template-columns: 110px minmax(0, 1fr); gap: 30px; }
+    .editorial-opening { padding-block: 45px 70px; }
+    .editorial-note { font-size: 14px; }
+  }
+  @media (max-width: 600px) {
+    .starter-footer { flex-wrap: wrap; gap: 8px 20px; }
+    .editorial-opening { padding-block: 30px 45px; }
+    .editorial-opening .tokn-kicker { font-size: 9px; }
+    h1 { font-size: 44px; margin-top: 25px; }
+    .editorial-description { font-size: 14px; }
+    .editorial-body { grid-template-columns: 1fr; gap: 25px; padding-block: 10px 50px; }
+    .editorial-note { display: flex; align-items: center; gap: 15px; padding-top: 0; transform: none; }
+    .editorial-note > span { margin-bottom: 0; }
+    .editorial-prose > p { font-size: 14px; }
+    .evidence-placeholder { padding: 22px; }
+  }
+</style>

@@ -1,0 +1,182 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Brand from "../Brand.astro";
+import Navbar from "./Navbar.astro";
+import Thread from "./Thread.astro";
+import Note from "./Note.astro";
+import SectionLabel from "./SectionLabel.astro";
+import { getLocalizedPath, type Locale } from "../../i18n/locales";
+import { design_copy } from "../../i18n/design";
+import design_prompt from "../../../templates/product-page.prompt.md?raw";
+import "../../styles/design-kit.css";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const copy = design_copy[locale];
+const alternate_locale = locale === "en" ? "zh-CN" : "en";
+const swatches = ["#FCFBF8", "#302937", "#6A5A7D", "#61B6AF", "#C48257"];
+const navigation_links = [
+  { label: copy.nav_name, href: "#navigation" },
+  { label: copy.compositions, href: "#expressions" },
+  { label: copy.materials, href: "#materials" },
+];
+const ctl_links = [
+  { label: copy.nav_overview, href: "https://tokn-ai.dev/ctl/" },
+  { label: copy.nav_docs, href: "https://github.com/tokn-ai/ctl#readme" },
+];
+---
+
+<SiteLayout locale={locale} path="/design/" title={copy.title} description={copy.description} noindex>
+  <Navbar locale={locale} product={{ name: "design", href: getLocalizedPath(locale, "/design/") }} links={navigation_links} repository_href="https://github.com/tokn-ai/tokn-ai.github.io" primary_action={{ label: copy.use_kit, href: "#use" }} alternate={{ label: locale === "en" ? "中文" : "EN", href: getLocalizedPath(alternate_locale, "/design/"), lang: alternate_locale, accessible_label: copy.switch_language }} navigation_label={copy.navigation} />
+  <main id="main">
+    <section class="tokn-shell kit-hero" aria-labelledby="kit-title">
+      <div class="kit-hero-copy">
+        <p class="tokn-kicker"><span class="kit-star" aria-hidden="true">✳</span> {copy.kicker}</p>
+        <h1 class="tokn-title" id="kit-title">{copy.headline}<br /><em class="tokn-serif">{copy.emphasis}</em></h1>
+        <p class="kit-introduction">{copy.introduction}</p>
+        <a class="tokn-link" href="#materials">{copy.hero_action} <span aria-hidden="true">↘</span></a>
+      </div>
+      <div class="kit-material-object" aria-hidden="true">
+        <div class="kit-paper kit-paper-back"><span>t / 01</span><Thread variant="wander" tone="teal" /></div>
+        <div class="kit-paper kit-paper-front">
+          <img src="/logo-icon.svg" width="66" height="66" alt="" />
+          <div class="kit-object-palette"><i></i><i></i><i></i></div>
+          <span>Aa<span>永</span><code>&gt;_</code></span>
+        </div>
+        <Thread class="kit-object-thread" variant="loop" />
+        <Note class="kit-object-note">{copy.hero_note} ↖</Note>
+      </div>
+      <div class="kit-hero-foot"><span>{copy.small_label}</span><p>{copy.small_body}</p></div>
+    </section>
+
+    <section class="tokn-shell kit-section kit-navigation" id="navigation" aria-labelledby="navigation-title">
+      <SectionLabel index="01">{copy.nav_eyebrow}</SectionLabel>
+      <div class="kit-section-intro"><h2 id="navigation-title">{copy.nav_title}</h2><p>{copy.nav_description}</p></div>
+      <div class="kit-nav-example">
+        <div class="kit-nav-example-label"><span>{copy.nav_desktop}</span><code>Tokn / ctl</code></div>
+        <Navbar locale={locale} home_href={getLocalizedPath(locale)} product={{ name: "ctl", href: "https://tokn-ai.dev/ctl/" }} links={ctl_links} repository_href="https://github.com/tokn-ai/ctl" primary_action={{ label: copy.nav_start, href: "https://github.com/tokn-ai/ctl#build" }} navigation_label={copy.nav_example_label} />
+        <div class="kit-nav-legend"><p><span>01</span>{copy.nav_identity}</p><p><span>02</span>{copy.nav_links}</p><p><span>03</span>{copy.nav_actions}</p></div>
+      </div>
+      <div class="kit-nav-mobile-row">
+        <div class="kit-nav-phone">
+          <div class="kit-nav-example-label"><span>{copy.nav_mobile}</span><span aria-hidden="true">↓</span></div>
+          <Navbar locale={locale} home_href={getLocalizedPath(locale)} product={{ name: "ctl", href: "https://tokn-ai.dev/ctl/" }} links={ctl_links} repository_href="https://github.com/tokn-ai/ctl" primary_action={{ label: copy.nav_start, href: "https://github.com/tokn-ai/ctl#build" }} navigation_label={copy.nav_mobile_label} />
+          <div class="kit-nav-phone-body"><span class="tokn-kicker">ctl</span><p>{copy.nav_body}</p><Thread tone="teal" variant="wander" /></div>
+        </div>
+        <div class="kit-nav-contract"><h3>{copy.nav_contract_title}</h3><ul>{copy.nav_contract.map(item => <li>{item}</li>)}</ul><p>{copy.nav_optional_locale}</p></div>
+      </div>
+    </section>
+
+    <section class="tokn-shell kit-section" id="expressions" aria-labelledby="expressions-title">
+      <SectionLabel index="02">{copy.study_label}</SectionLabel>
+      <div class="kit-section-intro"><h2 id="expressions-title">{copy.study_title}</h2><p>{copy.study_description}</p></div>
+      <div class="kit-studies">
+        <figure class="kit-study">
+          <div class="kit-study-workbench">
+            <div class="kit-study-chrome"><span class="kit-study-product">&gt;_ ctl</span><span>{copy.workbench_label}</span></div>
+            <h3>{copy.workbench_title}<br /><em>{copy.workbench_emphasis}</em></h3>
+            <p>{copy.workbench_description}</p>
+            <div class="kit-study-command"><span aria-hidden="true">$</span><code>ctl ctmux list</code></div>
+            <div class="kit-study-output"><span>orbit-web</span><span>running</span><span>orbit-api</span><span>running</span></div>
+            <Note>{copy.workbench_annotation} ↗</Note>
+          </div>
+          <figcaption><p>{copy.workbench_detail}</p><a class="tokn-link" href="/design/workbench.astro.txt" download="workbench.astro">{copy.download_workbench} <span aria-hidden="true">↗</span></a></figcaption>
+        </figure>
+        <figure class="kit-study">
+          <div class="kit-study-editorial">
+            <div class="kit-study-chrome"><span class="kit-study-product">ffbpe</span><span>{copy.editorial_label}</span></div>
+            <p class="kit-editorial-kicker">{copy.editorial_kicker}</p>
+            <h3>{copy.editorial_title}<br /><em>{copy.editorial_emphasis}</em></h3>
+            <p class="kit-editorial-description">{copy.editorial_description}</p>
+            <div class="kit-token-line" aria-hidden="true"><span>small</span><span>▁pieces</span><span>.</span></div>
+            <Thread variant="underline" tone="teal" />
+            <Note>{copy.editorial_annotation}</Note>
+          </div>
+          <figcaption><p>{copy.editorial_detail}</p><a class="tokn-link" href="/design/editorial.astro.txt" download="editorial.astro">{copy.download_editorial} <span aria-hidden="true">↗</span></a></figcaption>
+        </figure>
+      </div>
+      <p class="kit-disclaimer">{copy.study_disclaimer}</p>
+    </section>
+
+    <section class="kit-materials" id="materials" aria-labelledby="materials-title">
+      <div class="tokn-shell kit-section">
+        <SectionLabel index="03">{copy.materials_label}</SectionLabel>
+        <h2 class="kit-materials-title" id="materials-title">{copy.materials_title}</h2>
+        <div class="kit-material-grid">
+          <div class="kit-palette">
+            <h3 class="tokn-kicker">{copy.palette_label}</h3>
+            <div class="kit-swatches">{swatches.map((hex, index) => <div class="kit-swatch"><span style={`--swatch: ${hex}`} aria-hidden="true"></span><strong>{copy.colors[index]}</strong><code>{hex}</code></div>)}</div>
+            <p>{copy.palette_note}</p>
+          </div>
+          <div class="kit-type">
+            <h3 class="tokn-kicker">{copy.type_label}</h3>
+            <p class="kit-type-display">{copy.type_large}<br /><em class="tokn-serif">{copy.type_emphasis}</em></p>
+            <p>{copy.type_body}</p>
+            <p class="kit-type-foot">{copy.type_detail}</p>
+          </div>
+        </div>
+        <h3 class="tokn-kicker kit-details-label">{copy.details_label}</h3>
+        <div class="kit-details">
+          <article><div class="kit-detail-specimen"><Thread tone="teal" /></div><h4>{copy.thread_label}</h4><p>{copy.thread_description}</p></article>
+          <article><div class="kit-detail-specimen"><Note>{copy.note_sample}</Note></div><h4>{copy.note_label}</h4><p>{copy.note_description}</p></article>
+          <article><div class="kit-detail-specimen kit-control-specimen"><a class="tokn-button" href="/design/guide.txt">{copy.control_link} <span aria-hidden="true">↗</span></a><span class="tokn-status">{copy.status}</span></div><h4>{copy.controls_label}</h4><p>{copy.controls_description}</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="tokn-shell kit-section kit-freedom" aria-labelledby="freedom-title">
+      <SectionLabel index="04">{copy.freedom_label}</SectionLabel>
+      <div class="kit-freedom-grid">
+        <div><h2 id="freedom-title">{copy.keep_title}</h2><ul>{copy.keep_items.map(item => <li><span aria-hidden="true">↳</span>{item}</li>)}</ul></div>
+        <div><h2>{copy.free_title}</h2><ul>{copy.free_items.map(item => <li><span aria-hidden="true">↗</span>{item}</li>)}</ul></div>
+      </div>
+    </section>
+
+    <section class="kit-use" id="use" aria-labelledby="use-title">
+      <div class="tokn-shell kit-section">
+        <SectionLabel index="05">{copy.start_label}</SectionLabel>
+        <div class="kit-use-intro"><h2 id="use-title">{copy.start_title}<br /><em>{copy.start_emphasis}</em></h2><p>{copy.start_description}</p></div>
+        <div class="kit-handoff">
+          <div class="kit-prompt">
+            <p class="tokn-kicker">{copy.prompt_label}</p>
+            <blockquote>{copy.prompt_excerpt}</blockquote>
+            <div class="kit-prompt-actions">
+              <button class="tokn-button" type="button" data-copy-prompt data-copied={copy.copied_prompt} data-failed={copy.copy_failed} hidden>{copy.copy_prompt} <span aria-hidden="true">↗</span></button>
+              <a class="tokn-link" href="/design/prompt.txt">{copy.open_prompt}</a>
+            </div>
+            <p class="kit-copy-status" data-copy-status role="status" aria-live="polite"></p>
+            <pre data-prompt-text hidden>{design_prompt}</pre>
+          </div>
+          <div class="kit-export">
+            <p class="tokn-kicker">{copy.export_label}</p>
+            <pre class="tokn-code"><code>bun run export:design -- ./tokn-kit</code></pre>
+            <p>{copy.export_note}</p>
+            <div class="kit-downloads">
+              <a href="/brand/tokn.css" download="tokn.css">{copy.download_css} <span aria-hidden="true">↓</span></a>
+              <a href="/design/starter.html.txt" download="index.html">{copy.download_html} <span aria-hidden="true">↓</span></a>
+              <a href="/design/workbench.astro.txt" download="workbench.astro">{copy.download_workbench} <span aria-hidden="true">↓</span></a>
+              <a href="/design/editorial.astro.txt" download="editorial.astro">{copy.download_editorial} <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="tokn-shell tokn-signature kit-footer"><Brand locale={locale} /><p>{copy.footer}</p><a class="tokn-link" href={getLocalizedPath(locale)}>{copy.back_home} <span aria-hidden="true">↗</span></a></footer>
+  <script>
+    const copy_button = document.querySelector<HTMLButtonElement>("[data-copy-prompt]");
+    const prompt_text = document.querySelector<HTMLElement>("[data-prompt-text]");
+    const copy_status = document.querySelector<HTMLElement>("[data-copy-status]");
+    if (copy_button && prompt_text && copy_status && navigator.clipboard) {
+      copy_button.hidden = false;
+      copy_button.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(prompt_text.textContent ?? "");
+          copy_status.textContent = copy_button.dataset.copied ?? "";
+        } catch {
+          copy_status.textContent = copy_button.dataset.failed ?? "";
+        }
+      });
+    }
+  </script>
+</SiteLayout>

@@ -1,0 +1,5 @@
+---
+interface Props { index?: string }
+const { index } = Astro.props;
+---
+<p class="tokn-section-label">{index && <span aria-hidden="true">{index}</span>}<span><slot /></span></p>
