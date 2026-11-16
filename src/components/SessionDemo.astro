@@ -1,50 +1,27 @@
 ---
+import { formatMessage, type Locale } from "../i18n/locales";
+import { formatConversationCount, session_conversations, session_messages } from "../i18n/session";
+
 interface Props {
   id?: string;
+  locale?: Locale;
 }
 
-const { id = "session-example" } = Astro.props;
-const sessions = [
-  {
-    id: "keyboard",
-    source: "Codex",
-    title: "Review keyboard navigation",
-    preview: "Give every control a clear focus state.",
-    prompt: "Can you make the Orbit dashboard easier to use with a keyboard?",
-    response: "The activity list now follows a predictable tab order. Each control has a visible focus state, and Escape closes the detail panel.",
-    tool: "Read keyboard.ts",
-    output: "Tab → next control\nShift + Tab → previous control\nEscape → close details",
-    time: "Today",
-  },
-  {
-    id: "release",
-    source: "Pi",
-    title: "Simplify release notes",
-    preview: "Make the changes easy to scan.",
-    prompt: "Help me turn these Orbit updates into a short set of release notes.",
-    response: "Start with what changed for the reader: a clearer activity timeline, keyboard navigation, and a more useful detail panel. Keep one idea per bullet.",
-    tool: "Read release-notes.md",
-    output: "• A clearer activity timeline\n• Keyboard navigation throughout\n• Details when you need them",
-    time: "Yesterday",
-  },
-  {
-    id: "timeline",
-    source: "OpenCode",
-    title: "Add an activity timeline",
-    preview: "Keep recent updates together.",
-    prompt: "Let's add a compact activity timeline to Orbit. Keep it simple.",
-    response: "The timeline groups updates by day, with a short description for each event. Selecting an event opens its details without losing your place in the list.",
-    tool: "Read ActivityTimeline.tsx",
-    output: "ActivityTimeline\n  DayGroup\n    ActivityItem\n    ActivityItem\n  DetailPanel",
-    time: "Yesterday",
-  },
+const { id = "session-example", locale = "en" } = Astro.props;
+const messages = session_messages[locale];
+const sessions = session_conversations[locale];
+const sources = [
+  { id: "All", label: messages.all_sources },
+  { id: "Codex", label: "Codex" },
+  { id: "Pi", label: "Pi" },
+  { id: "OpenCode", label: "OpenCode" },
 ];
 ---
 
-<session-example class="session-example" aria-label="Try the session viewer with fictional conversations">
+<session-example class="session-example" data-locale={locale} aria-label={messages.region_label}>
   <div class="example-caption">
     <span class="example-spark" aria-hidden="true">✳</span>
-    <span>Interactive example · sample conversations</span>
+    <span>{messages.caption}</span>
   </div>
 
   <div class="session-window">
@@ -55,26 +32,26 @@ const sessions = [
     </div>
 
     <div class="session-workspace">
-      <aside class="session-sidebar" aria-label="Example conversations">
-        <div class="sidebar-heading"><span>Your threads</span><span aria-hidden="true">↙</span></div>
+      <aside class="session-sidebar" aria-label={messages.sidebar_label}>
+        <div class="sidebar-heading"><span>{messages.sidebar_heading}</span><span aria-hidden="true">↙</span></div>
 
         <div data-fallback>
-          <p class="fallback-note">Three tools. One familiar place.</p>
-          <div class="fallback-session"><span class="source-mark" aria-hidden="true">C</span><span>Review keyboard navigation<small>Codex · Orbit</small></span></div>
+          <p class="fallback-note">{messages.fallback_note}</p>
+          <div class="fallback-session"><span class="source-mark" aria-hidden="true">C</span><span>{sessions[0].title}<small>Codex · Orbit</small></span></div>
         </div>
 
         <div data-controls hidden>
           <label class="session-search">
             <svg aria-hidden="true" viewBox="0 0 20 20" fill="none"><circle cx="8.5" cy="8.5" r="5.5"></circle><path d="m12.5 12.5 4 4"></path></svg>
-            <span class="visually-hidden">Search example session titles and previews</span>
-            <input type="search" placeholder="Find a thread…" autocomplete="off" data-search />
+            <span class="visually-hidden">{messages.search_label}</span>
+            <input type="search" placeholder={messages.search_placeholder} autocomplete="off" data-search />
           </label>
-          <div class="source-filters" role="group" aria-label="Filter example sessions by source">
-            {['All', 'Codex', 'Pi', 'OpenCode'].map((source) => (
-              <button type="button" data-source={source} aria-pressed={source === 'All'}>{source}</button>
+          <div class="source-filters" role="group" aria-label={messages.filter_label}>
+            {sources.map((source) => (
+              <button type="button" data-source={source.id} aria-pressed={source.id === 'All'}>{source.label}</button>
             ))}
           </div>
-          <p class="result-count" role="status" aria-live="polite" aria-atomic="true" data-result-count>3 conversations</p>
+          <p class="result-count" role="status" aria-live="polite" aria-atomic="true" data-result-count>{formatConversationCount(locale, sessions.length)}</p>
           <div class="session-list">
             {sessions.map((session, index) => (
               <button
@@ -94,23 +71,23 @@ const sessions = [
           </div>
           <div class="sidebar-empty" data-sidebar-empty hidden>
             <span aria-hidden="true">⌕</span>
-            <p>No threads found.</p>
-            <button type="button" data-clear>Clear filters</button>
+            <p>{messages.no_threads}</p>
+            <button type="button" data-clear>{messages.clear_filters}</button>
           </div>
         </div>
-        <p class="sidebar-footnote"><span aria-hidden="true">◌</span> A little less searching.</p>
+        <p class="sidebar-footnote"><span aria-hidden="true">◌</span> {messages.sidebar_note}</p>
       </aside>
 
       <div class="conversation-area">
         {sessions.map((session, index) => (
-          <article id={`${id}-${session.id}`} class="conversation" data-conversation={session.id} hidden={index !== 0} aria-label={`${session.title}, example ${session.source} conversation`}>
+          <article id={`${id}-${session.id}`} class="conversation" data-conversation={session.id} hidden={index !== 0} aria-label={formatMessage(messages.conversation_label, { title: session.title, source: session.source })}>
             <div class="conversation-heading">
               <span class="conversation-breadcrumb">Orbit <span aria-hidden="true">/</span> {session.source}</span>
-              <span class="history-label">History</span>
+              <span class="history-label">{messages.history}</span>
             </div>
             <h3>{session.title}</h3>
             <div class="message message-user">
-              <span class="message-author">You</span>
+              <span class="message-author">{messages.user}</span>
               <p>{session.prompt}</p>
             </div>
             <div class="message message-agent">
@@ -118,16 +95,16 @@ const sessions = [
               <p>{session.response}</p>
             </div>
             <details class="recorded-step">
-              <summary><span class="step-icon" aria-hidden="true">↳</span><span>{session.tool}<small>Recorded tool step</small></span><span class="step-toggle" aria-hidden="true">+</span></summary>
+              <summary><span class="step-icon" aria-hidden="true">↳</span><span>{session.tool}<small>{messages.recorded_step}</small></span><span class="step-toggle" aria-hidden="true">+</span></summary>
               <pre><code>{session.output}</code></pre>
             </details>
-            <p class="conversation-note"><span aria-hidden="true">✓</span> The conversation, with its context.</p>
+            <p class="conversation-note"><span aria-hidden="true">✓</span> {messages.conversation_note}</p>
           </article>
         ))}
         <div class="conversation-empty" data-conversation-empty hidden>
           <span aria-hidden="true">⌕</span>
-          <p>A different word might find it.</p>
-          <span>Try “keyboard”, “release”, or “timeline”.</span>
+          <p>{messages.empty_title}</p>
+          <span>{messages.empty_hint}</span>
         </div>
       </div>
     </div>
@@ -135,10 +112,14 @@ const sessions = [
 </session-example>
 
 <script>
+  import { getLocale } from "../i18n/locales";
+  import { formatConversationCount } from "../i18n/session";
+
   class SessionExample extends HTMLElement {
     connectedCallback() {
       if (this.dataset.ready) return;
 
+      const locale = getLocale(this.dataset.locale);
       const controls = this.querySelector<HTMLElement>("[data-controls]");
       const search = this.querySelector<HTMLInputElement>("[data-search]");
       const result_count = this.querySelector<HTMLElement>("[data-result-count]");
@@ -162,15 +143,15 @@ const sessions = [
       };
 
       const updateResults = () => {
-        const query = search.value.trim().toLocaleLowerCase();
+        const query = search.value.trim().toLocaleLowerCase(locale);
         const visible_rows = rows.filter((row) => {
           const matches_source = active_source === "All" || row.dataset.provider === active_source;
-          const matches_search = row.dataset.searchText?.toLocaleLowerCase().includes(query) ?? false;
+          const matches_search = row.dataset.searchText?.toLocaleLowerCase(locale).includes(query) ?? false;
           row.hidden = !(matches_source && matches_search);
           return !row.hidden;
         });
         filters.forEach((filter) => filter.setAttribute("aria-pressed", String(filter.dataset.source === active_source)));
-        result_count.textContent = `${visible_rows.length} conversation${visible_rows.length === 1 ? "" : "s"}`;
+        result_count.textContent = formatConversationCount(locale, visible_rows.length);
         sidebar_empty.hidden = visible_rows.length !== 0;
         const next_session = visible_rows.find((row) => row.dataset.session === selected_session) ?? visible_rows[0];
         showConversation(next_session?.dataset.session);

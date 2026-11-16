@@ -1,0 +1,224 @@
+---
+import Brand from "./Brand.astro";
+import SessionDemo from "./SessionDemo.astro";
+import TerminalDemo from "./TerminalDemo.astro";
+import { getWorkshopProjects } from "../data/projects";
+import { locale_paths, type Locale } from "../i18n/locales";
+import { page_copy } from "../i18n/page";
+import "../styles/global.css";
+import "../styles/home.css";
+
+interface Props { locale: Locale }
+
+const { locale } = Astro.props;
+const copy = page_copy[locale];
+const workshop_projects = getWorkshopProjects(locale);
+const alternate_locale = locale === "en" ? "zh-CN" : "en";
+const site_url = new URL(locale_paths[locale], Astro.site);
+const og_image = new URL(locale === "en" ? "/og.png" : "/og-cn.png", Astro.site);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={copy.site_description} />
+    <meta name="theme-color" content="#fcfbf8" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="canonical" href={site_url} />
+    <link rel="alternate" hreflang="en" href={new URL(locale_paths.en, Astro.site)} />
+    <link rel="alternate" hreflang="zh-CN" href={new URL(locale_paths["zh-CN"], Astro.site)} />
+    <link rel="alternate" hreflang="x-default" href={new URL(locale_paths.en, Astro.site)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tokn AI" />
+    <meta property="og:title" content={copy.site_title} />
+    <meta property="og:description" content={copy.site_description} />
+    <meta property="og:url" content={site_url} />
+    <meta property="og:locale" content={locale === "en" ? "en_US" : "zh_CN"} />
+    <meta property="og:locale:alternate" content={locale === "en" ? "zh_CN" : "en_US"} />
+    <meta property="og:image" content={og_image} />
+    <meta property="og:image:alt" content={copy.og_alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={copy.site_title} />
+    <meta name="twitter:description" content={copy.site_description} />
+    <meta name="twitter:image" content={og_image} />
+    <meta name="twitter:image:alt" content={copy.og_alt} />
+    <meta name="generator" content={Astro.generator} />
+    <title>{copy.site_title}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{copy.skip_content}</a>
+    <header class="site-header" id="top">
+      <div class="shell header-inner">
+        <Brand locale={locale} />
+        <nav aria-label={copy.main_navigation}>
+          <a href="#tools">{copy.tools}</a>
+          <a href="#workshop">{copy.workshop}</a>
+          <a class="nav-github" href="https://github.com/tokn-ai">GitHub <span aria-hidden="true">↗</span></a>
+          <a class="language-switch" href={locale_paths[alternate_locale]} hreflang={alternate_locale} lang={alternate_locale} aria-label={copy.switch_language} data-language-switch>{locale === "en" ? "中文" : "EN"}</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <svg class="hero-thread" viewBox="0 0 1440 670" fill="none" aria-hidden="true">
+          <path class="thread-plum" pathLength="1" d="M-65 180C145 15 210 80 171 235S-24 460 131 487C272 512 228 319 147 391S230 657 460 587" />
+          <path class="thread-teal" pathLength="1" d="M972 605C1120 637 1362 612 1260 434S1094 394 1199 453S1485 343 1450 202" />
+        </svg>
+        <div class="shell hero-inner">
+          <p class="eyebrow hero-eyebrow"><span class="little-star" aria-hidden="true">✳</span> {copy.hero_eyebrow}</p>
+          <h1 id="hero-title"><span class="hero-line hero-line-intro">{copy.hero_intro}<em class="hero-emphasis">{copy.hero_wheels}</em></span> <span class="hero-line hero-line-context">{copy.hero_context}<em class="hero-emphasis-teal">{copy.hero_rsi}</em></span></h1>
+          <p class="hero-description">{copy.hero_description}<br class="desktop-break" /> {copy.hero_detail}</p>
+          <div class="hero-actions">
+            <a class="button button-plum" href="#tools">{copy.explore_tools} <span aria-hidden="true">↘</span></a>
+            <a class="text-link" href="https://github.com/tokn-ai">{copy.view_source} <span aria-hidden="true">↗</span></a>
+          </div>
+          <a class="floating-note note-session" href="#tokn-session">
+            <span class="note-icon" aria-hidden="true">↳</span>
+            <span><small>tokn-session</small><strong>{copy.session_note_first} <br />{copy.session_note_second}</strong></span>
+            <span class="note-check" aria-hidden="true">✓</span>
+          </a>
+          <a class="floating-note note-terminal" href="#ctl">
+            <span class="note-icon" aria-hidden="true">&gt;_</span>
+            <span><small>ctl</small><strong>{copy.terminal_note_first} <br />{copy.terminal_note_second}</strong></span>
+            <span class="running-dot" aria-hidden="true"></span>
+          </a>
+          <div class="hero-bottom">
+            <span>{copy.start_with}</span>
+            <a href="#tools"><span aria-hidden="true">↓</span> {copy.look_around}</a>
+            <button class="motion-toggle" type="button" data-motion-toggle data-pause={copy.pause_motion} data-enable={copy.enable_motion} data-reduced={copy.reduced_motion} hidden aria-pressed="false">{copy.pause_motion}</button>
+          </div>
+        </div>
+      </section>
+      <div id="tools" class="tools">
+        <section class="session-section shell" id="tokn-session" aria-labelledby="session-title">
+          <div class="section-topline"><span>{copy.session_topline}</span><span class="topline-doodle" aria-hidden="true">↶</span></div>
+          <div class="product-story session-story">
+            <div class="story-copy" data-reveal>
+              <div class="product-heading"><span class="product-name">tokn-session</span><span class="development">{copy.in_development}</span></div>
+              <h2 id="session-title">{copy.session_title}{locale === "en" ? " " : ""}<br /><em>{copy.session_emphasis_first}{locale === "en" ? " " : ""}<br />{copy.session_emphasis_second}</em></h2>
+              <p>{copy.session_description}</p>
+              <ul class="feature-list">{copy.session_features.map(feature => <li>{feature}</li>)}</ul>
+              <a class="text-link" href="https://github.com/tokn-ai/tokn-session">{copy.explore_session} <span aria-hidden="true">↗</span></a>
+              <p class="small-note">{copy.session_note}</p>
+            </div>
+            <div class="demo-scene session-scene" data-reveal>
+              <p class="handwritten demo-hint">{copy.session_hint} <span aria-hidden="true">↴</span></p>
+              <SessionDemo locale={locale} />
+              <p class="source-line"><span>{copy.history_sources}</span> Codex · Pi · OpenCode · ZCode · WorkBuddy · DSH</p>
+            </div>
+          </div>
+        </section>
+        <section class="terminal-section" id="ctl" aria-labelledby="terminal-title">
+          <div class="shell">
+            <div class="section-topline"><span>{copy.terminal_topline}</span><span class="topline-doodle" aria-hidden="true">↳</span></div>
+            <div class="product-story terminal-story">
+              <div class="demo-scene terminal-scene" data-reveal>
+                <p class="handwritten demo-hint">{copy.terminal_hint} <span aria-hidden="true">↴</span></p>
+                <TerminalDemo locale={locale} />
+              </div>
+              <div class="story-copy" data-reveal>
+                <div class="product-heading"><span class="product-name">ctl</span><span class="development">{copy.in_development}</span></div>
+                <h2 id="terminal-title">{copy.terminal_title} <br /><em>{copy.terminal_emphasis}</em></h2>
+                <p>{copy.terminal_description}</p>
+                <ul class="feature-list">{copy.terminal_features.map(feature => <li>{feature}</li>)}</ul>
+                <a class="text-link" href="https://github.com/tokn-ai/ctl">{copy.explore_terminal} <span aria-hidden="true">↗</span></a>
+                <p class="small-note">{copy.terminal_note}</p>
+              </div>
+            </div>
+            <div class="break-note" aria-hidden="true"><span>✳</span> {copy.coffee_break}</div>
+          </div>
+        </section>
+      </div>
+      <section class="workshop-section shell" id="workshop" aria-labelledby="workshop-title">
+        <div class="workshop-intro" data-reveal>
+          <p class="eyebrow">{copy.workshop_eyebrow}</p>
+          <h2 id="workshop-title">{copy.workshop_title}<br /><em>{copy.workshop_emphasis}</em></h2>
+          <p>{copy.workshop_description}</p>
+        </div>
+        <div class="workshop-grid">
+          {workshop_projects.map((project) => (
+            <article class={`workshop-project project-${project.id}`} id={project.id} data-reveal>
+              <div class="project-top"><span class="project-symbol" aria-hidden="true">{project.symbol}</span><span class="project-status">{project.status}</span></div>
+              <div class="project-title"><h3><a href={project.href}>{project.name}<span class="project-arrow" aria-hidden="true">↗</span></a></h3><span>{project.scope}</span></div>
+              <p>{project.summary}</p>
+              <div class="project-bottom"><span>{project.language}</span><span>{project.detail}</span></div>
+            </article>
+          ))}
+        </div>
+        <p class="workshop-sources">{copy.source_intro}<a href="https://github.com/tokn-ai">tokn-ai <span aria-hidden="true">↗</span></a>{copy.source_conjunction}<a href="https://github.com/agentic-rs">agentic-rs <span aria-hidden="true">↗</span></a>{copy.source_end}</p>
+      </section>
+      <section class="open-section" id="about" aria-labelledby="open-title">
+        <div class="shell open-inner">
+          <div class="open-art" aria-hidden="true">
+            <span class="orbit-label orbit-label-top">{copy.orbit_top}</span>
+            <div class="logo-pebble"><img src="/logo-icon.svg" width="130" height="130" alt="" loading="lazy" /></div>
+            <svg viewBox="0 0 300 300" fill="none"><ellipse cx="150" cy="150" rx="139" ry="82" transform="rotate(-32 150 150)" /><path d="m30 131-13 7 3-15" /></svg>
+            <span class="orbit-label orbit-label-bottom">{copy.orbit_bottom}</span>
+          </div>
+          <div class="open-copy" data-reveal>
+            <p class="eyebrow">{copy.open_eyebrow}</p>
+            <h2 id="open-title">{copy.open_title}<br /><em>{copy.open_emphasis}</em></h2>
+            <p>{copy.open_description}</p>
+            <ol class="rsi-loop" aria-label={copy.loop_label}>
+              {copy.loop_steps.map((step, index) => <li>{step} <span aria-hidden="true">{index === copy.loop_steps.length - 1 ? "↺" : "→"}</span></li>)}
+            </ol>
+            <a class="button button-plum" href="https://github.com/tokn-ai">{copy.explore_github} <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="shell site-footer">
+      <Brand locale={locale} />
+      <p>{copy.footer_tagline}</p>
+      <a href="#top">{copy.back_top} <span aria-hidden="true">↑</span></a>
+      <span class="copyright">© {new Date().getFullYear()} Tokn AI</span>
+    </footer>
+    <script>
+      const motionButton = document.querySelector<HTMLButtonElement>("[data-motion-toggle]");
+      const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let motionPaused = motionPreference.matches;
+
+      function setMotion(paused: boolean) {
+        motionPaused = paused || motionPreference.matches;
+        document.documentElement.dataset.motion = motionPaused ? "paused" : "playing";
+        motionButton?.setAttribute("aria-pressed", String(motionPaused));
+        if (motionButton) {
+          motionButton.disabled = motionPreference.matches;
+          motionButton.textContent = motionPreference.matches
+            ? motionButton.getAttribute("data-reduced")
+            : motionButton.getAttribute(motionPaused ? "data-enable" : "data-pause");
+        }
+      }
+
+      setMotion(motionPaused);
+      if (motionButton) {
+        motionButton.hidden = false;
+        motionButton.addEventListener("click", () => setMotion(!motionPaused));
+      }
+      motionPreference.addEventListener("change", (event) => setMotion(event.matches));
+
+      const language_switch = document.querySelector<HTMLAnchorElement>("[data-language-switch]");
+      const language_path = language_switch?.getAttribute("href");
+      function updateLanguageLink() {
+        if (language_switch && language_path) language_switch.href = `${language_path}${window.location.hash}`;
+      }
+      updateLanguageLink();
+      window.addEventListener("hashchange", updateLanguageLink);
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("has-arrived");
+              observer.unobserve(entry.target);
+            }
+          }
+        }, { threshold: 0.12 });
+        document.querySelectorAll("[data-reveal]").forEach((element) => observer.observe(element));
+      }
+    </script>
+  </body>
+</html>

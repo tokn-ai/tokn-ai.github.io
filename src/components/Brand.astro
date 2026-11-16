@@ -1,12 +1,15 @@
 ---
+import { locale_paths, type Locale } from "../i18n/locales";
+
 interface Props {
   class?: string;
+  locale?: Locale;
 }
 
-const { class: className } = Astro.props;
+const { class: className, locale = "en" } = Astro.props;
 ---
 
-<a class:list={["brand", className]} href="/" aria-label="Tokn AI home">
+<a class:list={["brand", className]} href={locale_paths[locale]} aria-label={locale === "zh-CN" ? "Tokn AI 首页" : "Tokn AI home"}>
   <img src="/logo.svg" width="118" height="32" alt="" />
 </a>
 

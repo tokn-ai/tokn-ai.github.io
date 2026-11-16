@@ -1,6 +1,19 @@
 ---
 import { terminal_sessions } from "../data/terminal-sessions";
+import { formatMessage, type Locale } from "../i18n/locales";
+import { terminal_copy } from "../i18n/terminal";
 import "../styles/terminal-demo.css";
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = "en" } = Astro.props;
+const copy = terminal_copy[locale];
+const sessions = terminal_sessions.map(session => ({
+  ...session,
+  host: session.id === "local" ? copy.local_host : copy.remote_host,
+}));
 
 const icons = {
   terminal: "m5 6 4 4-4 4m7 0h4M3 3h14v14H3z",
@@ -14,16 +27,16 @@ const icons = {
 };
 ---
 
-<terminal-demo class="terminal-demo">
-  <div class="demo-label">Interactive example · simulated ctl workspace</div>
+<terminal-demo class="terminal-demo" data-locale={locale}>
+  <div class="demo-label">{copy.demo_label}</div>
   <div class="terminal-window">
     <div class="window-bar">
       <span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span>
       <span class="window-title">ctl</span>
-      <span class="window-context">Orbit workspace</span>
+      <span class="window-context">{copy.workspace_name}</span>
     </div>
     <div class="workbench">
-      <aside class="workspace-sidebar" id="ctl-demo-hosts" aria-label="Example hosts and sessions">
+      <aside class="workspace-sidebar" id="ctl-demo-hosts" aria-label={copy.sidebar_label}>
         <div class="workspace-rail" aria-hidden="true">
           {["terminal", "tasks", "ports", "shield"].map((name, index) => (
             <span class:list={["rail-icon", { "rail-active": index === 0 }]}>
@@ -33,8 +46,8 @@ const icons = {
           <span class="rail-icon rail-settings"><svg viewBox="0 0 20 20"><path d={icons.settings} /></svg></span>
         </div>
         <div class="hosts-tree">
-          <div class="hosts-heading"><span>Hosts</span><span class="host-count">2</span></div>
-          {terminal_sessions.map((session) => (
+          <div class="hosts-heading"><span>{copy.hosts}</span><span class="host-count">2</span></div>
+          {sessions.map((session) => (
             <div class={`host-group host-${session.id}`}>
               <div class="host-heading">
                 <span class="host-chevron" aria-hidden="true">⌄</span>
@@ -48,31 +61,31 @@ const icons = {
               </button>
             </div>
           ))}
-          <p class="hosts-note"><i aria-hidden="true"></i> 2 sessions running</p>
+          <p class="hosts-note"><i aria-hidden="true"></i> {copy.sessions_running}</p>
         </div>
       </aside>
       <div class="workspace-main">
         <div class="tab-bar">
-          <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-label="Hide hosts" aria-expanded="true" aria-controls="ctl-demo-hosts" title="Show or hide hosts" hidden>
+          <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-label={copy.hide_hosts} aria-expanded="true" aria-controls="ctl-demo-hosts" title={copy.toggle_hosts} hidden>
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d={icons.panel} /></svg>
           </button>
-          <div class="terminal-tabs" role="tablist" aria-label="Example terminal tabs">
-            {terminal_sessions.map((session) => (
+          <div class="terminal-tabs" role="tablist" aria-label={copy.tabs_label}>
+            {sessions.map((session) => (
               <div class={`terminal-tab host-${session.id}`} data-tab={session.id}>
                 <button id={`ctl-tab-${session.id}`} class="tab-select" type="button" role="tab" data-select={session.id} aria-selected={session.id === "local" ? "true" : "false"} aria-controls="ctl-demo-output" tabindex={session.id === "local" ? 0 : -1} disabled>
                   <span aria-hidden="true">›_</span>{session.name}
                 </button>
-                <button class="tab-close" type="button" data-close={session.id} aria-label={`Close ${session.name} tab`} title="Close tab · session keeps running" hidden><span aria-hidden="true">×</span></button>
+                <button class="tab-close" type="button" data-close={session.id} aria-label={formatMessage(copy.close_tab, { name: session.name })} title={copy.close_tab_hint} hidden><span aria-hidden="true">×</span></button>
               </div>
             ))}
           </div>
-          <span class="no-tabs-label" data-no-tabs hidden>No open tabs</span>
+          <span class="no-tabs-label" data-no-tabs hidden>{copy.no_tabs}</span>
         </div>
         <div class="terminal-surface" id="ctl-demo-output" role="tabpanel" aria-labelledby="ctl-tab-local" tabindex="0" data-panel>
           <div class="terminal-output" data-output>
             <p class="command"><span class="prompt" data-prompt>orbit-web</span><span class="prompt-marker" aria-hidden="true">$</span> sh progress.sh</p>
             <p class="boot-line">Orbit <span class="service-label" data-service>/ web</span></p>
-            <p class="process-note">Sample process started. Waiting for work.</p>
+            <p class="process-note">{copy.process_started}</p>
             <div class="heartbeat-lines">
               {[39, 40, 41, 42].map((tick) => (
                 <p><span class="log-time" data-time>00:{tick}</span><span class="log-marker" aria-hidden="true">›</span><span>heartbeat <span data-tick>{String(tick).padStart(3, "0")}</span></span><span class="log-ok">ok</span></p>
@@ -82,24 +95,26 @@ const icons = {
           </div>
           <div class="empty-workspace" data-empty hidden>
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d={icons.terminal} /></svg>
-            <strong>Tabs closed. Sessions alive.</strong>
-            <p>Your processes keep running.<br />Open a session from Hosts to return.</p>
-            <button type="button" class="reopen-button" data-reopen>Reopen orbit-web <span aria-hidden="true">↗</span></button>
+            <strong>{copy.empty_title}</strong>
+            <p>{copy.empty_description}<br />{copy.empty_hint}</p>
+            <button type="button" class="reopen-button" data-reopen>{formatMessage(copy.reopen_session, { name: "orbit-web" })} <span aria-hidden="true">↗</span></button>
           </div>
         </div>
       </div>
     </div>
     <div class="workspace-status">
-      <span class="status-host"><i aria-hidden="true"></i><span data-status-host>Local</span></span>
+      <span class="status-host"><i aria-hidden="true"></i><span data-status-host>{copy.local_host}</span></span>
       <span class="status-process" data-status-process>sh progress.sh</span>
-      <span class="status-persistence">ctmux <span aria-hidden="true">·</span> persistent sessions</span>
+      <span class="status-persistence">ctmux <span aria-hidden="true">·</span> {copy.persistent_sessions}</span>
     </div>
   </div>
-  <p class="demo-caption" data-announcement role="status" aria-live="polite">Close a tab, then reopen it from Hosts. Sessions stay alive while the daemon runs.</p>
+  <p class="demo-caption" data-announcement role="status" aria-live="polite">{copy.caption}</p>
 </terminal-demo>
 
 <script>
   import { terminal_sessions } from "../data/terminal-sessions";
+  import { formatMessage, getLocale } from "../i18n/locales";
+  import { terminal_copy } from "../i18n/terminal";
 
   type SessionId = typeof terminal_sessions[number]["id"];
 
@@ -108,6 +123,7 @@ const icons = {
 
     connectedCallback() {
       this.cleanup?.();
+      const copy = terminal_copy[getLocale(this.dataset.locale)];
 
       const sidebar = this.querySelector<HTMLElement>(".workspace-sidebar");
       const sidebar_toggle = this.querySelector<HTMLButtonElement>("[data-sidebar-toggle]");
@@ -130,7 +146,12 @@ const icons = {
 
       if (!sidebar || !sidebar_toggle || !tab_list || !panel || !output || !empty || !no_tabs || !reopen_button || !prompt || !service || !status_host || !status_process || !announcement) return;
 
-      const sessions = terminal_sessions.map(session => ({ ...session, open: true, closed_tick: 0 }));
+      const sessions = terminal_sessions.map(session => ({
+        ...session,
+        host: session.id === "local" ? copy.local_host : copy.remote_host,
+        open: true,
+        closed_tick: 0,
+      }));
       let active_id: SessionId | null = "local";
       let sidebar_preference: boolean | undefined;
       let in_view = false;
@@ -147,7 +168,7 @@ const icons = {
         sidebar.hidden = !visible;
         this.dataset.sidebar = String(visible);
         sidebar_toggle.setAttribute("aria-expanded", String(visible));
-        sidebar_toggle.setAttribute("aria-label", visible ? "Hide hosts" : "Show hosts");
+        sidebar_toggle.setAttribute("aria-label", visible ? copy.hide_hosts : copy.show_hosts);
       };
 
       const renderOutput = () => {
@@ -177,11 +198,11 @@ const icons = {
           status_process.textContent = "sh progress.sh";
         } else {
           panel.setAttribute("role", "region");
-          panel.setAttribute("aria-label", "No open terminal tabs");
+          panel.setAttribute("aria-label", copy.empty_panel_label);
           panel.removeAttribute("aria-labelledby");
           panel.tabIndex = -1;
-          status_host.textContent = "No active tab";
-          status_process.textContent = "2 sessions running";
+          status_host.textContent = copy.no_active_tab;
+          status_process.textContent = copy.sessions_running;
         }
         sessions.forEach(session => {
           const tab = this.querySelector<HTMLElement>(`[data-tab="${session.id}"]`);
@@ -209,9 +230,9 @@ const icons = {
         renderWorkspace();
         if (was_closed) {
           const elapsed = elapsedSeconds() - session.closed_tick;
-          announcement.textContent = `${session.name} reopened. Same running process; ${elapsed} ${elapsed === 1 ? "heartbeat" : "heartbeats"} passed while its tab was closed.`;
+          announcement.textContent = formatMessage(elapsed === 1 ? copy.reopened_one : copy.reopened_many, { name: session.name, count: elapsed });
         } else {
-          announcement.textContent = `${session.name} selected on ${session.host}. Close its tab, then reopen it from Hosts.`;
+          announcement.textContent = formatMessage(copy.session_selected, { name: session.name, host: session.host });
         }
         if (from_sidebar && isCompact()) {
           sidebar_preference = false;
@@ -237,7 +258,7 @@ const icons = {
         session.closed_tick = elapsedSeconds();
         if (active_id === session.id) active_id = sessions.find(session => session.open)?.id ?? null;
         renderWorkspace();
-        announcement.textContent = `${session.name} tab closed. Its process is still running. ${isCompact() && sidebar.hidden ? "Show Hosts, then select" : "Select"} ${session.name} to return.`;
+        announcement.textContent = formatMessage(isCompact() && sidebar.hidden ? copy.tab_closed_compact : copy.tab_closed, { name: session.name });
         if (active_id) focusActiveTab();
         else reopen_button.focus({ preventScroll: true });
       }, { signal: controller.signal }));

@@ -42,6 +42,16 @@ Supporting projects are listed in `src/data/projects.ts`. Shared styles live in
 `src/styles/`, and the research behind the page is in
 [`docs/landing-page-research.md`](docs/landing-page-research.md).
 
+## Languages
+
+English is served at `/`; Simplified Chinese is served at `/cn/` with the
+standard `zh-CN` language tag. Both routes render the shared `HomePage.astro`
+component at build time, including localized demos, metadata, and social previews.
+Translations live in `src/i18n/`; project copy is localized in
+`src/data/projects.ts`. The header language link works without JavaScript and
+preserves the current section when JavaScript is enabled. Language selection is
+explicit, with no automatic redirects.
+
 ## Brand assets
 
 The approved logo is `public/logo.svg`, shared by the header and footer.
